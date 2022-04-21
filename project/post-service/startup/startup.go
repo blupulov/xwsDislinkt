@@ -43,6 +43,7 @@ func (s *Server) Start() {
 
 	router.GET("/post", postController.GetAll)
 	router.POST("/post", postController.Insert)
+	router.PUT("/post/:postId/like/:userId", postController.Like)
 
 	//Starting server
 	log.Println("post-service running on port " + s.config.Port)
