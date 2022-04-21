@@ -37,7 +37,7 @@ func (ps *PostService) DeleteById(id primitive.ObjectID) error {
 }
 
 func (ps *PostService) Like(userId string, postId primitive.ObjectID) error {
-	panic("Not implemented")
+	return ps.pi.Like(userId, postId)
 }
 
 func (ps *PostService) Dislike(userId string, postId primitive.ObjectID) error {

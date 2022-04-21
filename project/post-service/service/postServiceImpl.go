@@ -58,7 +58,11 @@ func (ps *PostServiceImpl) DeleteById(id primitive.ObjectID) error {
 }
 
 func (ps *PostServiceImpl) Like(userId string, postId primitive.ObjectID) error {
-	panic("Not implemented")
+	if err := ps.updateLikeIfHater(userId, postId); err == nil {
+		return nil
+	}
+	err := ps.updateLikeIfNotHater(userId, postId)
+	return err
 }
 
 func (ps *PostServiceImpl) Dislike(userId string, postId primitive.ObjectID) error {
@@ -93,4 +97,39 @@ func decode(cur *mongo.Cursor) (posts []*model.Post, err error) {
 	}
 	err = cur.Err()
 	return
+}
+
+//private method for like post
+func (ps *PostServiceImpl) updateLikeIfHater(userId string, postId primitive.ObjectID) error {
+	//$in - work with array only
+	var userIds []string
+	userIds = append(userIds, userId)
+
+	checkFilter := bson.M{
+		"_id":       postId,
+		"hatersIds": bson.M{"$in": userIds},
+	}
+
+	updateFilter := bson.D{
+		{"$inc", bson.D{{"postLikeNumber", 1}}},
+		{"$push", bson.D{{"fansIds", userId}}},
+		{"$pull", bson.D{{"hatersIds", userId}}},
+		{"$inc", bson.D{{"postDislikeNumber", -1}}},
+	}
+
+	//throw error if cant find post with specific checkFilter
+	ur := ps.postsCollection.FindOneAndUpdate(context.TODO(), checkFilter, updateFilter)
+	return ur.Err()
+}
+
+//private method for like post
+func (ps *PostServiceImpl) updateLikeIfNotHater(userId string, postId primitive.ObjectID) error {
+	findFilter := bson.M{"_id": postId}
+	updateFilter := bson.D{
+		{"$inc", bson.D{{"postLikeNumber", 1}}},
+		{"$push", bson.D{{"fansIds", userId}}},
+	}
+
+	_, err := ps.postsCollection.UpdateOne(context.TODO(), findFilter, updateFilter)
+	return err
 }
