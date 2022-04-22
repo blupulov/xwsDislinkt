@@ -57,6 +57,7 @@ func (s *Server) initMongoClient() *mongo.Client {
 	uri := fmt.Sprintf("mongodb://%s:%s/", s.config.UserDBHost, s.config.UserDBPort)
 	options := options.Client().ApplyURI(uri)
 	client, err := mongo.Connect(context.TODO(), options)
+	log.Println("mongodb client connected")
 	if err != nil {
 		log.Fatal(err)
 	}

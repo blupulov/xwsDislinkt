@@ -20,7 +20,7 @@ func NewUserController(us *service.UserService) *UserController {
 	}
 }
 
-func (uc UserController) GetAll(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (uc *UserController) GetAll(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	users, err := uc.us.GetAll()
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
@@ -34,10 +34,10 @@ func (uc UserController) GetAll(w http.ResponseWriter, r *http.Request, _ httpro
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "%\n", jsonUsers)
+	fmt.Fprintf(w, "%s\n", jsonUsers)
 }
 
-func (uc UserController) Register(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (uc *UserController) Register(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	user := model.User{}
 
 	json.NewDecoder(r.Body).Decode(&user)
@@ -50,6 +50,6 @@ func (uc UserController) Register(w http.ResponseWriter, r *http.Request, _ http
 	w.WriteHeader(http.StatusOK)
 }
 
-func (uc UserController) GetById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func (uc *UserController) GetById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 }

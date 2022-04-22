@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	Id           primitive.ObjectID `bson:"_id" json: "_id"`
+	Id           primitive.ObjectID `bson:"_id" json:"_id"`
 	FirstName    string             `bson:"firstName" json:"firstName"`
 	LastName     string             `bson:"lastName" json:"lastName"`
 	BirthDate    time.Time          `bson:"birthDate" json:"birthDate"`
@@ -20,7 +20,7 @@ type User struct {
 	ProfileImage string             `bson:"profileImage" json:"profileImage"` //base64
 
 	Education      []EducationItem      `bson:"educationCollection" json:"educationCollection"` // Nije bas dobra praksa imenovanja, konsultovati se
-	WorkExpirience []WorkExpirienceItem `bson:"workExpirienceCollection" json:"workExpirienceCollection"`
+	WorkExperience []WorkExperienceItem `bson:"workExperienceCollection" json:"workExperienceCollection"`
 	Skills         []SkillItem          `bson:"skills" json:"skills"`
 	Interests      []InterestItem       `bson:"interestsCollection" json:"interestCollection"`
 	BlockedUsers   []string             `bson:"blockedUsers" json:"blockedUsers"`
