@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+option go_package = "github.com/blupulov/xwsDislinkt/common/post-service";
+
+package postservice;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+service PostService{
+  rpc GetAll(GetAllRequest) returns(GetAllResponse) {
+    option (google.api.http) = {
+      get: "/post"
+    };
+  }
+  rpc GetById(GetByIdRequest) returns(GetByIdResponse) {
+    option (google.api.http) = {
+      get: "/post/{id}"
+    };
+  }
+  rpc Insert(InsertRequest) returns(InsertResponse) {
+    option (google.api.http) = {
+      post: "/post"
+      body: "post"
+    };
+  }
+  rpc Like(LikeRequest) returns(LikeResponse) {
+    option (google.api.http) = {
+      put: "/post/{postId}/like/{userId}"
+    };
+  }
+}
+
+message GetAllRequest {
+}
+
+message GetAllResponse {
+  repeated Post post = 1;
+}
+
+message GetByIdRequest {
+  string id = 1;
+}
+
+message GetByIdResponse {
+  Post post = 1;
+}
+
+message InsertRequest {
+  Post post = 1;
+}
+
+message InsertResponse {
+  string status = 1;
+}
+
+message LikeRequest {
+  string postId = 1;
+  string userId = 2;
+}
+
+message LikeResponse {
+  string status = 1;
+}
+
+message Post {
+  string id = 1;
+  string postComment = 2;
+  string postImage = 3;
+  string postOwnerId = 4;
+  google.protobuf.Timestamp postDate = 5;
+  int32 postLikeNumber = 6;
+  int32 postDislikeNumber = 7;
+  repeated string fansIds = 8;
+  repeated string hatersIds = 9;
+  repeated Comment comments = 10;
+}
+
+message Comment {
+  string commentOwnerId = 1;
+  string commentContent = 2;
+  string creationDate = 3;
+}
+
+
+

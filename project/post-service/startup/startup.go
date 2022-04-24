@@ -4,14 +4,19 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
+	"sync"
 
+	psGrpc "github.com/blupulov/xwsDislinkt/common/proto/services/post-service"
 	"github.com/blupulov/xwsDislinkt/post-service/controller"
+	"github.com/blupulov/xwsDislinkt/post-service/handler"
 	"github.com/blupulov/xwsDislinkt/post-service/service"
 	"github.com/blupulov/xwsDislinkt/post-service/startup/config"
 	"github.com/julienschmidt/httprouter"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"google.golang.org/grpc"
 )
 
 type Server struct {
@@ -35,6 +40,8 @@ func (s *Server) Start() {
 	postService := service.NewPostService(postServiceImpl)
 	//Post controller
 	postController := controller.NewPostController(postService)
+	//Post handler
+	postHandler := handler.NewPostHandler(postService)
 
 	//All routes (first is test rout)
 	router.GET("/", func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -45,9 +52,19 @@ func (s *Server) Start() {
 	router.POST("/post", postController.Insert)
 	router.PUT("/post/:postId/like/:userId", postController.Like)
 
-	//Starting server
-	log.Println("post-service running on port " + s.config.Port)
-	err := http.ListenAndServe(":"+s.config.Port, router)
+	wg := new(sync.WaitGroup)
+	wg.Add(2)
+
+	//Starting servers
+	go s.startRestServer(router)
+	go s.startGrpcServer(postHandler)
+	wg.Wait()
+}
+
+//Rest server
+func (s *Server) startRestServer(router *httprouter.Router) {
+	log.Println("post-service (rest) running on port: " + s.config.RestPort)
+	err := http.ListenAndServe(":"+s.config.RestPort, router)
 	if err != nil {
 		panic(err)
 	}
@@ -63,4 +80,18 @@ func (s *Server) initMongoClient() *mongo.Client {
 	}
 	log.Println("mongodb client connected")
 	return client
+}
+
+//Grpc server
+func (s *Server) startGrpcServer(postHandler *handler.PostHandler) {
+	listener, err := net.Listen("tcp", ":9050")
+	if err != nil {
+		log.Fatal(err)
+	}
+	grpcServer := grpc.NewServer()
+	psGrpc.RegisterPostServiceServer(grpcServer, postHandler)
+	log.Println("post-service (grpc) runing on port: " + s.config.GrpcPort)
+	if err := grpcServer.Serve(listener); err != nil {
+		log.Fatal(err)
+	}
 }
