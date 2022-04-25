@@ -45,6 +45,8 @@ func (s *Server) Start() {
 	router.GET("/user", userController.GetAll)
 	router.POST("/user", userController.Register)
 
+	router.POST("/user/login", userController.Login)
+
 	//Starting server
 	log.Println("user-service running on port " + s.config.Port)
 	err := http.ListenAndServe(":"+s.config.Port, router)

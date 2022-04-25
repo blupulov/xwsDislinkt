@@ -7,4 +7,5 @@ type UserInterface interface {
 	GetAll() ([]*User, error)
 	Register(user *User) error
 	DeleteById(id primitive.ObjectID) error
+	Login(password, username string) (string, error)
 }

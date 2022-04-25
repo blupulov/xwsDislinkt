@@ -2,16 +2,20 @@ package service
 
 import (
 	"context"
+	"time"
 
 	"github.com/blupulov/xwsDislinkt/user-service/model"
+	"github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const (
 	DATABASE   = "user-service"
 	COLLECTION = "users"
+	SecretKey  = "secret"
 )
 
 type UserServiceImpl struct {
@@ -39,15 +43,52 @@ func (ps *UserServiceImpl) GetAll() ([]*model.User, error) {
 }
 
 func (ps *UserServiceImpl) Register(user *model.User) error {
-
 	user.Id = primitive.NewObjectID()
 
-	_, err := ps.usersCollection.InsertOne(context.TODO(), user)
+	password, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+	user.Password = string(password)
+
+	_, err = ps.usersCollection.InsertOne(context.TODO(), user)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func (us *UserServiceImpl) Login(password, username string) (string, error) {
+	user, err := us.findUserByUsername(username)
+	if err != nil {
+		return "", err
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+
+	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+		Issuer:    user.Id.String(),
+		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+	})
+
+	token, err := claims.SignedString([]byte(SecretKey))
+	if err != nil {
+		//internal server error
+		return "", err
+	}
+
+	return token, nil
+}
+
+func (us *UserServiceImpl) findUserByUsername(username string) (*model.User, error) {
+	filter := bson.M{"username": username}
+	sr := us.usersCollection.FindOne(context.TODO(), filter)
+	if sr.Err() != nil {
+		return nil, sr.Err()
+	}
+
+	var user model.User
+	sr.Decode(&user)
+
+	return &user, nil
 }
 
 //private method for applying filters on db

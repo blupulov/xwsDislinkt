@@ -30,3 +30,7 @@ func (us *UserService) GetAll() ([]*model.User, error) {
 func (us *UserService) DeleteById(id primitive.ObjectID) error {
 	return us.ui.DeleteById(id)
 }
+
+func (us *UserService) Login(password, username string) (string, error) {
+	return us.ui.Login(password, username)
+}
