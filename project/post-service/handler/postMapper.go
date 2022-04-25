@@ -6,7 +6,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func mapPost(post *model.Post) *pb.Post {
+func mapPbFromPost(post *model.Post) *pb.Post {
 	pbPost := &pb.Post{
 		Id:                post.Id.Hex(),
 		PostComment:       post.PostComment,
@@ -29,4 +29,17 @@ func mapPost(post *model.Post) *pb.Post {
 	}
 
 	return pbPost
+}
+
+func mapPostFromPb(pbPost *pb.Post) *model.Post {
+	return &model.Post{
+		PostComment:   pbPost.PostComment,
+		PostImage:     pbPost.PostImage,
+		PostOwnerId:   pbPost.PostOwnerId,
+		Comments:      make([]model.Comment, 0),
+		FansIds:       make([]string, 0),
+		HatersIds:     make([]string, 0),
+		LikeNumber:    0,
+		DislikeNumber: 0,
+	}
 }
