@@ -19,9 +19,9 @@ type Post struct {
 	Comments      []Comment          `bson:"comments" json:"comments"`
 }
 
-//Verovatno ce i ovde morati da se doda Id
 type Comment struct {
-	CommentOwnerId string    `bson:"commentOwnerId" json:"commentOwnerId"`
-	CommentContent string    `bson:"commentContent" json:"commentContent"`
-	CreationDate   time.Time `bson:"creationDate" json:"creationDate"`
+	Id             primitive.ObjectID `bson:"_id" json:"_id"`
+	CommentOwnerId string             `bson:"commentOwnerId" json:"commentOwnerId"`
+	CommentContent string             `bson:"commentContent" json:"commentContent"`
+	CreationDate   time.Time          `bson:"creationDate" json:"creationDate"`
 }

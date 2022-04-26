@@ -13,5 +13,6 @@ type PostInterface interface {
 	Like(userId string, postId primitive.ObjectID) error
 	Dislike(userId string, postId primitive.ObjectID) error
 	AddComment(comment *Comment, postId primitive.ObjectID) error
+	DeleteCommentById(commentId, postId string) error
 	//delete comment by Id, or (ownerId and creation time)??
 }

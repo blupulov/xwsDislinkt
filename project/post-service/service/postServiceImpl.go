@@ -70,7 +70,38 @@ func (ps *PostServiceImpl) Dislike(userId string, postId primitive.ObjectID) err
 }
 
 func (ps *PostServiceImpl) AddComment(comment *model.Comment, postId primitive.ObjectID) error {
-	panic("Not implemented")
+	comment.Id = primitive.NewObjectID()
+	comment.CreationDate = time.Now()
+	findFilter := bson.M{"_id": postId}
+	updateFilter := bson.M{
+		"$push": bson.M{"comments": comment},
+	}
+	sr := ps.postsCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}
+
+//Only comment owner// postOwner??
+func (ps *PostServiceImpl) DeleteCommentById(commentId, postId string) error {
+	pId, err := primitive.ObjectIDFromHex(postId)
+	if err != nil {
+		return err
+	}
+	cId, err := primitive.ObjectIDFromHex(commentId)
+	if err != nil {
+		return err
+	}
+	var filterArray []primitive.ObjectID
+	filterArray = append(filterArray, cId)
+	findFilter := bson.M{"_id": pId}
+	updateFilter := bson.M{
+		"$pull": bson.M{
+			"comments": bson.M{
+				"_id": cId,
+			},
+		},
+	}
+	sr := ps.postsCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
 }
 
 //private method for applay filters on db
