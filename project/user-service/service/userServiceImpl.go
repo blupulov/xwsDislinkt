@@ -48,6 +48,11 @@ func (ps *UserServiceImpl) Register(user *model.User) error {
 	password, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	user.Password = string(password)
 
+	userExists, err := ps.findUserByUsername(user.Username)
+	if userExists != nil {
+		return err
+	}
+
 	_, err = ps.usersCollection.InsertOne(context.TODO(), user)
 	if err != nil {
 		return err
