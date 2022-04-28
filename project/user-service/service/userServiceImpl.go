@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/blupulov/xwsDislinkt/user-service/model"
@@ -50,7 +51,7 @@ func (ps *UserServiceImpl) Register(user *model.User) error {
 
 	userExists, err := ps.findUserByUsername(user.Username)
 	if userExists != nil {
-		return err
+		return errors.New("User already exists")
 	}
 
 	_, err = ps.usersCollection.InsertOne(context.TODO(), user)
