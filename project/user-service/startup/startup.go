@@ -4,9 +4,15 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
+	"sync"
 
+	"github.com/blupulov/xwsDislinkt/user-service/handler"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
+	"google.golang.org/grpc"
+
+	usGrpc "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 
 	"github.com/blupulov/xwsDislinkt/user-service/controller"
 	"github.com/blupulov/xwsDislinkt/user-service/startup/config"
@@ -36,6 +42,8 @@ func (s *Server) Start() {
 	userService := service.NewUserService(userServiceImpl)
 	//User controller
 	userController := controller.NewUserController(userService)
+	//User handler
+	userHandler := handler.NewUserHandler(userService)
 
 	//All routes (first is test rout)
 	router.GET("/", func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -47,12 +55,13 @@ func (s *Server) Start() {
 
 	router.POST("/user/login", userController.Login)
 
-	//Starting server
-	log.Println("user-service running on port " + s.config.Port)
-	err := http.ListenAndServe(":"+s.config.Port, router)
-	if err != nil {
-		panic(err)
-	}
+	wg := new(sync.WaitGroup)
+	wg.Add(2)
+
+	//Starting servers
+	go s.startRestServer(router)
+	go s.startGrpcServer(userHandler)
+	wg.Wait()
 }
 
 func (s *Server) initMongoClient() *mongo.Client {
@@ -64,4 +73,27 @@ func (s *Server) initMongoClient() *mongo.Client {
 		log.Fatal(err)
 	}
 	return client
+}
+
+//Grpc server
+func (s *Server) startGrpcServer(postHandler *handler.UserHandler) {
+	listener, err := net.Listen("tcp", ":9050")
+	if err != nil {
+		log.Fatal(err)
+	}
+	grpcServer := grpc.NewServer()
+	usGrpc.RegisterUserServiceServer(grpcServer, postHandler)
+	log.Println("post-service (grpc) runing on port: " + s.config.GrpcPort)
+	if err := grpcServer.Serve(listener); err != nil {
+		log.Fatal(err)
+	}
+}
+
+//Rest server
+func (s *Server) startRestServer(router *httprouter.Router) {
+	log.Println("post-service (rest) running on port: " + s.config.RestPort)
+	err := http.ListenAndServe(":"+s.config.RestPort, router)
+	if err != nil {
+		panic(err)
+	}
 }

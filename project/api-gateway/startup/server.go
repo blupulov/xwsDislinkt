@@ -8,6 +8,7 @@ import (
 
 	"github.com/blupulov/xwsDislinkt/api-gateway/startup/config"
 	psGw "github.com/blupulov/xwsDislinkt/common/proto/services/post-service"
+	usGw "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -41,6 +42,15 @@ func (s *Server) initHandlers() {
 		s.log.Println("POST-SERVICE GATEWAY PROBLEM")
 		panic(err)
 	}
+
+	usEndpoint := fmt.Sprintf("%s:%s", s.config.UserServiceHost, s.config.UserServicePort)
+	s.log.Println("user-service grpc endpoint port: " + s.config.UserServicePort)
+	errUserService := usGw.RegisterUserServiceHandlerFromEndpoint(context.TODO(), s.mux, usEndpoint, options)
+	if err != nil {
+		s.log.Println("USER-SERVICE GATEWAY PROBLEM")
+		panic(errUserService)
+	}
+
 }
 
 func (s *Server) initCustomHandlers() {

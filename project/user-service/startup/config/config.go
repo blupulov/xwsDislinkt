@@ -1,14 +1,16 @@
 package config
 
 type Config struct {
-	Port       string
+	RestPort   string
 	UserDBHost string
 	UserDBPort string
+	GrpcPort   string
 }
 
 func NewConfig() *Config {
 	return &Config{
-		Port:       "8051",
+		RestPort:   "8051",
+		GrpcPort:   "9051",
 		UserDBHost: "localhost",
 		UserDBPort: "27017",
 	}

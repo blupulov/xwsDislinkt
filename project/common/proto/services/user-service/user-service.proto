@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+option go_package = "github.com/blupulov/xwsDislinkt/common/user-service";
+
+package userservice;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+service UserService{
+    rpc GetAll(GetAllRequest) returns(GetAllResponse) {
+        option (google.api.http) = {
+          get: "/user"
+        };
+      }
+}
+
+
+message GetAllRequest {
+}
+
+message GetAllResponse {
+  repeated User users = 1;
+}
+
+
+message User {
+    string id = 1;
+    string FirstName = 2;
+    string LastName = 3;
+    google.protobuf.Timestamp BirthDate = 4;
+    string Email = 5;
+    string Username = 6;
+    string Password = 7;
+    repeated EducationItem Education = 8;
+    repeated WorkExpirienceItem WorkExpirience = 9;
+    repeated SkillItem Skills = 10;
+    repeated Interests Interests = 11;
+    repeated string BlockedUsers = 12;
+  }
+
+  message EducationItem {
+    string SchoolName = 1;
+    string SchoolType = 2;
+    int32 DurationInMonths = 3;
+
+  }
+
+  message WorkExpirienceItem{
+    string CompanyName = 1;
+    int32 WorkDurationInMonths = 2;
+    string EmploymentField = 3;
+  }
+
+  message SkillItem{
+    string SkillName = 1;
+    string SkillDescription = 2;
+  }
+
+  message Interests{
+    string InterestName = 1;
+    string InterestDescription = 2;
+  }
+  
