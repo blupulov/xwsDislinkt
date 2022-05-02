@@ -5,7 +5,7 @@ import (
 
 	ub "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
-	//	"go.mongodb.org/mongo-driver/bson/primitive"
+	//"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UserHandler struct {
@@ -35,4 +35,18 @@ func (uh *UserHandler) GetAll(ctx context.Context, r *ub.GetAllRequest) (*ub.Get
 	}
 
 	return response, nil
+}
+
+func (uh *UserHandler) Register(ctx context.Context, r *ub.RegisterRequest) (*ub.RegisterResponse, error) {
+	var response ub.RegisterResponse
+
+	newUser := mapUserFromUb(r.User)
+	err := uh.us.Register(newUser)
+	if err != nil {
+		response.Status = "Not created"
+	} else {
+		response.Status = "Created"
+	}
+
+	return &response, err
 }

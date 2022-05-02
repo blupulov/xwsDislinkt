@@ -33,10 +33,10 @@ func mapUserFromUb(ubUser *ub.User) *model.User {
 		Email:          ubUser.Email,
 		Username:       ubUser.Username,
 		Password:       ubUser.Password,
-		Education:      []model.EducationItem{}, //za potrebe testiranja
-		WorkExperience: []model.WorkExperienceItem{},
-		Skills:         []model.SkillItem{},
-		Interests:      []model.InterestItem{},
+		Education:      make([]model.EducationItem, 0), //za potrebe testiranja
+		WorkExperience: make([]model.WorkExperienceItem, 0),
+		Skills:         make([]model.SkillItem, 0),
+		Interests:      make([]model.InterestItem, 0),
 		BlockedUsers:   []string{},
 	}
 }

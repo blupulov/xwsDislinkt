@@ -13,15 +13,44 @@ service UserService{
           get: "/user"
         };
       }
+
+
+rpc GetById(GetByIdRequest) returns(GetByIdResponse) {
+  option (google.api.http) = {
+    get: "/user/{id}"
+  };
 }
 
-
+rpc Register(RegisterRequest) returns(RegisterResponse) {
+  option (google.api.http) = {
+    post: "/user"
+    body: "user"
+  };
+}
+}
 message GetAllRequest {
 }
 
 message GetAllResponse {
   repeated User users = 1;
 }
+
+message GetByIdRequest {
+  string id = 1;
+}
+
+message GetByIdResponse {
+  User user = 1;
+}
+
+message RegisterRequest {
+  User user = 1;
+}
+
+message RegisterResponse {
+  string status = 1;
+}
+
 
 
 message User {
