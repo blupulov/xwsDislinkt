@@ -51,8 +51,6 @@ message RegisterResponse {
   string status = 1;
 }
 
-
-
 message User {
     string id = 1;
     string FirstName = 2;

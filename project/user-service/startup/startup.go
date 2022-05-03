@@ -52,8 +52,8 @@ func (s *Server) Start() {
 
 	router.GET("/user", userController.GetAll)
 	router.POST("/user", userController.Register)
-
 	router.POST("/user/login", userController.Login)
+	router.PUT("/user/:userId/workExpirienceItem", userController.AddExpirience)
 
 	wg := new(sync.WaitGroup)
 	wg.Add(2)
@@ -77,13 +77,13 @@ func (s *Server) initMongoClient() *mongo.Client {
 
 //Grpc server
 func (s *Server) startGrpcServer(postHandler *handler.UserHandler) {
-	listener, err := net.Listen("tcp", ":9050")
+	listener, err := net.Listen("tcp", ":9051")
 	if err != nil {
 		log.Fatal(err)
 	}
 	grpcServer := grpc.NewServer()
 	usGrpc.RegisterUserServiceServer(grpcServer, postHandler)
-	log.Println("post-service (grpc) runing on port: " + s.config.GrpcPort)
+	log.Println("user-service (grpc) runing on port: " + s.config.GrpcPort)
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatal(err)
 	}
@@ -91,7 +91,7 @@ func (s *Server) startGrpcServer(postHandler *handler.UserHandler) {
 
 //Rest server
 func (s *Server) startRestServer(router *httprouter.Router) {
-	log.Println("post-service (rest) running on port: " + s.config.RestPort)
+	log.Println("user-service (rest) running on port: " + s.config.RestPort)
 	err := http.ListenAndServe(":"+s.config.RestPort, router)
 	if err != nil {
 		panic(err)

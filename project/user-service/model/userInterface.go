@@ -8,4 +8,5 @@ type UserInterface interface {
 	Register(user *User) error
 	DeleteById(id primitive.ObjectID) error
 	Login(password, username string) (string, error)
+	AddExpirience(expirience *WorkExperienceItem, expirienceID primitive.ObjectID) error
 }

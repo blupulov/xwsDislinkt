@@ -122,3 +122,16 @@ func decode(cur *mongo.Cursor) (users []*model.User, err error) {
 	err = cur.Err()
 	return
 }
+
+func (us *UserServiceImpl) AddExpirience(expirience *model.WorkExperienceItem, userID primitive.ObjectID) error {
+
+	expirience.Id = primitive.NewObjectID()
+
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$push": bson.M{"WorkExpirienceItem": expirience},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}

@@ -34,3 +34,7 @@ func (us *UserService) DeleteById(id primitive.ObjectID) error {
 func (us *UserService) Login(password, username string) (string, error) {
 	return us.ui.Login(password, username)
 }
+
+func (us *UserService) AddExpirience(expirience *model.WorkExperienceItem, expirienceID primitive.ObjectID) error {
+	return us.ui.AddExpirience(expirience, expirienceID)
+}

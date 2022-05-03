@@ -10,6 +10,7 @@ import (
 	"github.com/blupulov/xwsDislinkt/user-service/model"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
 	"github.com/julienschmidt/httprouter"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UserController struct {
@@ -75,4 +76,20 @@ func (uc *UserController) Login(w http.ResponseWriter, r *http.Request, _ httpro
 	cookie := http.Cookie{Name: "jwt", Value: token, Expires: time.Now().Add(time.Hour * 24)}
 	http.SetCookie(w, &cookie)
 	w.WriteHeader(http.StatusAccepted)
+}
+
+func (uc *UserController) AddExpirience(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	userId, err := primitive.ObjectIDFromHex(p.ByName("userId"))
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	expirience := model.WorkExperienceItem{}
+	json.NewDecoder(r.Body).Decode(&expirience)
+	err = uc.us.AddExpirience(&expirience, userId)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
 }
