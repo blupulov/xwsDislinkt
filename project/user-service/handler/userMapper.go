@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"log"
+
 	ub "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/model"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -26,6 +28,8 @@ func mapUbFromUser(user *model.User) *ub.User {
 }
 
 func mapUserFromUb(ubUser *ub.User) *model.User {
+	log.Println("fromMapper")
+	log.Println(ubUser.FirstName)
 	return &model.User{
 		FirstName:      ubUser.FirstName,
 		LastName:       ubUser.LastName,
@@ -37,6 +41,6 @@ func mapUserFromUb(ubUser *ub.User) *model.User {
 		WorkExperience: make([]model.WorkExperienceItem, 0),
 		Skills:         make([]model.SkillItem, 0),
 		Interests:      make([]model.InterestItem, 0),
-		BlockedUsers:   []string{},
+		BlockedUsers:   make([]string, 0),
 	}
 }

@@ -42,6 +42,7 @@ func (uh *UserHandler) Register(ctx context.Context, r *ub.RegisterRequest) (*ub
 
 	newUser := mapUserFromUb(r.User)
 	err := uh.us.Register(newUser)
+
 	if err != nil {
 		response.Status = "Not created"
 	} else {

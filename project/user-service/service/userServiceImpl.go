@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"log"
 	"time"
 
 	"github.com/blupulov/xwsDislinkt/user-service/model"
@@ -129,9 +130,11 @@ func (us *UserServiceImpl) AddExpirience(expirience *model.WorkExperienceItem, u
 
 	findFilter := bson.M{"_id": userID}
 	updateFilter := bson.M{
-		"$push": bson.M{"WorkExpirienceItem": expirience},
+		"$push": bson.M{"workExpirienceItem": expirience},
 	}
 
+	log.Println(expirience)
 	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
 	return sr.Err()
+	//return nil
 }

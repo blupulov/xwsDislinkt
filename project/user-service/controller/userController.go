@@ -84,6 +84,7 @@ func (uc *UserController) AddExpirience(w http.ResponseWriter, r *http.Request, 
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
+	//var expirience model.WorkExperienceItem
 	expirience := model.WorkExperienceItem{}
 	json.NewDecoder(r.Body).Decode(&expirience)
 	err = uc.us.AddExpirience(&expirience, userId)
