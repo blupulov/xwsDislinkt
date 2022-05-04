@@ -42,3 +42,7 @@ func (us *UserService) AddExpirience(expirience *model.WorkExperienceItem, expir
 func (us *UserService) AddSkill(skill *model.SkillItem, userID primitive.ObjectID) error {
 	return us.ui.AddSkill(skill, userID)
 }
+
+func (us *UserService) AddEducation(education *model.EducationItem, userID primitive.ObjectID) error {
+	return us.ui.AddEducation(education, userID)
+}

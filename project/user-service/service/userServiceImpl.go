@@ -151,3 +151,14 @@ func (us *UserServiceImpl) AddSkill(skill *model.SkillItem, userID primitive.Obj
 	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
 	return sr.Err()
 }
+
+func (us *UserServiceImpl) AddEducation(education *model.EducationItem, userID primitive.ObjectID) error {
+
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$push": bson.M{"educationCollection": education},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}

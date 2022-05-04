@@ -111,3 +111,20 @@ func (uc *UserController) AddSkill(w http.ResponseWriter, r *http.Request, p htt
 	}
 	w.WriteHeader(http.StatusCreated)
 }
+
+func (uc *UserController) AddEducation(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	userId, err := primitive.ObjectIDFromHex(p.ByName("userId"))
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	education := model.EducationItem{}
+	json.NewDecoder(r.Body).Decode(&education)
+	err = uc.us.AddEducation(&education, userId)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+}
