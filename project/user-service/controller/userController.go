@@ -94,3 +94,20 @@ func (uc *UserController) AddExpirience(w http.ResponseWriter, r *http.Request, 
 	}
 	w.WriteHeader(http.StatusCreated)
 }
+
+func (uc *UserController) AddSkill(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	userId, err := primitive.ObjectIDFromHex(p.ByName("userId"))
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	skill := model.SkillItem{}
+	json.NewDecoder(r.Body).Decode(&skill)
+	err = uc.us.AddSkill(&skill, userId)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+}

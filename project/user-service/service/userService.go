@@ -38,3 +38,7 @@ func (us *UserService) Login(password, username string) (string, error) {
 func (us *UserService) AddExpirience(expirience *model.WorkExperienceItem, expirienceID primitive.ObjectID) error {
 	return us.ui.AddExpirience(expirience, expirienceID)
 }
+
+func (us *UserService) AddSkill(skill *model.SkillItem, userID primitive.ObjectID) error {
+	return us.ui.AddSkill(skill, userID)
+}

@@ -138,3 +138,16 @@ func (us *UserServiceImpl) AddExpirience(expirience *model.WorkExperienceItem, u
 	return sr.Err()
 	//return nil
 }
+
+func (us *UserServiceImpl) AddSkill(skill *model.SkillItem, userID primitive.ObjectID) error {
+
+	skill.Id = primitive.NewObjectID()
+
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$push": bson.M{"skills": skill},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}

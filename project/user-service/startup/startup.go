@@ -54,6 +54,7 @@ func (s *Server) Start() {
 	router.POST("/user", userController.Register)
 	router.POST("/user/login", userController.Login)
 	router.PUT("/user/:userId/workExpirienceItem", userController.AddExpirience)
+	router.PUT("/user/:userId/skillItem", userController.AddSkill)
 
 	wg := new(sync.WaitGroup)
 	wg.Add(2)
