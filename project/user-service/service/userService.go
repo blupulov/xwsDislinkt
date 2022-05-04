@@ -46,3 +46,7 @@ func (us *UserService) AddSkill(skill *model.SkillItem, userID primitive.ObjectI
 func (us *UserService) AddEducation(education *model.EducationItem, userID primitive.ObjectID) error {
 	return us.ui.AddEducation(education, userID)
 }
+
+func (us *UserService) AddInterest(interest *model.InterestItem, userID primitive.ObjectID) error {
+	return us.ui.AddInterest(interest, userID)
+}

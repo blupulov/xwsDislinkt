@@ -1,6 +1,9 @@
 package model
 
+import "go.mongodb.org/mongo-driver/bson/primitive"
+
 type InterestItem struct {
-	InterestName        string `bson:"interestName" json:"interestName"`
-	InterestDescription string `bson:"interestDescription" json:"interestDescription"`
+	Id                  primitive.ObjectID `bson:"_id" json:"_id"`
+	InterestName        string             `bson:"interestName" json:"interestName"`
+	InterestDescription string             `bson:"interestDescription" json:"interestDescription"`
 }

@@ -154,9 +154,24 @@ func (us *UserServiceImpl) AddSkill(skill *model.SkillItem, userID primitive.Obj
 
 func (us *UserServiceImpl) AddEducation(education *model.EducationItem, userID primitive.ObjectID) error {
 
+	education.Id = primitive.NewObjectID()
+
 	findFilter := bson.M{"_id": userID}
 	updateFilter := bson.M{
 		"$push": bson.M{"educationCollection": education},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}
+
+func (us *UserServiceImpl) AddInterest(interest *model.InterestItem, userID primitive.ObjectID) error {
+
+	interest.Id = primitive.NewObjectID()
+
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$push": bson.M{"interestsCollection": interest},
 	}
 
 	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
