@@ -51,6 +51,7 @@ func (s *Server) Start() {
 	})
 
 	router.GET("/user", userController.GetAll)
+	router.GET("/user/:userId", userController.GetById)
 	router.POST("/user", userController.Register)
 	router.POST("/user/login", userController.Login)
 	router.PUT("/user/:userId/workExpirienceItem", userController.AddExpirience)

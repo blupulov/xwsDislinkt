@@ -54,7 +54,22 @@ func (uc *UserController) Register(w http.ResponseWriter, r *http.Request, _ htt
 }
 
 func (uc *UserController) GetById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	userId, err := primitive.ObjectIDFromHex(p.ByName("userId"))
 
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var user *model.User
+
+	user, err = uc.us.GetById(userId)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+	fmt.Fprintf(w, "%s\n", user)
 }
 
 //Dodati i vracanje ID-ja

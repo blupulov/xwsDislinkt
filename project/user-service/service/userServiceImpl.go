@@ -33,7 +33,9 @@ func NewUserServiceImpl(client *mongo.Client) model.UserInterface {
 }
 
 func (ps *UserServiceImpl) GetById(id primitive.ObjectID) (*model.User, error) {
-	panic("Not implemented")
+	filter := bson.M{"_id": id}
+	return ps.filter(filter)
+
 }
 
 //proba sa lupulovom
@@ -187,4 +189,12 @@ func (us *UserServiceImpl) ChangeUser(userID primitive.ObjectID, dto *dto.Change
 	//ovo radis sam
 
 	return nil
+}
+
+func (ps *UserServiceImpl) filter(filter interface{}) (user *model.User, err error) {
+	cur := ps.usersCollection.FindOne(context.TODO(), filter)
+
+	err = cur.Decode(&user)
+
+	return
 }
