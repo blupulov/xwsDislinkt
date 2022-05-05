@@ -1,13 +1,10 @@
 package service
 
 import (
-	"fmt"
-
 	"github.com/blupulov/xwsDislinkt/following-service/model"
 	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
 )
 
-//https://www.youtube.com/watch?v=rJ0klPKqVnk
 type FollowServiceImpl struct {
 	driver neo4j.Driver
 }
@@ -17,6 +14,10 @@ func NewFollowServiceImpl(d neo4j.Driver) model.ServiceInterface {
 		driver: d,
 	}
 }
+
+//****************************************************************************************************
+//PUBLIC METHODS
+//****************************************************************************************************
 
 func (fs *FollowServiceImpl) Insert(userId string) error {
 	session := fs.driver.NewSession(neo4j.SessionConfig{
@@ -78,7 +79,6 @@ func (fs *FollowServiceImpl) UnFollow(sourceUserId, targetUserId string) error {
 	return err
 }
 
-//1 transaction ??
 func (fs *FollowServiceImpl) RequestAnswer(requestSenderId, requestReceiverId string, accept bool) error {
 	session := fs.driver.NewSession(neo4j.SessionConfig{
 		AccessMode: neo4j.AccessModeWrite,
@@ -86,7 +86,6 @@ func (fs *FollowServiceImpl) RequestAnswer(requestSenderId, requestReceiverId st
 	defer session.Close()
 
 	if accept {
-		fmt.Println(accept)
 		_, err := session.WriteTransaction(func(tx neo4j.Transaction) (interface{}, error) {
 			if _, err := deleteRequest(tx, requestSenderId, requestReceiverId); err != nil {
 				tx.Rollback()
@@ -106,6 +105,89 @@ func (fs *FollowServiceImpl) RequestAnswer(requestSenderId, requestReceiverId st
 		return err
 	}
 }
+
+func (fs *FollowServiceImpl) GetAllUserFollowers(userId string) ([]*model.User, error) {
+	session := fs.driver.NewSession(neo4j.SessionConfig{
+		AccessMode: neo4j.AccessModeRead,
+	})
+	defer session.Close()
+
+	result, err := session.ReadTransaction(func(tx neo4j.Transaction) (interface{}, error) {
+		return getAllUserFollowers(tx, userId)
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	users := result.([]*model.User)
+	return users, nil
+}
+
+func (fs *FollowServiceImpl) GetAllFollowingUsers(userId string) ([]*model.User, error) {
+	session := fs.driver.NewSession(neo4j.SessionConfig{
+		AccessMode: neo4j.AccessModeRead,
+	})
+	defer session.Close()
+
+	result, err := session.ReadTransaction(func(tx neo4j.Transaction) (interface{}, error) {
+		return getAllFollowingUsers(tx, userId)
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	users := result.([]*model.User)
+	return users, nil
+}
+
+func (fs *FollowServiceImpl) GetAllReceivedRequests(userId string) ([]*model.User, error) {
+	session := fs.driver.NewSession(neo4j.SessionConfig{
+		AccessMode: neo4j.AccessModeRead,
+	})
+	defer session.Close()
+
+	result, err := session.ReadTransaction(func(tx neo4j.Transaction) (interface{}, error) {
+		return getAllReceivedRequests(tx, userId)
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	users := result.([]*model.User)
+	return users, nil
+}
+
+func (fs *FollowServiceImpl) GetAllSentRequests(userId string) ([]*model.User, error) {
+	session := fs.driver.NewSession(neo4j.SessionConfig{
+		AccessMode: neo4j.AccessModeRead,
+	})
+	defer session.Close()
+
+	result, err := session.ReadTransaction(func(tx neo4j.Transaction) (interface{}, error) {
+		return getAllSentRequests(tx, userId)
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	users := result.([]*model.User)
+	return users, nil
+}
+
+func (fs *FollowServiceImpl) DeleteRequest(requestSenderId, requestReceiverId string) error {
+	session := fs.driver.NewSession(neo4j.SessionConfig{
+		AccessMode: neo4j.AccessModeWrite,
+	})
+	defer session.Close()
+	_, err := session.WriteTransaction(func(tx neo4j.Transaction) (interface{}, error) {
+		return deleteRequest(tx, requestSenderId, requestReceiverId)
+	})
+	return err
+}
+
+//****************************************************************************************************
+//PRIVATE QUERY FUNCTIONS
+//****************************************************************************************************
 
 func insertFollow(tx neo4j.Transaction, sUserId, tUserId string) (interface{}, error) {
 	query := "MATCH(n:User {userId: $sUserId}), (m:User {userId: $tUserId})" +
@@ -149,6 +231,134 @@ func deleteRequest(tx neo4j.Transaction, sUserId, tUserId string) (interface{}, 
 	return tx.Run(query, params)
 }
 
+func getAllUserFollowers(tx neo4j.Transaction, userId string) (interface{}, error) {
+	query := "MATCH (n:User) -[:FOLLOW]-> (m:User {userId: $userId}) return n.userId as userId"
+	params := map[string]interface{}{
+		"userId": userId,
+	}
+
+	result, err := tx.Run(query, params)
+	if err != nil {
+		return nil, err
+	}
+
+	var users []*model.User
+	for result.Next() {
+		uId := result.Record().GetByIndex(0).(string)
+		user := &model.User{UserId: uId}
+		users = append(users, user)
+	}
+	return users, nil
+}
+
+func getAllFollowingUsers(tx neo4j.Transaction, userId string) (interface{}, error) {
+	query := "MATCH (n:User {userId: $userId}) -[:FOLLOW]-> (m:User) return m.userId as userId"
+	params := map[string]interface{}{
+		"userId": userId,
+	}
+
+	result, err := tx.Run(query, params)
+	if err != nil {
+		return nil, err
+	}
+
+	var users []*model.User
+	for result.Next() {
+		uId := result.Record().GetByIndex(0).(string)
+		user := &model.User{UserId: uId}
+		users = append(users, user)
+	}
+	return users, nil
+}
+
+func getAllReceivedRequests(tx neo4j.Transaction, userId string) (interface{}, error) {
+	query := "MATCH (n:User) -[:REQUEST]-> (m:User {userId: $userId}) return n.userId as userId"
+	params := map[string]interface{}{
+		"userId": userId,
+	}
+
+	result, err := tx.Run(query, params)
+	if err != nil {
+		return nil, err
+	}
+
+	var users []*model.User
+	for result.Next() {
+		uId := result.Record().GetByIndex(0).(string)
+		user := &model.User{UserId: uId}
+		users = append(users, user)
+	}
+	return users, nil
+}
+
+func getAllSentRequests(tx neo4j.Transaction, userId string) (interface{}, error) {
+	query := "MATCH (n:User {userId: $userId}) -[:REQUEST]-> (m:User) return m.userId as userId"
+	params := map[string]interface{}{
+		"userId": userId,
+	}
+
+	result, err := tx.Run(query, params)
+	if err != nil {
+		return nil, err
+	}
+
+	var users []*model.User
+	for result.Next() {
+		uId := result.Record().GetByIndex(0).(string)
+		user := &model.User{UserId: uId}
+		users = append(users, user)
+	}
+	return users, nil
+}
+
+func insertUser(tx neo4j.Transaction, userId string) (interface{}, error) {
+	query := "CREATE (:User {userId: $userId})"
+	params := map[string]interface{}{
+		"userId": userId,
+	}
+	_, err := tx.Run(query, params)
+	return nil, err
+}
+
+func findUser(tx neo4j.Transaction, userId string) (interface{}, error) {
+	query := "MATCH (n:User {userId: $userId}) return n.userId as userId"
+	params := map[string]interface{}{
+		"userId": userId,
+	}
+	result, err := tx.Run(query, params)
+	user := &model.User{}
+	for result.Next() {
+		userId, _ := result.Record().Get("userId")
+		user.UserId = userId.(string)
+	}
+	return user, err
+}
+
+//****************************************************************************************************
+//PRIVATE METHODS
+//****************************************************************************************************
+
+func (fs *FollowServiceImpl) isUserExist(userId string) (bool, error) {
+	session := fs.driver.NewSession(neo4j.SessionConfig{
+		AccessMode: neo4j.AccessModeRead,
+	})
+	defer session.Close()
+
+	result, err := session.ReadTransaction(func(tx neo4j.Transaction) (interface{}, error) {
+		return findUser(tx, userId)
+	})
+	if err != nil {
+		return false, err
+	}
+
+	user := result.(*model.User)
+	if user.UserId == "" {
+		return false, nil
+	}
+
+	return true, nil
+}
+
 func (fs *FollowServiceImpl) prepareUsers(sourceUserId, targetUserId string) error {
 	existSource, err := fs.isUserExist(sourceUserId)
 	if err != nil {
@@ -173,70 +383,4 @@ func (fs *FollowServiceImpl) prepareUsers(sourceUserId, targetUserId string) err
 	}
 
 	return nil
-}
-
-func filterOne(result neo4j.Result) *model.User {
-	user := &model.User{}
-	for result.Next() {
-		user.UserId = result.Record().GetByIndex(0).(string)
-	}
-	return user
-}
-
-//probati
-func insertUser(tx neo4j.Transaction, userId string) (interface{}, error) {
-	query := "CREATE (:User {userId: $userId})"
-	params := map[string]interface{}{
-		"userId": userId,
-	}
-	_, err := tx.Run(query, params)
-	return nil, err
-}
-
-//mora da se isprocesuira rezultat u okviru transakcije
-func findUser(tx neo4j.Transaction, userId string) (interface{}, error) {
-	query := "MATCH (n:User {userId: $userId}) return n.userId as userId"
-	params := map[string]interface{}{
-		"userId": userId,
-	}
-	result, err := tx.Run(query, params)
-	user := &model.User{}
-	for result.Next() {
-		userId, _ := result.Record().Get("userId")
-		user.UserId = userId.(string)
-	}
-	return user, err
-}
-
-func (fs *FollowServiceImpl) isUserExist(userId string) (bool, error) {
-	session := fs.driver.NewSession(neo4j.SessionConfig{
-		AccessMode: neo4j.AccessModeRead,
-	})
-	defer session.Close()
-
-	result, err := session.ReadTransaction(func(tx neo4j.Transaction) (interface{}, error) {
-		return findUser(tx, userId)
-	})
-	if err != nil {
-		return false, err
-	}
-
-	user := result.(*model.User)
-	if user.UserId == "" {
-		return false, nil
-	}
-
-	return true, nil
-}
-
-func (fs *FollowServiceImpl) GetAllUserFollowers(userId string) ([]model.User, error) {
-	panic("Not implemented")
-}
-
-func (fs *FollowServiceImpl) GetAllFollowingUsers(userId string) ([]model.User, error) {
-	panic("Not implemented")
-}
-
-func (fs *FollowServiceImpl) GetAllRequestForFollowingOfUser(userId string) ([]model.User, error) {
-	panic("Not implemented")
 }

@@ -47,9 +47,15 @@ func (s *Server) Start() {
 	router.POST("/follow/:userId/follow/:targetUserId", followController.Follow)
 	router.POST("/follow/:userId/request/:targetUserId", followController.SendRequest)
 	//answer := {t, f}
-	router.PUT("/follow/:requestSenderId/request/:requestReceiverId/answer/:answer", followController.RequestAnswer)
+	router.PUT("/follow/:senderId/request/:receiverId/answer/:answer", followController.RequestAnswer)
 
 	router.DELETE("/follow/unFollow/:userId/:targetUserId", followController.UnFollow)
+	router.DELETE("/follow/request/:senderId/:receiverId", followController.DeleteRequest)
+
+	router.GET("/follow/:userId/followers", followController.GetAllUserFollowers)
+	router.GET("/follow/:userId/following", followController.GetAllFollowingUsers)
+	router.GET("/follow/:userId/received/request", followController.GetAllReceivedRequests)
+	router.GET("/follow/:userId/sent/request", followController.GetAllSentRequests)
 
 	wg := new(sync.WaitGroup)
 	wg.Add(1)

@@ -28,14 +28,26 @@ func (fs *FollowService) SendRequest(sourceUserId, targetUserId string) error {
 	return fs.fi.SendRequest(sourceUserId, targetUserId)
 }
 
-func (fs *FollowService) GetAllUserFollowers(userId string) ([]model.User, error) {
+func (fs *FollowService) GetAllUserFollowers(userId string) ([]*model.User, error) {
 	return fs.fi.GetAllUserFollowers(userId)
 }
 
-func (fs *FollowService) GetAllFollowingUsers(userId string) ([]model.User, error) {
+func (fs *FollowService) GetAllFollowingUsers(userId string) ([]*model.User, error) {
 	return fs.fi.GetAllFollowingUsers(userId)
 }
 
 func (fs *FollowService) RequestAnswer(requestSenderId, requestReceverId string, answer bool) error {
 	return fs.fi.RequestAnswer(requestSenderId, requestReceverId, answer)
+}
+
+func (fs *FollowService) GetAllReceivedRequests(userId string) ([]*model.User, error) {
+	return fs.fi.GetAllReceivedRequests(userId)
+}
+
+func (fs *FollowService) GetAllSentRequests(userId string) ([]*model.User, error) {
+	return fs.fi.GetAllSentRequests(userId)
+}
+
+func (fs *FollowService) DeleteRequest(requestSenderId, requestReceiverId string) error {
+	return fs.fi.DeleteRequest(requestSenderId, requestReceiverId)
 }
