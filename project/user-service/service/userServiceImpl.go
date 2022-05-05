@@ -6,6 +6,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/blupulov/xwsDislinkt/user-service/dto"
 	"github.com/blupulov/xwsDislinkt/user-service/model"
 	"github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson"
@@ -35,8 +36,12 @@ func (ps *UserServiceImpl) GetById(id primitive.ObjectID) (*model.User, error) {
 	panic("Not implemented")
 }
 
+//proba sa lupulovom
 func (ps *UserServiceImpl) DeleteById(id primitive.ObjectID) error {
-	panic("Not implemented")
+
+	filter := bson.M{"_id": id}
+
+	return ps.usersCollection.FindOneAndDelete(context.TODO(), filter).Err()
 }
 
 func (ps *UserServiceImpl) GetAll() ([]*model.User, error) {
@@ -176,4 +181,10 @@ func (us *UserServiceImpl) AddInterest(interest *model.InterestItem, userID prim
 
 	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
 	return sr.Err()
+}
+
+func (us *UserServiceImpl) ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error {
+	//ovo radis sam
+
+	return nil
 }

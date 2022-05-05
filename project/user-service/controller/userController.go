@@ -145,3 +145,19 @@ func (uc *UserController) AddInterest(w http.ResponseWriter, r *http.Request, p 
 	}
 	w.WriteHeader(http.StatusCreated)
 }
+
+func (uc *UserController) DeleteById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	userId, err := primitive.ObjectIDFromHex(p.ByName("userId"))
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = uc.us.DeleteById(userId)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+}
