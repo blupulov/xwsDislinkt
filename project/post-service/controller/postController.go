@@ -72,6 +72,19 @@ func (pc *PostController) GetById(w http.ResponseWriter, r *http.Request, p http
 	fmt.Fprintf(w, "%s\n", post)
 }
 
+func (pc *PostController) DeleteById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	postId, err := primitive.ObjectIDFromHex(p.ByName("postId"))
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	err = pc.ps.DeleteById(postId)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+}
+
 func (pc *PostController) Like(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	postId, err := primitive.ObjectIDFromHex(p.ByName("postId"))
 	if err != nil {

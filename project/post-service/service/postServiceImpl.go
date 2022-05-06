@@ -55,7 +55,9 @@ func (ps *PostServiceImpl) Insert(post *model.Post) error {
 }
 
 func (ps *PostServiceImpl) DeleteById(id primitive.ObjectID) error {
-	panic("Not implemented")
+	filter := bson.M{"_id": id}
+	sr := ps.postsCollection.FindOneAndDelete(context.TODO(), filter)
+	return sr.Err()
 }
 
 func (ps *PostServiceImpl) Like(userId string, postId primitive.ObjectID) error {
