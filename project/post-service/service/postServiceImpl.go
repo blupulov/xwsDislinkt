@@ -29,7 +29,8 @@ func NewPostServiceImpl(client *mongo.Client) model.PostInterface {
 }
 
 func (ps *PostServiceImpl) GetById(id primitive.ObjectID) (*model.Post, error) {
-	panic("Not implemented")
+	filter := bson.M{"_id": id}
+	return ps.filter(filter)
 }
 
 func (ps *PostServiceImpl) GetAll() ([]*model.Post, error) {
@@ -163,4 +164,12 @@ func (ps *PostServiceImpl) updateLikeIfNotHater(userId string, postId primitive.
 
 	_, err := ps.postsCollection.UpdateOne(context.TODO(), findFilter, updateFilter)
 	return err
+}
+
+func (ps *PostServiceImpl) filter(filter interface{}) (post *model.Post, err error) {
+	cur := ps.postsCollection.FindOne(context.TODO(), filter)
+
+	err = cur.Decode(&post)
+
+	return
 }
