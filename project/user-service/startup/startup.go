@@ -60,6 +60,7 @@ func (s *Server) Start() {
 	router.PUT("/user/:userId/interestItem", userController.AddInterest)
 	router.DELETE("/user/:userId", userController.DeleteById)
 
+	router.PUT("/user/:userId", userController.ChangeUser)
 	wg := new(sync.WaitGroup)
 	wg.Add(2)
 

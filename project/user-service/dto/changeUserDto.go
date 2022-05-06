@@ -1,7 +1,13 @@
 package dto
 
-type ChangeUserDto struct {
-	Username  string `json:"username"`
-	FirstName string `json: "firstname"` //sve ono sto moze da se promeni...
+import "time"
 
+type ChangeUserDto struct {
+	Username    string    `json:"username"`
+	FirstName   string    `json:"firstname"`
+	LastName    string    `json:"lastname"`
+	Email       string    `json:"email"`
+	PhoneNumber string    `json:"phoneNumber"`
+	Biography   string    `json:"biography"`
+	BirthDate   time.Time `json:"birthDate"`
 }

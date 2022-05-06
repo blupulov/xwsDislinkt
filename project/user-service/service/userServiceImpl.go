@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"errors"
-	"log"
 	"time"
 
 	"github.com/blupulov/xwsDislinkt/user-service/dto"
@@ -35,14 +34,10 @@ func NewUserServiceImpl(client *mongo.Client) model.UserInterface {
 func (ps *UserServiceImpl) GetById(id primitive.ObjectID) (*model.User, error) {
 	filter := bson.M{"_id": id}
 	return ps.filter(filter)
-
 }
 
-//proba sa lupulovom
 func (ps *UserServiceImpl) DeleteById(id primitive.ObjectID) error {
-
 	filter := bson.M{"_id": id}
-
 	return ps.usersCollection.FindOneAndDelete(context.TODO(), filter).Err()
 }
 
@@ -85,11 +80,76 @@ func (us *UserServiceImpl) Login(password, username string) (string, error) {
 
 	token, err := claims.SignedString([]byte(SecretKey))
 	if err != nil {
-		//internal server error
 		return "", err
 	}
 
 	return token, nil
+}
+
+func (us *UserServiceImpl) AddExpirience(expirience *model.WorkExperienceItem, userID primitive.ObjectID) error {
+	expirience.Id = primitive.NewObjectID()
+
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$push": bson.M{"workExpirienceItem": expirience},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}
+
+func (us *UserServiceImpl) AddSkill(skill *model.SkillItem, userID primitive.ObjectID) error {
+	skill.Id = primitive.NewObjectID()
+
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$push": bson.M{"skills": skill},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}
+
+func (us *UserServiceImpl) AddEducation(education *model.EducationItem, userID primitive.ObjectID) error {
+	education.Id = primitive.NewObjectID()
+
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$push": bson.M{"educationCollection": education},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}
+
+func (us *UserServiceImpl) AddInterest(interest *model.InterestItem, userID primitive.ObjectID) error {
+	interest.Id = primitive.NewObjectID()
+
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$push": bson.M{"interestsCollection": interest},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
+}
+
+func (us *UserServiceImpl) ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error {
+	findFilter := bson.M{"_id": userID}
+	updateFilter := bson.M{
+		"$set": bson.M{
+			"firstName":   dto.FirstName,
+			"lastName":    dto.LastName,
+			"username":    dto.Username,
+			"biography":   dto.Biography,
+			"Email":       dto.Email,
+			"phoneNumber": dto.PhoneNumber,
+			"birthDate":   dto.BirthDate,
+		},
+	}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+	return sr.Err()
 }
 
 func (us *UserServiceImpl) findUserByUsername(username string) (*model.User, error) {
@@ -129,66 +189,6 @@ func decode(cur *mongo.Cursor) (users []*model.User, err error) {
 	}
 	err = cur.Err()
 	return
-}
-
-func (us *UserServiceImpl) AddExpirience(expirience *model.WorkExperienceItem, userID primitive.ObjectID) error {
-
-	expirience.Id = primitive.NewObjectID()
-
-	findFilter := bson.M{"_id": userID}
-	updateFilter := bson.M{
-		"$push": bson.M{"workExpirienceItem": expirience},
-	}
-
-	log.Println(expirience)
-	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
-	return sr.Err()
-	//return nil
-}
-
-func (us *UserServiceImpl) AddSkill(skill *model.SkillItem, userID primitive.ObjectID) error {
-
-	skill.Id = primitive.NewObjectID()
-
-	findFilter := bson.M{"_id": userID}
-	updateFilter := bson.M{
-		"$push": bson.M{"skills": skill},
-	}
-
-	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
-	return sr.Err()
-}
-
-func (us *UserServiceImpl) AddEducation(education *model.EducationItem, userID primitive.ObjectID) error {
-
-	education.Id = primitive.NewObjectID()
-
-	findFilter := bson.M{"_id": userID}
-	updateFilter := bson.M{
-		"$push": bson.M{"educationCollection": education},
-	}
-
-	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
-	return sr.Err()
-}
-
-func (us *UserServiceImpl) AddInterest(interest *model.InterestItem, userID primitive.ObjectID) error {
-
-	interest.Id = primitive.NewObjectID()
-
-	findFilter := bson.M{"_id": userID}
-	updateFilter := bson.M{
-		"$push": bson.M{"interestsCollection": interest},
-	}
-
-	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
-	return sr.Err()
-}
-
-func (us *UserServiceImpl) ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error {
-	//ovo radis sam
-
-	return nil
 }
 
 func (ps *UserServiceImpl) filter(filter interface{}) (user *model.User, err error) {

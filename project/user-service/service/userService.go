@@ -1,6 +1,7 @@
 package service
 
 import (
+	"github.com/blupulov/xwsDislinkt/user-service/dto"
 	"github.com/blupulov/xwsDislinkt/user-service/model"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -49,4 +50,8 @@ func (us *UserService) AddEducation(education *model.EducationItem, userID primi
 
 func (us *UserService) AddInterest(interest *model.InterestItem, userID primitive.ObjectID) error {
 	return us.ui.AddInterest(interest, userID)
+}
+
+func (us *UserService) ChangeUser(userId primitive.ObjectID, dto *dto.ChangeUserDto) error {
+	return us.ui.ChangeUser(userId, dto)
 }

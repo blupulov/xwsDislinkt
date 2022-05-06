@@ -176,3 +176,26 @@ func (uc *UserController) DeleteById(w http.ResponseWriter, r *http.Request, p h
 	}
 	w.WriteHeader(http.StatusCreated)
 }
+
+func (uc *UserController) ChangeUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	userId, err := primitive.ObjectIDFromHex(p.ByName("userId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	dto := dto.ChangeUserDto{}
+	err = json.NewDecoder(r.Body).Decode(&dto)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = uc.us.ChangeUser(userId, &dto)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
