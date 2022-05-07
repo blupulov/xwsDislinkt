@@ -54,22 +54,25 @@ func (pc *PostController) Insert(w http.ResponseWriter, r *http.Request, _ httpr
 
 func (pc *PostController) GetById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	postId, err := primitive.ObjectIDFromHex(p.ByName("postId"))
-
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
-	var post *model.Post
-
-	post, err = pc.ps.GetById(postId)
+	post, err := pc.ps.GetById(postId)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	jsonPost, err := json.Marshal(post)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "%s\n", post)
+	fmt.Fprintf(w, "%s\n", jsonPost)
 }
 
 func (pc *PostController) DeleteById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
