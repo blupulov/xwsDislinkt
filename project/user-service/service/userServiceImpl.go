@@ -91,7 +91,7 @@ func (us *UserServiceImpl) AddExpirience(expirience *model.WorkExperienceItem, u
 
 	findFilter := bson.M{"_id": userID}
 	updateFilter := bson.M{
-		"$push": bson.M{"workExpirienceItem": expirience},
+		"$push": bson.M{"workExperienceCollection": expirience},
 	}
 
 	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
