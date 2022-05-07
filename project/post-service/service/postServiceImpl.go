@@ -39,7 +39,8 @@ func (ps *PostServiceImpl) GetAll() ([]*model.Post, error) {
 }
 
 func (ps *PostServiceImpl) GetAllByOwnerId(ownerId string) ([]*model.Post, error) {
-	panic("Not implemented")
+	filter := bson.M{"postOwnerId": ownerId}
+	return ps.filterAll(filter)
 }
 
 func (ps *PostServiceImpl) Insert(post *model.Post) error {

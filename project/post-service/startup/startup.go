@@ -56,6 +56,7 @@ func (s *Server) Start() {
 	router.GET("/post/:postId", postController.GetById)
 	router.DELETE("/post/:postId", postController.DeleteById)
 	router.PUT("/post/:postId/dislike/:userId", postController.Dislike)
+	router.GET("/post/:postId/:ownerId", postController.GetAllByOwnerId)
 
 	wg := new(sync.WaitGroup)
 	wg.Add(2)

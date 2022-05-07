@@ -143,3 +143,20 @@ func (pc *PostController) DeleteCommentById(w http.ResponseWriter, r *http.Reque
 
 	w.WriteHeader(http.StatusOK)
 }
+
+func (pc *PostController) GetAllByOwnerId(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	posts, err := pc.ps.GetAllByOwnerId(p.ByName("ownerId"))
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	jsonPosts, err := json.Marshal(posts)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "%s\n", jsonPosts)
+}
