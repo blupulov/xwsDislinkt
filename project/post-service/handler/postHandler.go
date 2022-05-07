@@ -69,3 +69,21 @@ func (ph *PostHandler) Like(ctx context.Context, r *pb.LikeRequest) (res *pb.Lik
 
 	return
 }
+
+// func (ph *PostHandler) Dislike(ctx context.Context, r *pb.DislikeRequest) (res *pb.DislikeResponse, err error) {
+// 	res = &pb.DislikeResponse{}
+// 	postId, err := primitive.ObjectIDFromHex(r.PostId)
+// 	if err != nil {
+// 		res.Status = "Bad post ID"
+// 		return
+// 	}
+
+// 	err = ph.ps.Dislike(r.userId, r.postId)
+// 	if err != nil {
+// 		res.Status = "Didnt dislike post"
+// 	} else {
+// 		res.Status = "Post disliked"
+// 	}
+
+// 	return
+// }

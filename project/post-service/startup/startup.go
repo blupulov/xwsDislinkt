@@ -55,6 +55,7 @@ func (s *Server) Start() {
 	router.DELETE("/post/:postId/comment/:commentId", postController.DeleteCommentById)
 	router.GET("/post/:postId", postController.GetById)
 	router.DELETE("/post/:postId", postController.DeleteById)
+	router.PUT("/post/:postId/dislike/:userId", postController.Dislike)
 
 	wg := new(sync.WaitGroup)
 	wg.Add(2)

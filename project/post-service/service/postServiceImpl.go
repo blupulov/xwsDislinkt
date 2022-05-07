@@ -69,7 +69,11 @@ func (ps *PostServiceImpl) Like(userId string, postId primitive.ObjectID) error 
 }
 
 func (ps *PostServiceImpl) Dislike(userId string, postId primitive.ObjectID) error {
-	panic("Not implemented")
+	if err := ps.updateDislikeIfFan(userId, postId); err == nil {
+		return nil
+	}
+	err := ps.updateDislikeIfNotFan(userId, postId)
+	return err
 }
 
 func (ps *PostServiceImpl) AddComment(comment *model.Comment, postId primitive.ObjectID) error {
@@ -174,4 +178,35 @@ func (ps *PostServiceImpl) filter(filter interface{}) (post *model.Post, err err
 	err = cur.Decode(&post)
 
 	return
+}
+
+func (ps *PostServiceImpl) updateDislikeIfFan(userId string, postId primitive.ObjectID) error {
+	var userIds []string
+	userIds = append(userIds, userId)
+
+	checkFilter := bson.M{
+		"_id":     postId,
+		"fansIds": bson.M{"$in": userIds},
+	}
+
+	updateFilter := bson.D{
+		{"$inc", bson.D{{"postDislikeNumber", 1}}},
+		{"$push", bson.D{{"hatersIds", userId}}},
+		{"$pull", bson.D{{"fansIds", userId}}},
+		{"$inc", bson.D{{"postLikeNumber", -1}}},
+	}
+
+	ur := ps.postsCollection.FindOneAndUpdate(context.TODO(), checkFilter, updateFilter)
+	return ur.Err()
+}
+
+func (ps *PostServiceImpl) updateDislikeIfNotFan(userId string, postId primitive.ObjectID) error {
+	findFilter := bson.M{"_id": postId}
+	updateFilter := bson.D{
+		{"$inc", bson.D{{"postDislikeNumber", 1}}},
+		{"$push", bson.D{{"hatersIds", userId}}},
+	}
+
+	_, err := ps.postsCollection.UpdateOne(context.TODO(), findFilter, updateFilter)
+	return err
 }

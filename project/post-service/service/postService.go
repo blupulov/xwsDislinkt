@@ -41,7 +41,7 @@ func (ps *PostService) Like(userId string, postId primitive.ObjectID) error {
 }
 
 func (ps *PostService) Dislike(userId string, postId primitive.ObjectID) error {
-	panic("Not implemented")
+	return ps.pi.Dislike(userId, postId)
 }
 
 func (ps *PostService) AddComment(comment *model.Comment, postId primitive.ObjectID) error {

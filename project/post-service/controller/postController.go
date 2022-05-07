@@ -101,6 +101,23 @@ func (pc *PostController) Like(w http.ResponseWriter, r *http.Request, p httprou
 	w.WriteHeader(http.StatusOK)
 }
 
+func (pc *PostController) Dislike(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	postId, err := primitive.ObjectIDFromHex(p.ByName("postId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	userId := p.ByName("userId")
+
+	err = pc.ps.Dislike(userId, postId)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
 func (pc *PostController) AddComment(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	postId, err := primitive.ObjectIDFromHex(p.ByName("postId"))
 	if err != nil {
