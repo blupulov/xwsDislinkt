@@ -83,7 +83,7 @@ func (s *Server) initMongoClient() *mongo.Client {
 
 //Grpc server
 func (s *Server) startGrpcServer(postHandler *handler.UserHandler) {
-	listener, err := net.Listen("tcp", ":9051")
+	listener, err := net.Listen("tcp", ":"+s.config.GrpcPort)
 	if err != nil {
 		log.Fatal(err)
 	}
