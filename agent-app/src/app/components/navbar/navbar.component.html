@@ -3,8 +3,9 @@
     <a class="navbar-brand">DISLINKT</a>
     <!--Pretraga javnih ako nije registrovan korisnik??-->
     <div class="d-flex">
-        <button mat-raised-button color="accent" routerLink="login">Login</button>
-        <button mat-raised-button color="accent" routerLink="register">Register</button>
+        <button *ngIf="userService.getUserRole() == null" mat-raised-button color="accent" routerLink="login">Login</button>
+        <button *ngIf="userService.getUserRole() == null" mat-raised-button color="accent" routerLink="register">Register</button>
+        <button *ngIf="userService.getUserRole() != null" mat-raised-button color="primary" (click)="logout()">Logout</button> 
     </div>
   </div>
 </nav>

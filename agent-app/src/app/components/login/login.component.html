@@ -3,19 +3,23 @@
     <mat-toolbar color="accent">
       LOGIN FORM
     </mat-toolbar>
-    <form (submit)="onSubmit()" fxLayoutAlign="stretch" fxLayout="column">
+    <form novalidate #form="ngForm" (submit)="onSubmit()" fxLayoutAlign="stretch" fxLayout="column">
+      
       <!--USERNAME-->
       <mat-form-field color="accent">
         <mat-label><strong>USERNAME</strong></mat-label>
-        <input name="username" matInput placeholder="Username">
+        <input name="username" matInput placeholder="Username" [(ngModel)] = username required>
       </mat-form-field>
+
       <!--PASSWORD-->
       <mat-form-field color="accent">
         <mat-label><strong>PASSWORD</strong></mat-label>
-        <input name="password" matInput placeholder="Password" type="password">
+        <input name="password" matInput placeholder="Password" type="password" [(ngModel)] = password required>
       </mat-form-field>
+
       <!--BUTTON-->
-      <button mat-raised-button color="accent" type="submit">LOGIN</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">LOGIN</button>
+      
     </form>
 
   </mat-card>

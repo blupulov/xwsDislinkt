@@ -23,6 +23,8 @@ import { UserFollowersComponent } from './components/profileComponents/user-foll
 import { FollowingUsersComponent } from './components/profileComponents/following-users/following-users.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CommentPostComponent } from './components/profileComponents/comment-post/comment-post.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { SelectedUserProfileComponent } from './components/selected-user-profile
     FollowingUsersComponent,
     MainPageComponent,
     SelectedUserProfileComponent,
+    CommentPostComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import { SelectedUserProfileComponent } from './components/selected-user-profile
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

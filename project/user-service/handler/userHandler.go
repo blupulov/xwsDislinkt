@@ -3,13 +3,13 @@ package handler
 import (
 	"context"
 
-	ub "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
+	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
 	//"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UserHandler struct {
-	ub.UnimplementedUserServiceServer
+	pb.UnimplementedUserServiceServer
 	us *service.UserService
 }
 
@@ -19,14 +19,14 @@ func NewUserHandler(userService *service.UserService) *UserHandler {
 	}
 }
 
-func (uh *UserHandler) GetAll(ctx context.Context, r *ub.GetAllRequest) (*ub.GetAllResponse, error) {
+func (uh *UserHandler) GetAll(ctx context.Context, r *pb.GetAllRequest) (*pb.GetAllResponse, error) {
 	users, err := uh.us.GetAll()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ub.GetAllResponse{
-		Users: []*ub.User{},
+	response := &pb.GetAllResponse{
+		Users: []*pb.User{},
 	}
 
 	for _, u := range users {
@@ -37,8 +37,8 @@ func (uh *UserHandler) GetAll(ctx context.Context, r *ub.GetAllRequest) (*ub.Get
 	return response, nil
 }
 
-func (uh *UserHandler) Register(ctx context.Context, r *ub.RegisterRequest) (*ub.RegisterResponse, error) {
-	var response ub.RegisterResponse
+func (uh *UserHandler) Register(ctx context.Context, r *pb.RegisterRequest) (*pb.RegisterResponse, error) {
+	var response pb.RegisterResponse
 
 	newUser := mapUserFromUb(r.User)
 	err := uh.us.Register(newUser)
@@ -50,4 +50,18 @@ func (uh *UserHandler) Register(ctx context.Context, r *ub.RegisterRequest) (*ub
 	}
 
 	return &response, err
+}
+
+func (uh *UserHandler) Login(ctx context.Context, r *pb.LoginRequest) (*pb.LoginResponse, error) {
+	token, err := uh.us.Login(r.Credentials.Password, r.Credentials.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	var response pb.LoginResponse
+	response.Role = token.Role
+	response.UserId = token.Id
+	response.Token = token.Token
+
+	return &response, nil
 }

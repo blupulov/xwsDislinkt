@@ -8,26 +8,46 @@ import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 
 service UserService{
-    rpc GetAll(GetAllRequest) returns(GetAllResponse) {
-        option (google.api.http) = {
-          get: "/user"
-        };
-      }
+  rpc GetAll(GetAllRequest) returns(GetAllResponse) {
+      option (google.api.http) = {
+        get: "/user"
+      };
+  }
+  rpc GetById(GetByIdRequest) returns(GetByIdResponse) {
+    option (google.api.http) = {
+      get: "/user/{id}"
+    };
+  }
+  rpc Register(RegisterRequest) returns(RegisterResponse) {
+    option (google.api.http) = {
+      post: "/user"
+      body: "user"
+    };
+  }
+  rpc Login(LoginRequest) returns(LoginResponse) {
+    option (google.api.http) = {
+      post: "/user/login"
+      body: "credentials"
+    };
+  }
 
-
-rpc GetById(GetByIdRequest) returns(GetByIdResponse) {
-  option (google.api.http) = {
-    get: "/user/{id}"
-  };
 }
 
-rpc Register(RegisterRequest) returns(RegisterResponse) {
-  option (google.api.http) = {
-    post: "/user"
-    body: "user"
-  };
+message Credentials {
+  string username = 1;
+  string password = 2;
 }
+
+message LoginRequest {
+  Credentials credentials = 1;
 }
+
+message LoginResponse {
+  string userId = 1;
+  string token = 2;
+  string role = 3;
+}
+
 message GetAllRequest {
 }
 
@@ -52,40 +72,39 @@ message RegisterResponse {
 }
 
 message User {
-    string id = 1;
-    string FirstName = 2;
-    string LastName = 3;
-    google.protobuf.Timestamp BirthDate = 4;
-    string Email = 5;
-    string Username = 6;
-    string Password = 7;
-    repeated EducationItem Education = 8;
-    repeated WorkExpirienceItem WorkExpirience = 9;
-    repeated SkillItem Skills = 10;
-    repeated Interests Interests = 11;
-    repeated string BlockedUsers = 12;
-  }
+  string id = 1;
+  string FirstName = 2;
+  string LastName = 3;
+  google.protobuf.Timestamp BirthDate = 4;
+  string Email = 5;
+  string Username = 6;
+  string Password = 7;
+  repeated EducationItem Education = 8;
+  repeated WorkExpirienceItem WorkExpirience = 9;
+  repeated SkillItem Skills = 10;
+  repeated Interests Interests = 11;
+  repeated string BlockedUsers = 12;
+}
 
-  message EducationItem {
-    string SchoolName = 1;
-    string SchoolType = 2;
-    int32 DurationInMonths = 3;
+message EducationItem {
+  string SchoolName = 1;
+  string SchoolType = 2;
+  int32 DurationInMonths = 3;
+}
 
-  }
+message WorkExpirienceItem{
+  string CompanyName = 1;
+  int32 WorkDurationInMonths = 2;
+  string EmploymentField = 3;
+}
 
-  message WorkExpirienceItem{
-    string CompanyName = 1;
-    int32 WorkDurationInMonths = 2;
-    string EmploymentField = 3;
-  }
+message SkillItem{
+  string SkillName = 1;
+  string SkillDescription = 2;
+}
 
-  message SkillItem{
-    string SkillName = 1;
-    string SkillDescription = 2;
-  }
-
-  message Interests{
-    string InterestName = 1;
-    string InterestDescription = 2;
-  }
+message Interests{
+  string InterestName = 1;
+  string InterestDescription = 2;
+}
   

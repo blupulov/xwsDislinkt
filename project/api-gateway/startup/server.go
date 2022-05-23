@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/rs/cors"
+
 	"github.com/blupulov/xwsDislinkt/api-gateway/startup/config"
 	psGw "github.com/blupulov/xwsDislinkt/common/proto/services/post-service"
 	usGw "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
@@ -59,7 +61,15 @@ func (s *Server) initCustomHandlers() {
 
 func (s *Server) Start() {
 	s.log.Println("api-gateway runing on port: " + s.config.Port)
-	err := http.ListenAndServe(":"+s.config.Port, s.mux)
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:4200"},
+		AllowCredentials: true,
+		AllowedMethods:   []string{"POST", "PUT", "DELETE", "GET"},
+	})
+
+	handler := c.Handler(s.mux)
+	err := http.ListenAndServe(":"+s.config.Port, handler)
 	if err != nil {
 		panic(err)
 	}

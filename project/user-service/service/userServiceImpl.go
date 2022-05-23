@@ -65,13 +65,16 @@ func (ps *UserServiceImpl) Register(user *model.User) error {
 	return nil
 }
 
-func (us *UserServiceImpl) Login(password, username string) (string, error) {
+func (us *UserServiceImpl) Login(password, username string) (*dto.TokenDto, error) {
 	user, err := us.findUserByUsername(username)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		return nil, err
+	}
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
 		Issuer:    user.Id.String(),
@@ -80,10 +83,16 @@ func (us *UserServiceImpl) Login(password, username string) (string, error) {
 
 	token, err := claims.SignedString([]byte(SecretKey))
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return token, nil
+	dto := dto.TokenDto{
+		Role:  "implement me",
+		Token: token,
+		Id:    user.Id.Hex(),
+	}
+
+	return &dto, nil
 }
 
 func (us *UserServiceImpl) AddExpirience(expirience *model.WorkExperienceItem, userID primitive.ObjectID) error {

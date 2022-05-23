@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/blupulov/xwsDislinkt/user-service/dto"
 	"github.com/blupulov/xwsDislinkt/user-service/model"
@@ -69,7 +68,7 @@ func (uc *UserController) GetById(w http.ResponseWriter, r *http.Request, p http
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, "%s\n", user)
+	fmt.Fprintf(w, "%v\n", user)
 }
 
 //Dodati i vracanje ID-ja
@@ -88,8 +87,13 @@ func (uc *UserController) Login(w http.ResponseWriter, r *http.Request, _ httpro
 		return
 	}
 
-	cookie := http.Cookie{Name: "jwt", Value: token, Expires: time.Now().Add(time.Hour * 24)}
-	http.SetCookie(w, &cookie)
+	jsonToken, err := json.Marshal(token)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	fmt.Fprintf(w, "%v\n", jsonToken)
 	w.WriteHeader(http.StatusAccepted)
 }
 

@@ -10,7 +10,7 @@ type UserInterface interface {
 	GetAll() ([]*User, error)
 	Register(user *User) error
 	DeleteById(id primitive.ObjectID) error // treba uraditi
-	Login(password, username string) (string, error)
+	Login(password, username string) (*dto.TokenDto, error)
 	AddExpirience(expirience *WorkExperienceItem, expirienceID primitive.ObjectID) error
 	AddSkill(skill *SkillItem, userID primitive.ObjectID) error
 	AddEducation(education *EducationItem, userID primitive.ObjectID) error

@@ -32,7 +32,7 @@ func (us *UserService) DeleteById(id primitive.ObjectID) error {
 	return us.ui.DeleteById(id)
 }
 
-func (us *UserService) Login(password, username string) (string, error) {
+func (us *UserService) Login(password, username string) (*dto.TokenDto, error) {
 	return us.ui.Login(password, username)
 }
 
