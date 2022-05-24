@@ -1,1 +1,26 @@
-<p>profile works!</p>
+<div class="container">
+  <!--PROFILE INFO-->
+  <mat-grid-list cols="3" rowHeight="2:1">
+    <mat-grid-tile [colspan]="1" [rowspan]="2" [style.background]="'lightgreen'">PROFILE IMAGE</mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2" [style.background]="'lightblue'">USER INFO</mat-grid-tile>
+  </mat-grid-list>
+
+  <!--BUTTONS-->
+  <div fxLayoutAlign="center center" fxFlexFill class="button-main-div">
+    <div fxFlex="40" fxLayoutAlign="stretch" fxLayout="column">
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="myFollowers" > MY FOLLOWERS </button>
+      <mat-divider></mat-divider>
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="following" > FOLLOWING </button>
+      <mat-divider></mat-divider>
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="myPosts" > MY POSTS </button>
+      <mat-divider></mat-divider>
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="createPost" > ADD POST </button>
+      <mat-divider></mat-divider>
+      <!--U CHANGE INFO TREBA DODATI FORME ZA DODAVANJE INTERESOVANJA ZANIMANJA I SLICNE STVARI-->
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="changeInfo" > CHANGE INFO </button>
+    </div>
+  </div>
+
+</div>
+
+

@@ -1,0 +1,24 @@
+mat-grid-tile {
+  margin-top: 1vh; 
+  margin-bottom: 1vh; 
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+}
+
+.button-main-div {
+  margin-top: 3vh;
+  height: auto;
+  background: whitesmoke;
+}
+
+.profile-action-button {
+  height: 7vh;
+  margin: 0.5vh;
+  border-radius: 5vh;
+  transition-duration: 0.4s;
+}
+
+.profile-action-button:hover{
+  color: black;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
