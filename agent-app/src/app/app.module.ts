@@ -28,6 +28,7 @@ import { CommentPostComponent } from './components/profileComponents/comment-pos
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTableModule} from '@angular/material/table';
+import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {MatTableModule} from '@angular/material/table';
     MainPageComponent,
     SelectedUserProfileComponent,
     CommentPostComponent,
+    AddSkillComponent,
   ],
   imports: [
     BrowserModule,

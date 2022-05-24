@@ -23,7 +23,11 @@ export class UserService {
 
   registration(newUser: Registration){
     newUser.birthdate = "1999-11-11T00:00:00.000+00:00"
-    return this.http.post<any>(this.apiUrl, JSON.stringify(newUser));
+    return this.http.post<any>(this.apiUrl + '/register', JSON.stringify(newUser));
+  }
+
+  addSkill(newSkill: any) {
+    return this.http.put(this.apiUrl + '/addSkill/' + this.getUserId(), JSON.stringify(newSkill))
   }
 
   logout(): void {

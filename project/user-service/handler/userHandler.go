@@ -40,7 +40,7 @@ func (uh *UserHandler) GetAll(ctx context.Context, r *pb.GetAllRequest) (*pb.Get
 func (uh *UserHandler) Register(ctx context.Context, r *pb.RegisterRequest) (*pb.RegisterResponse, error) {
 	var response pb.RegisterResponse
 
-	newUser := mapUserFromUb(r.User)
+	newUser := mapUserForRegistration(r.NewUser)
 	err := uh.us.Register(newUser)
 
 	if err != nil {

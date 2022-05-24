@@ -1,12 +1,12 @@
-export class Registration {//sve
+export class Registration {
     firstName: String = '';
     lastName: String = '';
-    Email: String = '';
+    email: String = '';
     birthdate: String = '';
     biography: String = '';
     username: String = '';
     password: String = '';
-
     confirmPassword: String = '';
-  //dodati ostalo
+    phoneNumber: String = '';
+    image: String = '';
 }

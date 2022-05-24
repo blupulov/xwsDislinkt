@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
 import { ChangeInfoComponent } from './components/profileComponents/change-info/change-info.component';
 import { FollowingUsersComponent } from './components/profileComponents/following-users/following-users.component';
 import { ProfileComponent } from './components/profileComponents/profile/profile.component';
@@ -29,6 +30,8 @@ const routes: Routes = [
   // putanja do nje je http://localhost:4200/createPost
 
   // sto se tice registracije ona postoji na pritisak dugmeta za registraciju
+
+  {path: 'addSkill', component: AddSkillComponent},
 ];
 
 @NgModule({

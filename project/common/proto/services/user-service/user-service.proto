@@ -20,8 +20,8 @@ service UserService{
   }
   rpc Register(RegisterRequest) returns(RegisterResponse) {
     option (google.api.http) = {
-      post: "/user"
-      body: "user"
+      post: "/user/register"
+      body: "newUser"
     };
   }
   rpc Login(LoginRequest) returns(LoginResponse) {
@@ -64,7 +64,20 @@ message GetByIdResponse {
 }
 
 message RegisterRequest {
-  User user = 1;
+  UserRegistrationModel newUser = 1;
+}
+
+message UserRegistrationModel {
+  string username = 1;
+  string password = 2;
+  string confirmPassword = 3;
+  string firstName = 4;
+  string lastName = 5;
+  string biography = 6;
+  google.protobuf.Timestamp birthdate = 7;
+  string image = 8;
+  string phoneNumber = 9;
+  string email = 10;
 }
 
 message RegisterResponse {

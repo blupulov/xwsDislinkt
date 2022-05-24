@@ -1,15 +1,13 @@
 package handler
 
 import (
-	"log"
-
-	ub "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
+	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/model"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func mapUbFromUser(user *model.User) *ub.User {
-	ubUser := &ub.User{
+func mapUbFromUser(user *model.User) *pb.User {
+	ubUser := &pb.User{
 		Id:             user.Id.Hex(),
 		FirstName:      user.FirstName,
 		LastName:       user.LastName,
@@ -17,26 +15,24 @@ func mapUbFromUser(user *model.User) *ub.User {
 		Email:          user.Email,
 		Username:       user.Username,
 		Password:       user.Password,
-		Education:      []*ub.EducationItem{}, //za potrebe testiranja,sve dole
-		WorkExpirience: []*ub.WorkExpirienceItem{},
-		Skills:         []*ub.SkillItem{},
-		Interests:      []*ub.Interests{},
+		Education:      []*pb.EducationItem{}, //za potrebe testiranja,sve dole
+		WorkExpirience: []*pb.WorkExpirienceItem{},
+		Skills:         []*pb.SkillItem{},
+		Interests:      []*pb.Interests{},
 		BlockedUsers:   []string{},
 	}
 
 	return ubUser
 }
 
-func mapUserFromUb(ubUser *ub.User) *model.User {
-	log.Println("fromMapper")
-	log.Println(ubUser.FirstName)
+func mapUserForRegistration(newUser *pb.UserRegistrationModel) *model.User {
 	return &model.User{
-		FirstName:      ubUser.FirstName,
-		LastName:       ubUser.LastName,
-		BirthDate:      ubUser.GetBirthDate().AsTime(),
-		Email:          ubUser.Email,
-		Username:       ubUser.Username,
-		Password:       ubUser.Password,
+		FirstName: newUser.FirstName,
+		LastName:  newUser.LastName,
+		//BirthDate:      newUser.GetBirthdate().AsTime(),
+		Email:          newUser.Email,
+		Username:       newUser.Username,
+		Password:       newUser.Password,
 		Education:      make([]model.EducationItem, 0), //za potrebe testiranja
 		WorkExperience: make([]model.WorkExperienceItem, 0),
 		Skills:         make([]model.SkillItem, 0),
