@@ -5,6 +5,7 @@ import (
 
 	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	//"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -30,7 +31,7 @@ func (uh *UserHandler) GetAll(ctx context.Context, r *pb.GetAllRequest) (*pb.Get
 	}
 
 	for _, u := range users {
-		user := mapUbFromUser(u)
+		user := mapPbUserFromModel(u)
 		response.Users = append(response.Users, user)
 	}
 
@@ -62,6 +63,24 @@ func (uh *UserHandler) Login(ctx context.Context, r *pb.LoginRequest) (*pb.Login
 	response.Role = token.Role
 	response.UserId = token.Id
 	response.Token = token.Token
+
+	return &response, nil
+}
+
+func (uh *UserHandler) GetById(ctx context.Context, r *pb.GetByIdRequest) (*pb.GetByIdResponse, error) {
+	var response pb.GetByIdResponse
+
+	userId, err := primitive.ObjectIDFromHex(r.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	user, err := uh.us.GetById(userId)
+	if err != nil {
+		return nil, err
+	}
+
+	response.User = mapPbUserFromModel(user)
 
 	return &response, nil
 }

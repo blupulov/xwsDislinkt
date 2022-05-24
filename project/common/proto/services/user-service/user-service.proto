@@ -86,17 +86,18 @@ message RegisterResponse {
 
 message User {
   string id = 1;
-  string FirstName = 2;
-  string LastName = 3;
-  google.protobuf.Timestamp BirthDate = 4;
-  string Email = 5;
-  string Username = 6;
-  string Password = 7;
-  repeated EducationItem Education = 8;
-  repeated WorkExpirienceItem WorkExpirience = 9;
-  repeated SkillItem Skills = 10;
-  repeated Interests Interests = 11;
-  repeated string BlockedUsers = 12;
+  string firstName = 2;
+  string lastName = 3;
+  google.protobuf.Timestamp birthDate = 4;
+  string email = 5;
+  string username = 6;
+  string biography = 7;
+  repeated EducationItem education = 8;
+  repeated WorkExpirienceItem workExpirience = 9;
+  repeated SkillItem skills = 10;
+  repeated Interests interests = 11;
+  repeated string blockedUsers = 12;
+  string role = 13;
 }
 
 message EducationItem {

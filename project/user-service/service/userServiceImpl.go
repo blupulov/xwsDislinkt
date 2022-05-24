@@ -57,6 +57,8 @@ func (ps *UserServiceImpl) Register(user *model.User) error {
 		return errors.New("User already exists")
 	}
 
+	user.Role = model.ROLE_USER
+
 	_, err = ps.usersCollection.InsertOne(context.TODO(), user)
 	if err != nil {
 		return err
@@ -87,7 +89,7 @@ func (us *UserServiceImpl) Login(password, username string) (*dto.TokenDto, erro
 	}
 
 	dto := dto.TokenDto{
-		Role:  "implement me",
+		Role:  user.Role.String(),
 		Token: token,
 		Id:    user.Id.Hex(),
 	}
