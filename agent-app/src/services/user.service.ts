@@ -2,6 +2,9 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Login } from "src/models/login.model";
 import { Router } from "@angular/router";
+import { Registration } from "src/models/registration.model";
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +19,11 @@ export class UserService {
   login(username: String, password: String) {
     let params = {username: username, password: password}
     return this.http.post<Login>(this.apiUrl + '/login', JSON.stringify(params));
+  }
+
+  registration(newUser: Registration){
+    newUser.birthdate = "1999-11-11T00:00:00.000+00:00"
+    return this.http.post<any>(this.apiUrl, JSON.stringify(newUser));
   }
 
   logout(): void {

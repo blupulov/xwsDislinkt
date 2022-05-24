@@ -1,1 +1,55 @@
-<p>registration works!</p>
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="30">
+    <mat-toolbar color="accent">
+      REGISTRATION FORM
+    </mat-toolbar>
+    <form  #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
+
+      <!--FIRSTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>FIRSTNAME</strong></mat-label>
+        <input name="firstname" matInput placeholder="Firstname" [(ngModel)] = newUser.firstName >
+      </mat-form-field>
+
+      <!--LASTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>LASTNAME</strong></mat-label>
+        <input name="lastname" matInput placeholder="Lastname"  [(ngModel)] = newUser.lastName >
+      </mat-form-field>
+
+      <!--BIRTHDATE-->
+      <mat-form-field color="accent">
+          <mat-label><strong>BIRTHDATE</strong></mat-label>
+          <input name="birthdate" matInput placeholder="Birthdate"  [(ngModel)] = newUser.birthdate >
+      </mat-form-field>
+
+      <!--EMAIL-->
+      <mat-form-field color="accent">
+        <mat-label><strong>EMAIL</strong></mat-label>
+        <input name="email" matInput placeholder="Email"  [(ngModel)] = newUser.Email >
+      </mat-form-field>
+
+      <!--USERNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>USERNAME</strong></mat-label>
+        <input name="username" matInput placeholder="Username"  [(ngModel)] = newUser.username >
+      </mat-form-field>
+
+      <!--PASSWORD-->
+      <mat-form-field color="accent">
+        <mat-label><strong>PASSWORD</strong></mat-label>
+        <input name="password" matInput placeholder="Password" type="password" [(ngModel)] = newUser.password >
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong> CONFIRM PASSWORD</strong></mat-label>
+        <input name="confirmPassword" matInput placeholder="Confirm password" type="password" [(ngModel)] = newUser.confirmPassword >
+      </mat-form-field>
+
+      <!--BUTTON-->
+      <button mat-raised-button color="accent" type="submit" >REGISTER</button>
+
+    </form>
+
+  </mat-card>
+</div>
