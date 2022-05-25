@@ -6,15 +6,17 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func mapUbFromUser(user *model.User) *pb.User {
-	ubUser := &pb.User{
-		Id:             user.Id.Hex(),
-		FirstName:      user.FirstName,
-		LastName:       user.LastName,
-		BirthDate:      timestamppb.New(user.BirthDate),
-		Email:          user.Email,
-		Username:       user.Username,
-		Password:       user.Password,
+func mapPbUserFromModel(user *model.User) *pb.User {
+	pbUser := &pb.User{
+		Id:        user.Id.Hex(),
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		BirthDate: timestamppb.New(user.BirthDate),
+		Email:     user.Email,
+		Username:  user.Username,
+		Biography: user.Biography,
+		Role:      user.Role.String(),
+		// DODATI DOBAVLJENJE NIZOVA IZPOD
 		Education:      []*pb.EducationItem{}, //za potrebe testiranja,sve dole
 		WorkExpirience: []*pb.WorkExpirienceItem{},
 		Skills:         []*pb.SkillItem{},
@@ -22,7 +24,7 @@ func mapUbFromUser(user *model.User) *pb.User {
 		BlockedUsers:   []string{},
 	}
 
-	return ubUser
+	return pbUser
 }
 
 func mapUserForRegistration(newUser *pb.UserRegistrationModel) *model.User {
