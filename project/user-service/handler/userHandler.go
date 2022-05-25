@@ -71,10 +71,10 @@ func (uh *UserHandler) GetById(ctx context.Context, r *pb.GetByIdRequest) (*pb.G
 	var response pb.GetByIdResponse
 
 	userId, err := primitive.ObjectIDFromHex(r.Id)
-
 	if err != nil {
 		return nil, err
 	}
+
 	user, err := uh.us.GetById(userId)
 	if err != nil {
 		return nil, err
@@ -92,6 +92,7 @@ func (uh *UserHandler) AddSkill(ctx context.Context, r *pb.AddSkillRequest) (*pb
 	if err != nil {
 		return nil, err
 	}
+
 	newSkill := mapUserForAddingSkill(r.NewSkill)
 	err = uh.us.AddSkill(newSkill, userId)
 
