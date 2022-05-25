@@ -1,0 +1,32 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="30">
+    <mat-toolbar color="accent">
+      Education Form
+    </mat-toolbar>
+    <form  #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
+
+      <!--FIRSTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>School Name</strong></mat-label>
+        <input name="schoolName" matInput placeholder="school Name" [(ngModel)] = newEducation.SchoolName >
+      </mat-form-field>
+
+      <!--LASTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>School Type</strong></mat-label>
+        <input name="SchoolType" matInput placeholder="School type"  [(ngModel)] = newEducation.SchoolType >
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong> Duration in months</strong></mat-label>
+        <input name="SchoolType" matInput placeholder="Duration in months"  [(ngModel)] = newEducation.DurationInMonths >
+      </mat-form-field>
+
+
+      <!--BUTTON-->
+      <button mat-raised-button color="accent" type="submit" >REGISTER</button>
+
+    </form>
+
+  </mat-card>
+</div>

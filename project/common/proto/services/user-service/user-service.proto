@@ -42,6 +42,12 @@ service UserService{
       body: "newExpirience"
     };
   }
+  rpc AddEducation(AddEducationRequest) returns(AddEducationResponse){
+    option (google.api.http) = {
+      put: "/user/AddEducation/{userId}"
+      body: "newEducation"
+    };
+  }
   
 }
 message AddExpirienceRequest{
@@ -59,6 +65,21 @@ message AddExpirienceResponse{
   string status = 1;
 }
 
+message AddEducationRequest{
+  string userId = 1;
+  AddEducationModel newEducation =2;
+}
+
+message AddEducationModel{
+  string SchoolName = 1;
+  string SchoolType =2;
+  int32 DurationInMonths = 3;
+
+}
+
+message AddEducationResponse{
+  string status = 1;
+}
 message Credentials {
   string username = 1;
   string password = 2;

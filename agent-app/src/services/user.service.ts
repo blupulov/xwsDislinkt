@@ -6,6 +6,7 @@ import { Registration } from "src/models/registration.model";
 import { AddSkill } from "src/models/skill.model";
 import { User, UserResponse } from "src/models/user.model";
 import { AddExpirience } from "src/models/expirience.model";
+import { AddEducation } from "src/models/education.model";
 
 
 
@@ -37,6 +38,9 @@ export class UserService {
     return this.http.put(this.apiUrl + '/AddExpirience/' + this.getUserId(), JSON.stringify(newExpirience))
   }
 
+  AddEducation(newEducation: AddEducation) {
+    return this.http.put(this.apiUrl + '/AddEducation/' + this.getUserId(), JSON.stringify(newEducation))
+  }
   getUserById(userId: String | null) {
     return this.http.get<UserResponse>(this.apiUrl + '/' + userId);
   }

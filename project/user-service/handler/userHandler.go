@@ -124,3 +124,23 @@ func (uh *UserHandler) AddExpirience(ctx context.Context, r *pb.AddExpirienceReq
 
 	return &response, err
 }
+
+func (uh *UserHandler) AddEducation(ctx context.Context, r *pb.AddEducationRequest) (*pb.AddEducationResponse, error) {
+	var response pb.AddEducationResponse
+
+	userId, err := primitive.ObjectIDFromHex(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	newEducation := mapUserForAddingEducation(r.NewEducation)
+	err = uh.us.AddEducation(newEducation, userId)
+
+	if err != nil {
+		response.Status = "Not created"
+	} else {
+		response.Status = "Created"
+	}
+
+	return &response, err
+}

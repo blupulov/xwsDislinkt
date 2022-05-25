@@ -31,6 +31,7 @@ import {MatTableModule} from '@angular/material/table';
 import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
 import { FindUserComponent } from './components/find-user/find-user.component';
 import { AddExpirienceComponent } from './components/profileComponents/add-expirience/add-expirience.component';
+import { AddEducationComponent } from './components/profileComponents/add-education/add-education.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { AddExpirienceComponent } from './components/profileComponents/add-expir
     AddSkillComponent,
     FindUserComponent,
     AddExpirienceComponent,
+    AddEducationComponent,
   ],
   imports: [
     BrowserModule,

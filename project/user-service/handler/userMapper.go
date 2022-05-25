@@ -57,3 +57,11 @@ func mapUserForAddingExpirience(newExpirience *pb.AddExpirienceModel) *model.Wor
 		EmploymentField:      newExpirience.EmploymentField,
 	}
 }
+
+func mapUserForAddingEducation(newEducation *pb.AddEducationModel) *model.EducationItem {
+	return &model.EducationItem{
+		SchoolName:       newEducation.SchoolName,
+		SchoolType:       newEducation.SchoolType,
+		DurationInMonths: int(newEducation.DurationInMonths),
+	}
+}

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { AddEducationComponent } from './components/profileComponents/add-education/add-education.component';
 import { AddExpirienceComponent } from './components/profileComponents/add-expirience/add-expirience.component';
 import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
 import { ChangeInfoComponent } from './components/profileComponents/change-info/change-info.component';
@@ -35,6 +36,7 @@ const routes: Routes = [
 
   {path: 'user/addSkill', component: AddSkillComponent},
   {path: 'user/addExpirience', component: AddExpirienceComponent},
+  {path: 'user/addEducation', component: AddEducationComponent},
 ];
 
 @NgModule({
