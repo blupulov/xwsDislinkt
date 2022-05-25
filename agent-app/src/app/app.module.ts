@@ -29,6 +29,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTableModule} from '@angular/material/table';
 import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
+import { FindUserComponent } from './components/find-user/find-user.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AddSkillComponent } from './components/profileComponents/add-skill/add-
     SelectedUserProfileComponent,
     CommentPostComponent,
     AddSkillComponent,
+    FindUserComponent,
   ],
   imports: [
     BrowserModule,
