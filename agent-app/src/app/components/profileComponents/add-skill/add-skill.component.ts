@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddSkill } from 'src/models/skill.model';
 import { UserService } from 'src/services/user.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @Component({
   selector: 'app-add-skill',

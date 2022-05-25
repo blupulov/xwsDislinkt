@@ -1,0 +1,31 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="30">
+    <mat-toolbar color="accent">
+      Skill form
+    </mat-toolbar>
+    <form  #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
+
+      <!--FIRSTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>Company Name</strong></mat-label>
+        <input name="CompanyName" matInput placeholder="Company name" [(ngModel)] = newExpirience.CompanyName >
+      </mat-form-field>
+
+      <!--LASTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>Work duration in months</strong></mat-label>
+        <input name="WorkDurationInMonths" matInput placeholder="WorkDurationInMonths"  [(ngModel)] = newExpirience.WorkDurationInMonths>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong>Employment field</strong></mat-label>
+        <input name="EmploymentField" matInput placeholder="Employment Field"  [(ngModel)] = newExpirience.EmploymentField >
+      </mat-form-field>
+
+      <!--BUTTON-->
+      <button mat-raised-button color="accent" type="submit" >Add expirience</button>
+
+    </form>
+
+  </mat-card>
+</div>

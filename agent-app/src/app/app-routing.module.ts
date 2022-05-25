@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { AddExpirienceComponent } from './components/profileComponents/add-expirience/add-expirience.component';
 import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
 import { ChangeInfoComponent } from './components/profileComponents/change-info/change-info.component';
 import { FollowingUsersComponent } from './components/profileComponents/following-users/following-users.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'profile/following', component: FollowingUsersComponent},
   {path: 'profile/myPosts', component: UserPostsComponent},
 
+
   // ovde se dodaje komponenta i moguce ju je direktno pogoditi kroz url
   // primer recimo da postoji komponenta koja jos uvek nije povezana vec je treba samo testirati:
   //
@@ -32,6 +34,7 @@ const routes: Routes = [
   // sto se tice registracije ona postoji na pritisak dugmeta za registraciju
 
   {path: 'user/addSkill', component: AddSkillComponent},
+  {path: 'user/addExpirience', component: AddExpirienceComponent},
 ];
 
 @NgModule({

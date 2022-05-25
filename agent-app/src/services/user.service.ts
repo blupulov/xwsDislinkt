@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { Registration } from "src/models/registration.model";
 import { AddSkill } from "src/models/skill.model";
 import { User, UserResponse } from "src/models/user.model";
+import { AddExpirience } from "src/models/expirience.model";
 
 
 
@@ -30,6 +31,10 @@ export class UserService {
 
   addSkill(newSkill: AddSkill) {
     return this.http.put(this.apiUrl + '/addSkill/' + this.getUserId(), JSON.stringify(newSkill))
+  }
+
+  addExpirience(newExpirience: AddExpirience) {
+    return this.http.put(this.apiUrl + '/addExpirience/' + this.getUserId(), JSON.stringify(newExpirience))
   }
 
   getUserById(userId: String | null) {

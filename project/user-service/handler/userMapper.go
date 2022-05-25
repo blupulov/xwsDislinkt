@@ -49,3 +49,11 @@ func mapUserForAddingSkill(newSkill *pb.AddSkillModel) *model.SkillItem {
 		SkillDescription: newSkill.SkillDescription,
 	}
 }
+
+func mapUserForAddingExpirience(newExpirience *pb.AddExpirienceModel) *model.WorkExperienceItem {
+	return &model.WorkExperienceItem{
+		CompanyName:          newExpirience.CompanyName,
+		WorkDurationInMonths: int(newExpirience.WorkDurationInMonths),
+		EmploymentField:      newExpirience.EmploymentField,
+	}
+}

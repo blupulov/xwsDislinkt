@@ -36,6 +36,27 @@ service UserService{
       body: "newSkill"
     };
   }
+  rpc AddExpirience(AddExpirienceRequest) returns(AddExpirienceResponse){
+    option (google.api.http) = {
+      put: "/user/addExpirience/{userId}"
+      body: "newExpirience"
+    };
+  }
+  
+}
+message AddExpirienceRequest{
+  string userId = 1;
+  AddExpirienceModel newExpirience =2;
+}
+
+message AddExpirienceModel{
+  string CompanyName = 1;
+  int32 WorkDurationInMonths = 2;
+  string EmploymentField =3;
+}
+
+message AddExpirienceResponse{
+  string status = 1;
 }
 
 message Credentials {
