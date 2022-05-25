@@ -31,7 +31,7 @@ const routes: Routes = [
 
   // sto se tice registracije ona postoji na pritisak dugmeta za registraciju
 
-  {path: 'addSkill', component: AddSkillComponent},
+  {path: 'user/addSkill', component: AddSkillComponent},
 ];
 
 @NgModule({

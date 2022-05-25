@@ -40,3 +40,10 @@ func mapUserForRegistration(newUser *pb.UserRegistrationModel) *model.User {
 		BlockedUsers:   make([]string, 0),
 	}
 }
+
+func mapUserForAddingSkill(newSkill *pb.AddSkillModel) *model.SkillItem {
+	return &model.SkillItem{
+		SkillName:        newSkill.SkillName,
+		SkillDescription: newSkill.SkillDescription,
+	}
+}

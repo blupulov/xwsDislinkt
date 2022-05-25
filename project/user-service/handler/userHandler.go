@@ -5,6 +5,7 @@ import (
 
 	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	//"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -64,4 +65,23 @@ func (uh *UserHandler) Login(ctx context.Context, r *pb.LoginRequest) (*pb.Login
 	response.Token = token.Token
 
 	return &response, nil
+}
+func (uh *UserHandler) AddSkill(ctx context.Context, r *pb.AddSkillRequest) (*pb.AddSkillResponse, error) {
+	var response pb.AddSkillResponse
+
+	userId, err := primitive.ObjectIDFromHex(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	newSkill := mapUserForAddingSkill(r.NewSkill)
+	err = uh.us.AddSkill(newSkill, userId)
+
+	if err != nil {
+		response.Status = "Not created"
+	} else {
+		response.Status = "Created"
+	}
+
+	return &response, err
 }

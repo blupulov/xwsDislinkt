@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AddSkill } from 'src/models/skill.model';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-add-skill',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddSkillComponent implements OnInit {
 
-  constructor() { }
+  public newSkill: AddSkill = new AddSkill();
+
+  constructor(private userService: UserService, private router: Router) { }
+
 
   ngOnInit(): void {
   }
 
+  onSubmit(form: any){
+      this.userService.addSkill(this.newSkill).subscribe(
+        res => {
+          alert("skill added")
+          this.router.navigateByUrl("profile")
+        },
+        err => {
+          alert("problem while adding skill!")
+        }
+      )
+  }
 }

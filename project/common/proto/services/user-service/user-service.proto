@@ -30,7 +30,12 @@ service UserService{
       body: "credentials"
     };
   }
-
+  rpc AddSkill(AddSkillRequest) returns(AddSkillResponse){
+    option (google.api.http) = {
+      put: "/user/addSkill/{userId}"
+      body: "newSkill"
+    };
+  }
 }
 
 message Credentials {
@@ -81,6 +86,20 @@ message UserRegistrationModel {
 }
 
 message RegisterResponse {
+  string status = 1;
+}
+
+message AddSkillRequest{
+  string userId = 1;
+  AddSkillModel newSkill =2;
+}
+
+message AddSkillModel{
+  string SkillName = 1;
+  string SkillDescription = 2;
+}
+
+message AddSkillResponse{
   string status = 1;
 }
 

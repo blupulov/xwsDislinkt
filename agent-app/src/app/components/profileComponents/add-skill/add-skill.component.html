@@ -1,1 +1,27 @@
-<p>add-skill works!</p>
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="30">
+    <mat-toolbar color="accent">
+      REGISTRATION FORM
+    </mat-toolbar>
+    <form  #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
+
+      <!--FIRSTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>Skill Name</strong></mat-label>
+        <input name="SkillName" matInput placeholder="Skill name" [(ngModel)] = newSkill.SkillName >
+      </mat-form-field>
+
+      <!--LASTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>Skill Description</strong></mat-label>
+        <input name="SkillDescription" matInput placeholder="Description"  [(ngModel)] = newSkill.SkillDescription >
+      </mat-form-field>
+
+
+      <!--BUTTON-->
+      <button mat-raised-button color="accent" type="submit" >Add skill</button>
+
+    </form>
+
+  </mat-card>
+</div>

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Login } from "src/models/login.model";
 import { Router } from "@angular/router";
 import { Registration } from "src/models/registration.model";
+import { AddSkill } from "src/models/skill.model";
 
 
 
@@ -26,7 +27,7 @@ export class UserService {
     return this.http.post<any>(this.apiUrl + '/register', JSON.stringify(newUser));
   }
 
-  addSkill(newSkill: any) {
+  addSkill(newSkill: AddSkill) {
     return this.http.put(this.apiUrl + '/addSkill/' + this.getUserId(), JSON.stringify(newSkill))
   }
 
