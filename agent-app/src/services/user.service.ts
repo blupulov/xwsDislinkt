@@ -33,8 +33,8 @@ export class UserService {
     return this.http.put(this.apiUrl + '/addSkill/' + this.getUserId(), JSON.stringify(newSkill))
   }
 
-  addExpirience(newExpirience: AddExpirience) {
-    return this.http.put(this.apiUrl + '/addExpirience/' + this.getUserId(), JSON.stringify(newExpirience))
+  AddExpirience(newExpirience: AddExpirience) {
+    return this.http.put(this.apiUrl + '/AddExpirience/' + this.getUserId(), JSON.stringify(newExpirience))
   }
 
   getUserById(userId: String | null) {

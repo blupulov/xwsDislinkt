@@ -438,7 +438,7 @@ func RegisterUserServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/userservice.UserService/AddExpirience", runtime.WithHTTPPathPattern("/user/addExpirience/{userId}"))
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/userservice.UserService/AddExpirience", runtime.WithHTTPPathPattern("/user/AddExpirience/{userId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -606,7 +606,7 @@ func RegisterUserServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/userservice.UserService/AddExpirience", runtime.WithHTTPPathPattern("/user/addExpirience/{userId}"))
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/userservice.UserService/AddExpirience", runtime.WithHTTPPathPattern("/user/AddExpirience/{userId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -636,7 +636,7 @@ var (
 
 	pattern_UserService_AddSkill_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"user", "addSkill", "userId"}, ""))
 
-	pattern_UserService_AddExpirience_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"user", "addExpirience", "userId"}, ""))
+	pattern_UserService_AddExpirience_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"user", "AddExpirience", "userId"}, ""))
 )
 
 var (

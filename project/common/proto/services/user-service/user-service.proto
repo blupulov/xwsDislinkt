@@ -38,7 +38,7 @@ service UserService{
   }
   rpc AddExpirience(AddExpirienceRequest) returns(AddExpirienceResponse){
     option (google.api.http) = {
-      put: "/user/addExpirience/{userId}"
+      put: "/user/AddExpirience/{userId}"
       body: "newExpirience"
     };
   }

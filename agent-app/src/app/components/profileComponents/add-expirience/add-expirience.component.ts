@@ -20,7 +20,7 @@ export class AddExpirienceComponent implements OnInit {
   }
 
   onSubmit(form: any){
-    this.userService.addExpirience(this.newExpirience).subscribe(
+    this.userService.AddExpirience(this.newExpirience).subscribe(
       res => {
         alert("expirience added")
         this.router.navigateByUrl("profile")
