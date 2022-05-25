@@ -30,7 +30,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatTableModule} from '@angular/material/table';
 import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
 import { FindUserComponent } from './components/find-user/find-user.component';
-import { AddExpirienceComponentComponent } from './components/profileComponents/add-expirience/add-expirience.component';
+import { AddExpirienceComponent } from './components/profileComponents/add-expirience/add-expirience.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import { AddExpirienceComponentComponent } from './components/profileComponents/
     CommentPostComponent,
     AddSkillComponent,
     FindUserComponent,
-    AddExpirienceComponentComponent,
+    AddExpirienceComponent,
   ],
   imports: [
     BrowserModule,
