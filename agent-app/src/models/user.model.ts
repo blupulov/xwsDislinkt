@@ -18,6 +18,10 @@ export class User {
 }
 
 // ZBOG FORMATA U KOJEM SERVER VRACA OVAJ PODATAK "user": {"id":"...", ....}
-export class UserResponse{
+export class UserResponse {
   user: User = new User();
+}
+
+export class ManyUserResponse {
+  users: User[] = [];
 }

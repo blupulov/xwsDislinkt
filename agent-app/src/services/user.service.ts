@@ -4,7 +4,7 @@ import { Login } from "src/models/login.model";
 import { Router } from "@angular/router";
 import { Registration } from "src/models/registration.model";
 import { AddSkill } from "src/models/skill.model";
-import { User, UserResponse } from "src/models/user.model";
+import { ManyUserResponse, User, UserResponse } from "src/models/user.model";
 import { AddExpirience } from "src/models/expirience.model";
 import { AddEducation } from "src/models/education.model";
 import { AddInterest } from "src/models/interest.model";
@@ -18,10 +18,8 @@ import { AddInterest } from "src/models/interest.model";
 export class UserService {
 
   //TODO: u localStorage
-  public fansIds: Array<String> = [];
-  public hatersIds: Array<String> = [];
-
-  
+  //public fansIds: Array<String> = [];
+  //public hatersIds: Array<String> = [];
 
   constructor (private http: HttpClient, private router: Router) { }
 
@@ -35,6 +33,11 @@ export class UserService {
   registration(newUser: Registration){
     newUser.birthdate = "1999-11-11T00:00:00.000+00:00"
     return this.http.post<any>(this.apiUrl + '/register', JSON.stringify(newUser));
+  }
+
+  getManyUsersById(usersIds: any) {
+    let data = {"usersIds":usersIds}
+    return this.http.put<ManyUserResponse>(this.apiUrl + '/many', JSON.stringify(data));
   }
 
   addSkill(newSkill: AddSkill) {
@@ -79,18 +82,23 @@ export class UserService {
   }
 
   setHatersIds(hatersIds: String[]) {
-    localStorage.setItem("fansIds", JSON.stringify(hatersIds))
+    localStorage.setItem("hatersIds", JSON.stringify(hatersIds))
   }
   
   getFansIds() {
-    return localStorage.getItem("fansIds")
+    return JSON.parse(localStorage.getItem('fansIds') || '{}');
   }
 
   getHatersIds() {
-    return localStorage.getItem("hatersIds")
+    return JSON.parse(localStorage.getItem('hatersIds') || '{}');
   }
 
   setSelectedUserId(userId: String) {
     localStorage.setItem('selectedUserId', userId.toString())
   }
+
+  getSelectedUserId() {
+    return localStorage.getItem('selectedUserId') || '';
+  }
+  
 }

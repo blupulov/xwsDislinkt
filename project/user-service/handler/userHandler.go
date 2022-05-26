@@ -6,7 +6,6 @@ import (
 	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	//"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UserHandler struct {
@@ -170,7 +169,7 @@ func (uh *UserHandler) GetManyUsersById(ctx context.Context, r *pb.GetManyUsersB
 	if err != nil {
 		return nil, err
 	}
-	return &response, err
+
 	for _, user := range *users {
 		response.Users = append(response.Users, mapPbUserFromModel(&user))
 	}
