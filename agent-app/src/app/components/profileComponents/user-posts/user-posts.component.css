@@ -1,0 +1,34 @@
+.post-body {
+  margin-top: 2vh;
+  padding: 0.5vh;
+}
+
+.post-body button {
+  margin-left: 0.5vh;
+  margin-right: 0.5vh;
+}
+
+.post-comments {
+  padding: 0.5vh;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+.table {
+  color: #fff;
+  margin: 0.1vh;
+  padding: 0.25vh;
+}
+
+.post-footer {
+  margin-top: 0.25vh;
+  margin-bottom: 0.15vh;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+form {
+  margin-top: 0.25vh;
+}

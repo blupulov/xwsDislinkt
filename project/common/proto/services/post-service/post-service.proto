@@ -29,6 +29,34 @@ service PostService{
       put: "/post/{postId}/like/{userId}"
     };
   }
+  rpc GetAllUserPosts(GetAllUserPostsRequest) returns(GetAllUserPostsResponse) {
+    option (google.api.http) = {
+      get: "/post/user/{userId}"
+    };
+  }
+  rpc CommentPost(CommentPostRequest) returns(CommentPostResponse) {
+    option (google.api.http) = {
+      put: "/post/{postId}/comment"
+      body: "comment"
+    };
+  }
+}
+
+message CommentPostRequest {
+  string postId = 1;
+  Comment comment = 2;
+}
+
+message CommentPostResponse {
+
+}
+
+message GetAllUserPostsRequest {
+  string userId = 1;
+}
+
+message GetAllUserPostsResponse {
+  repeated Post posts = 1;
 }
 
 message GetAllRequest {
@@ -79,8 +107,5 @@ message Post {
 message Comment {
   string commentOwnerId = 1;
   string commentContent = 2;
-  string creationDate = 3;
+  google.protobuf.Timestamp creationDate = 3;
 }
-
-
-
