@@ -163,6 +163,26 @@ func (us *UserServiceImpl) ChangeUser(userID primitive.ObjectID, dto *dto.Change
 	return sr.Err()
 }
 
+func (us *UserServiceImpl) GetManyUsersById(usersIds []string) (*[]model.User, error) {
+	var users []model.User
+
+	for _, id := range usersIds {
+		userId, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+			return nil, err
+		}
+
+		user, err := us.GetById(userId)
+		if err != nil {
+			return nil, err
+		}
+
+		users = append(users, *user)
+	}
+
+	return &users, nil
+}
+
 func (us *UserServiceImpl) findUserByUsername(username string) (*model.User, error) {
 	filter := bson.M{"username": username}
 	sr := us.usersCollection.FindOne(context.TODO(), filter)

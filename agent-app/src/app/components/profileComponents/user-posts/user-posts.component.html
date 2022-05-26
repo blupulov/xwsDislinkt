@@ -21,7 +21,7 @@
         
         <!--DUGMICI-->
         <div>
-          <button mat-raised-button color="primary"> Likes: {{ post.postLikeNumber }} </button>
+          <button mat-raised-button color="primary" (click)="openFans()"> Likes: {{ post.postLikeNumber }} </button>
           <button mat-raised-button color="primary"> Dislikes: {{ post.postDislikeNumber }} </button>
           <button mat-raised-button color="primary" (click)="showPostComments(post.id)"> Comments: {{ post.comments.length }} </button>
         </div>

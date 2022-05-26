@@ -24,12 +24,13 @@ import { FollowingUsersComponent } from './components/profileComponents/followin
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CommentPostComponent } from './components/profileComponents/comment-post/comment-post.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTableModule} from '@angular/material/table';
 import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
 import { FindUserComponent } from './components/find-user/find-user.component';
+import { PostHatersComponent } from './components/post-haters/post-haters.component';
+import { PostFansComponent } from './components/post-fans/post-fans.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +46,10 @@ import { FindUserComponent } from './components/find-user/find-user.component';
     FollowingUsersComponent,
     MainPageComponent,
     SelectedUserProfileComponent,
-    CommentPostComponent,
     AddSkillComponent,
     FindUserComponent,
+    PostHatersComponent,
+    PostFansComponent,
   ],
   imports: [
     BrowserModule,

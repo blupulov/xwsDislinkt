@@ -39,6 +39,10 @@ export class UserPostsComponent implements OnInit {
     }
   }
 
+  openFans() {
+    alert('adksahdkjash')
+  }
+
   onSubmit() {
     //datum treba prilagotiti
     let comment = new PostComment();
@@ -54,5 +58,4 @@ export class UserPostsComponent implements OnInit {
       }
     )
   }
-
 }

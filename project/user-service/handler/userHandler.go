@@ -104,3 +104,18 @@ func (uh *UserHandler) AddSkill(ctx context.Context, r *pb.AddSkillRequest) (*pb
 
 	return &response, err
 }
+
+func (uh *UserHandler) GetManyUsersById(ctx context.Context, r *pb.GetManyUsersByIdRequest) (*pb.GetManyUsersByIdResponse, error) {
+	var response pb.GetManyUsersByIdResponse
+
+	users, err := uh.us.GetManyUsersById(r.UsersIds.UsersIds)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, user := range *users {
+		response.Users = append(response.Users, mapPbUserFromModel(&user))
+	}
+
+	return &response, nil
+}

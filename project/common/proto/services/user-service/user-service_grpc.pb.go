@@ -27,6 +27,7 @@ type UserServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	AddSkill(ctx context.Context, in *AddSkillRequest, opts ...grpc.CallOption) (*AddSkillResponse, error)
+	GetManyUsersById(ctx context.Context, in *GetManyUsersByIdRequest, opts ...grpc.CallOption) (*GetManyUsersByIdResponse, error)
 }
 
 type userServiceClient struct {
@@ -82,6 +83,15 @@ func (c *userServiceClient) AddSkill(ctx context.Context, in *AddSkillRequest, o
 	return out, nil
 }
 
+func (c *userServiceClient) GetManyUsersById(ctx context.Context, in *GetManyUsersByIdRequest, opts ...grpc.CallOption) (*GetManyUsersByIdResponse, error) {
+	out := new(GetManyUsersByIdResponse)
+	err := c.cc.Invoke(ctx, "/userservice.UserService/GetManyUsersById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type UserServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	AddSkill(context.Context, *AddSkillRequest) (*AddSkillResponse, error)
+	GetManyUsersById(context.Context, *GetManyUsersByIdRequest) (*GetManyUsersByIdResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedUserServiceServer) Login(context.Context, *LoginRequest) (*Lo
 }
 func (UnimplementedUserServiceServer) AddSkill(context.Context, *AddSkillRequest) (*AddSkillResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSkill not implemented")
+}
+func (UnimplementedUserServiceServer) GetManyUsersById(context.Context, *GetManyUsersByIdRequest) (*GetManyUsersByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetManyUsersById not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -216,6 +230,24 @@ func _UserService_AddSkill_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_GetManyUsersById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetManyUsersByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetManyUsersById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/userservice.UserService/GetManyUsersById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetManyUsersById(ctx, req.(*GetManyUsersByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddSkill",
 			Handler:    _UserService_AddSkill_Handler,
+		},
+		{
+			MethodName: "GetManyUsersById",
+			Handler:    _UserService_GetManyUsersById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

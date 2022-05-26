@@ -14,6 +14,12 @@ import { User, UserResponse } from "src/models/user.model";
 
 export class UserService {
 
+  //TODO: u localStorage
+  public fansIds: Array<String> = [];
+  public hatersIds: Array<String> = [];
+
+  
+
   constructor (private http: HttpClient, private router: Router) { }
 
   private apiUrl = 'http://localhost:8001/user';
@@ -52,5 +58,24 @@ export class UserService {
   getUserId(): String | null {
     return localStorage.getItem('userId')
   }
+  //.toString() ??
+  setFansIds(fansIds: String[]) {
+    localStorage.setItem("fansIds", JSON.stringify(fansIds))
+  }
 
+  setHatersIds(hatersIds: String[]) {
+    localStorage.setItem("fansIds", JSON.stringify(hatersIds))
+  }
+  
+  getFansIds() {
+    return localStorage.getItem("fansIds")
+  }
+
+  getHatersIds() {
+    return localStorage.getItem("hatersIds")
+  }
+
+  setSelectedUserId(userId: String) {
+    localStorage.setItem('selectedUserId', userId.toString())
+  }
 }
