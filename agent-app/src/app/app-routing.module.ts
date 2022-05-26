@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { AddEducationComponent } from './components/profileComponents/add-education/add-education.component';
 import { AddExpirienceComponent } from './components/profileComponents/add-expirience/add-expirience.component';
+import { AddInterestComponent } from './components/profileComponents/add-interest/add-interest.component';
 import { AddSkillComponent } from './components/profileComponents/add-skill/add-skill.component';
 import { ChangeInfoComponent } from './components/profileComponents/change-info/change-info.component';
 import { FollowingUsersComponent } from './components/profileComponents/following-users/following-users.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: 'user/addSkill', component: AddSkillComponent},
   {path: 'user/addExpirience', component: AddExpirienceComponent},
   {path: 'user/addEducation', component: AddEducationComponent},
+  {path: 'user/addInterest', component: AddInterestComponent},
 ];
 
 @NgModule({

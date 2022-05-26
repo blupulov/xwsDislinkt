@@ -65,3 +65,10 @@ func mapUserForAddingEducation(newEducation *pb.AddEducationModel) *model.Educat
 		DurationInMonths: int(newEducation.DurationInMonths),
 	}
 }
+
+func mapUserForAddingInterest(newInterest *pb.AddInterestModel) *model.InterestItem {
+	return &model.InterestItem{
+		InterestName:        newInterest.InterestName,
+		InterestDescription: newInterest.InterestDescription,
+	}
+}

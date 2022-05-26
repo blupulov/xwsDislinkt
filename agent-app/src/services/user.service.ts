@@ -7,6 +7,7 @@ import { AddSkill } from "src/models/skill.model";
 import { User, UserResponse } from "src/models/user.model";
 import { AddExpirience } from "src/models/expirience.model";
 import { AddEducation } from "src/models/education.model";
+import { AddInterest } from "src/models/interest.model";
 
 
 
@@ -41,6 +42,11 @@ export class UserService {
   AddEducation(newEducation: AddEducation) {
     return this.http.put(this.apiUrl + '/AddEducation/' + this.getUserId(), JSON.stringify(newEducation))
   }
+
+  AddInterest(newInterest: AddInterest) {
+    return this.http.put(this.apiUrl + '/AddInterest/' + this.getUserId(), JSON.stringify(newInterest))
+  }
+
   getUserById(userId: String | null) {
     return this.http.get<UserResponse>(this.apiUrl + '/' + userId);
   }

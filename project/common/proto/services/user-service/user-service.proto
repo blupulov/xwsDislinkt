@@ -48,8 +48,30 @@ service UserService{
       body: "newEducation"
     };
   }
-  
+  rpc AddInterest(AddInterestRequest) returns(AddInterestResponse){
+    option (google.api.http) = {
+      put: "/user/AddInterest/{userId}"
+      body: "newInterest"
+    };
+  }
 }
+
+
+message AddInterestRequest{
+  string userId = 1;
+  AddInterestModel newInterest =2;
+}
+
+message AddInterestModel{
+  string InterestName = 1;
+  string InterestDescription =2;
+}
+
+message AddInterestResponse{
+  string status = 1;
+}
+
+
 message AddExpirienceRequest{
   string userId = 1;
   AddExpirienceModel newExpirience =2;

@@ -1,0 +1,26 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="30">
+    <mat-toolbar color="accent">
+      Interest Form
+    </mat-toolbar>
+    <form  #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
+
+      <!--LASTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>Interest Name</strong></mat-label>
+        <input name="InterestName" matInput placeholder="Interest name"  [(ngModel)] = newInterest.InterestName >
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong> Interest description</strong></mat-label>
+        <input name="DurationInMonths" matInput placeholder="Interest description"  [(ngModel)] = newInterest.InterestDescription >
+      </mat-form-field>
+
+
+      <!--BUTTON-->
+      <button mat-raised-button color="accent" type="submit" >Add Interest</button>
+
+    </form>
+
+  </mat-card>
+</div>

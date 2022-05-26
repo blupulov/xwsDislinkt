@@ -32,6 +32,7 @@ import { AddSkillComponent } from './components/profileComponents/add-skill/add-
 import { FindUserComponent } from './components/find-user/find-user.component';
 import { AddExpirienceComponent } from './components/profileComponents/add-expirience/add-expirience.component';
 import { AddEducationComponent } from './components/profileComponents/add-education/add-education.component';
+import { AddInterestComponent } from './components/profileComponents/add-interest/add-interest.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AddEducationComponent } from './components/profileComponents/add-educat
     FindUserComponent,
     AddExpirienceComponent,
     AddEducationComponent,
+    AddInterestComponent,
   ],
   imports: [
     BrowserModule,

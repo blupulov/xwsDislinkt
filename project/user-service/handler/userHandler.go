@@ -144,3 +144,23 @@ func (uh *UserHandler) AddEducation(ctx context.Context, r *pb.AddEducationReque
 
 	return &response, err
 }
+
+func (uh *UserHandler) AddInterest(ctx context.Context, r *pb.AddInterestRequest) (*pb.AddInterestResponse, error) {
+	var response pb.AddInterestResponse
+
+	userId, err := primitive.ObjectIDFromHex(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	newInterest := mapUserForAddingInterest(r.NewInterest)
+	err = uh.us.AddInterest(newInterest, userId)
+
+	if err != nil {
+		response.Status = "Not created"
+	} else {
+		response.Status = "Created"
+	}
+
+	return &response, err
+}
