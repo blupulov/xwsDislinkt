@@ -55,3 +55,7 @@ func (us *UserService) AddInterest(interest *model.InterestItem, userID primitiv
 func (us *UserService) ChangeUser(userId primitive.ObjectID, dto *dto.ChangeUserDto) error {
 	return us.ui.ChangeUser(userId, dto)
 }
+
+func (us *UserService) GetManyUsersById(usersIds []string) (*[]model.User, error) {
+	return us.ui.GetManyUsersById(usersIds)
+}

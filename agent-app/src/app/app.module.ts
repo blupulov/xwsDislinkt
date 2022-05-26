@@ -24,7 +24,6 @@ import { FollowingUsersComponent } from './components/profileComponents/followin
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CommentPostComponent } from './components/profileComponents/comment-post/comment-post.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTableModule} from '@angular/material/table';
@@ -33,6 +32,8 @@ import { FindUserComponent } from './components/find-user/find-user.component';
 import { AddExpirienceComponent } from './components/profileComponents/add-expirience/add-expirience.component';
 import { AddEducationComponent } from './components/profileComponents/add-education/add-education.component';
 import { AddInterestComponent } from './components/profileComponents/add-interest/add-interest.component';
+import { PostHatersComponent } from './components/post-haters/post-haters.component';
+import { PostFansComponent } from './components/post-fans/post-fans.component';
 
 @NgModule({
   declarations: [
@@ -48,15 +49,15 @@ import { AddInterestComponent } from './components/profileComponents/add-interes
     FollowingUsersComponent,
     MainPageComponent,
     SelectedUserProfileComponent,
-    CommentPostComponent,
     AddSkillComponent,
     FindUserComponent,
     AddExpirienceComponent,
     AddEducationComponent,
+    PostHatersComponent,
+    PostFansComponent,
     AddInterestComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,

@@ -1,1 +1,56 @@
-<p>user-posts works!</p>
+<div class="container">
+  <div *ngFor="let post of posts" class="post-body" fxLayoutAlign="center">
+    <!--POST BODY-->
+    <mat-card fxFlex="70">
+      <!--DATUM KREIRANJA-->
+      <mat-card-header>
+        {{ post.postDate | date: 'dd-MM-yyyy' }}
+      </mat-card-header>
+
+      <!--KOMENTAR AKO GA IMA-->
+      <mat-card-header>
+        {{ post.postComment }}
+      </mat-card-header>
+
+      <!--SLIKA AKO POSTOJI-->
+      <mat-card-content>
+
+      </mat-card-content>
+      
+      <mat-card-footer class="post-footer" fxLayoutAlign="center center" fxLayoutAlign="stretch" fxLayout="column">
+        
+        <!--DUGMICI-->
+        <div>
+          <button mat-raised-button color="primary" (click)="openFans()"> Likes: {{ post.postLikeNumber }} </button>
+          <button mat-raised-button color="primary"> Dislikes: {{ post.postDislikeNumber }} </button>
+          <button mat-raised-button color="primary" (click)="showPostComments(post.id)"> Comments: {{ post.comments.length }} </button>
+        </div>
+
+        <!--KOMENTARI-->
+        <div *ngIf="post.id === selectedPostId" class="post-comments">
+         
+          <!--ADD COMMENT FORM-->
+          <form novalidate #form="ngForm" (submit)="onSubmit()">
+            <mat-form-field color="accent">
+              <mat-label>COMMENT</mat-label>
+              <input name="comment" matInput placeholder="Comment" [(ngModel)] = comment required>
+            </mat-form-field>
+            <button color="accent" type="submit" mat-flat-button [disabled]="form.invalid">Comment</button>
+          </form>
+
+          <table class="table">
+            <tbody>
+              <tr *ngFor="let comment of post.comments">
+                <td> {{ comment.commentContent }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </mat-card-footer>
+
+    </mat-card>
+
+  </div>
+
+</div>

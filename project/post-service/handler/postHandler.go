@@ -70,6 +70,38 @@ func (ph *PostHandler) Like(ctx context.Context, r *pb.LikeRequest) (res *pb.Lik
 	return
 }
 
+func (ph *PostHandler) GetAllUserPosts(ctx context.Context, r *pb.GetAllUserPostsRequest) (*pb.GetAllUserPostsResponse, error) {
+	var response pb.GetAllUserPostsResponse
+
+	posts, err := ph.ps.GetAllByOwnerId(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, post := range posts {
+		response.Posts = append(response.Posts, mapPbFromPost(post))
+	}
+
+	return &response, nil
+}
+
+func (ph *PostHandler) CommentPost(ctx context.Context, r *pb.CommentPostRequest) (*pb.CommentPostResponse, error) {
+	var response pb.CommentPostResponse
+
+	postId, err := primitive.ObjectIDFromHex(r.PostId)
+	if err != nil {
+		return nil, err
+	}
+
+	comment := mapPostCommentFromPb(r.Comment)
+	err = ph.ps.AddComment(comment, postId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
 // func (ph *PostHandler) Dislike(ctx context.Context, r *pb.DislikeRequest) (res *pb.DislikeResponse, err error) {
 // 	res = &pb.DislikeResponse{}
 // 	postId, err := primitive.ObjectIDFromHex(r.PostId)

@@ -6,14 +6,15 @@ import (
 )
 
 type UserInterface interface {
-	GetById(id primitive.ObjectID) (*User, error) // treba uraditi
+	GetById(id primitive.ObjectID) (*User, error)
 	GetAll() ([]*User, error)
 	Register(user *User) error
-	DeleteById(id primitive.ObjectID) error // treba uraditi
+	DeleteById(id primitive.ObjectID) error
 	Login(password, username string) (*dto.TokenDto, error)
 	AddExpirience(expirience *WorkExperienceItem, expirienceID primitive.ObjectID) error
 	AddSkill(skill *SkillItem, userID primitive.ObjectID) error
 	AddEducation(education *EducationItem, userID primitive.ObjectID) error
 	AddInterest(interest *InterestItem, userID primitive.ObjectID) error
-	ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error // treba istraziti i uraditi
+	ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error
+	GetManyUsersById(usersIds []string) (*[]User, error)
 }

@@ -29,7 +29,7 @@ const routes: Routes = [
   // ovde se dodaje komponenta i moguce ju je direktno pogoditi kroz url
   // primer recimo da postoji komponenta koja jos uvek nije povezana vec je treba samo testirati:
   //
-  // {path: 'createPost', component: CreatePostComponent},
+  // {path: 'profile/createPost', component: CreatePostComponent},
   //
   // putanja do nje je http://localhost:4200/createPost
 

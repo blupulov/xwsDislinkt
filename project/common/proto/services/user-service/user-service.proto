@@ -54,6 +54,25 @@ service UserService{
       body: "newInterest"
     };
   }
+  //VIDETI KASNIJE DA LI MOZE NETO DA SE ISKOMBINUJE POSTO GET METODA NEMA BODY
+  rpc GetManyUsersById(GetManyUsersByIdRequest) returns(GetManyUsersByIdResponse){
+    option (google.api.http) = {
+      put: "/user/many"
+      body: "usersIds"
+    };
+  }
+}
+
+message GetManyUsersByIdRequest {
+  UsersIds usersIds = 1;
+}
+
+message UsersIds {
+  repeated string usersIds = 1;
+}
+
+message GetManyUsersByIdResponse {
+  repeated User users = 1;
 }
 
 

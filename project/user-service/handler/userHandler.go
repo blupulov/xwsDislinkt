@@ -109,9 +109,6 @@ func (uh *UserHandler) AddExpirience(ctx context.Context, r *pb.AddExpirienceReq
 	var response pb.AddExpirienceResponse
 
 	userId, err := primitive.ObjectIDFromHex(r.UserId)
-	if err != nil {
-		return nil, err
-	}
 
 	newExpirience := mapUserForAddingExpirience(r.NewExpirience)
 	err = uh.us.AddExpirience(newExpirience, userId)
@@ -162,5 +159,21 @@ func (uh *UserHandler) AddInterest(ctx context.Context, r *pb.AddInterestRequest
 		response.Status = "Created"
 	}
 
+	return &response, nil
+}
+
+func (uh *UserHandler) GetManyUsersById(ctx context.Context, r *pb.GetManyUsersByIdRequest) (*pb.GetManyUsersByIdResponse, error) {
+	var response pb.GetManyUsersByIdResponse
+
+	users, err := uh.us.GetManyUsersById(r.UsersIds.UsersIds)
+
+	if err != nil {
+		return nil, err
+	}
 	return &response, err
+	for _, user := range *users {
+		response.Users = append(response.Users, mapPbUserFromModel(&user))
+	}
+
+	return &response, nil
 }

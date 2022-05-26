@@ -23,7 +23,7 @@ func mapPbFromPost(post *model.Post) *pb.Post {
 		pbComment := &pb.Comment{
 			CommentOwnerId: c.CommentOwnerId,
 			CommentContent: c.CommentContent,
-			CreationDate:   timestamppb.New(c.CreationDate).String(),
+			CreationDate:   timestamppb.New(c.CreationDate),
 		}
 		pbPost.Comments = append(pbPost.Comments, pbComment)
 	}
@@ -41,5 +41,13 @@ func mapPostFromPb(pbPost *pb.Post) *model.Post {
 		HatersIds:     make([]string, 0),
 		LikeNumber:    0,
 		DislikeNumber: 0,
+	}
+}
+
+func mapPostCommentFromPb(pbComment *pb.Comment) *model.Comment {
+	return &model.Comment{
+		CommentOwnerId: pbComment.CommentOwnerId,
+		CommentContent: pbComment.CommentContent,
+		CreationDate:   pbComment.GetCreationDate().AsTime(),
 	}
 }

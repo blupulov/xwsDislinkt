@@ -26,6 +26,8 @@ type PostServiceClient interface {
 	GetById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*GetByIdResponse, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*InsertResponse, error)
 	Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
+	GetAllUserPosts(ctx context.Context, in *GetAllUserPostsRequest, opts ...grpc.CallOption) (*GetAllUserPostsResponse, error)
+	CommentPost(ctx context.Context, in *CommentPostRequest, opts ...grpc.CallOption) (*CommentPostResponse, error)
 }
 
 type postServiceClient struct {
@@ -72,6 +74,24 @@ func (c *postServiceClient) Like(ctx context.Context, in *LikeRequest, opts ...g
 	return out, nil
 }
 
+func (c *postServiceClient) GetAllUserPosts(ctx context.Context, in *GetAllUserPostsRequest, opts ...grpc.CallOption) (*GetAllUserPostsResponse, error) {
+	out := new(GetAllUserPostsResponse)
+	err := c.cc.Invoke(ctx, "/postservice.PostService/GetAllUserPosts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *postServiceClient) CommentPost(ctx context.Context, in *CommentPostRequest, opts ...grpc.CallOption) (*CommentPostResponse, error) {
+	out := new(CommentPostResponse)
+	err := c.cc.Invoke(ctx, "/postservice.PostService/CommentPost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PostServiceServer is the server API for PostService service.
 // All implementations must embed UnimplementedPostServiceServer
 // for forward compatibility
@@ -80,6 +100,8 @@ type PostServiceServer interface {
 	GetById(context.Context, *GetByIdRequest) (*GetByIdResponse, error)
 	Insert(context.Context, *InsertRequest) (*InsertResponse, error)
 	Like(context.Context, *LikeRequest) (*LikeResponse, error)
+	GetAllUserPosts(context.Context, *GetAllUserPostsRequest) (*GetAllUserPostsResponse, error)
+	CommentPost(context.Context, *CommentPostRequest) (*CommentPostResponse, error)
 	mustEmbedUnimplementedPostServiceServer()
 }
 
@@ -98,6 +120,12 @@ func (UnimplementedPostServiceServer) Insert(context.Context, *InsertRequest) (*
 }
 func (UnimplementedPostServiceServer) Like(context.Context, *LikeRequest) (*LikeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Like not implemented")
+}
+func (UnimplementedPostServiceServer) GetAllUserPosts(context.Context, *GetAllUserPostsRequest) (*GetAllUserPostsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllUserPosts not implemented")
+}
+func (UnimplementedPostServiceServer) CommentPost(context.Context, *CommentPostRequest) (*CommentPostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CommentPost not implemented")
 }
 func (UnimplementedPostServiceServer) mustEmbedUnimplementedPostServiceServer() {}
 
@@ -184,6 +212,42 @@ func _PostService_Like_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PostService_GetAllUserPosts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllUserPostsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostServiceServer).GetAllUserPosts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/postservice.PostService/GetAllUserPosts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostServiceServer).GetAllUserPosts(ctx, req.(*GetAllUserPostsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PostService_CommentPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CommentPostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostServiceServer).CommentPost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/postservice.PostService/CommentPost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostServiceServer).CommentPost(ctx, req.(*CommentPostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PostService_ServiceDesc is the grpc.ServiceDesc for PostService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +270,14 @@ var PostService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Like",
 			Handler:    _PostService_Like_Handler,
+		},
+		{
+			MethodName: "GetAllUserPosts",
+			Handler:    _PostService_GetAllUserPosts_Handler,
+		},
+		{
+			MethodName: "CommentPost",
+			Handler:    _PostService_CommentPost_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
