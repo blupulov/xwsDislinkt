@@ -1,1 +1,25 @@
-<p>create-post works!</p>
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="30">
+        <mat-toolbar color="accent">
+            CREATING NEW POST
+        </mat-toolbar>
+        <form #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
+            <!--IMAGE-->
+            <mat-form-field color="accent">
+                <mat-label><strong>IMAGE</strong></mat-label>
+                <input name="image" matInput placeholder="Image" [(ngModel)]= newPost.image>
+            </mat-form-field>
+            <!--COMMENT-->
+            <mat-form-field color="accent">
+                <mat-label><strong>COMMENT</strong></mat-label>
+                <input name="comment" matInput placeholder="Comment" [(ngModel)] = newPost.comment>
+            </mat-form-field>
+            <!--BUTTON-->
+            <button mat-raised-button color="accent" type="submit">POST</button>
+
+        </form>
+
+
+    </mat-card>
+
+</div>
