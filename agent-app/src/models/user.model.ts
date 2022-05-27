@@ -17,7 +17,6 @@ export class User {
   // repeated string blockedUsers = 12;
 }
 
-// ZBOG FORMATA U KOJEM SERVER VRACA OVAJ PODATAK "user": {"id":"...", ....}
 export class UserResponse {
   user: User = new User();
 }

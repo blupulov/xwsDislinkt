@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 
 	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
@@ -164,6 +165,8 @@ func (uh *UserHandler) AddInterest(ctx context.Context, r *pb.AddInterestRequest
 func (uh *UserHandler) GetManyUsersById(ctx context.Context, r *pb.GetManyUsersByIdRequest) (*pb.GetManyUsersByIdResponse, error) {
 	var response pb.GetManyUsersByIdResponse
 
+	fmt.Println(r.UsersIds)
+
 	users, err := uh.us.GetManyUsersById(r.UsersIds.UsersIds)
 
 	if err != nil {
@@ -172,6 +175,24 @@ func (uh *UserHandler) GetManyUsersById(ctx context.Context, r *pb.GetManyUsersB
 
 	for _, user := range *users {
 		response.Users = append(response.Users, mapPbUserFromModel(&user))
+	}
+
+	return &response, nil
+}
+
+func (uh *UserHandler) ChangeUser(ctx context.Context, r *pb.ChangeUserRequest) (*pb.ChangeUserResponse, error) {
+	var response pb.ChangeUserResponse
+
+	userId, err := primitive.ObjectIDFromHex(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	newUserInfo := mapChangeUserDtoFromPb(r.UserInfo)
+
+	err = uh.us.ChangeUser(userId, newUserInfo)
+	if err != nil {
+		return nil, err
 	}
 
 	return &response, nil

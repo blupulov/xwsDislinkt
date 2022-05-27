@@ -8,6 +8,7 @@ import { ManyUserResponse, User, UserResponse } from "src/models/user.model";
 import { AddExpirience } from "src/models/expirience.model";
 import { AddEducation } from "src/models/education.model";
 import { AddInterest } from "src/models/interest.model";
+import { ChangeUserInfo } from "src/models/changeUserInfo.model";
 
 
 
@@ -58,6 +59,14 @@ export class UserService {
 
   getUserById(userId: String | null) {
     return this.http.get<UserResponse>(this.apiUrl + '/' + userId);
+  }
+
+  changeUser(newUser: ChangeUserInfo) {
+    let parts = newUser.birthDate.split('T')
+    let dob = parts[0] + 'T00:00:00Z'
+    newUser.birthDate = dob
+    newUser.phoneNumber = newUser.phoneNumber.toString()
+    return this.http.put(this.apiUrl + '/' + this.getUserId(), JSON.stringify(newUser));
   }
 
   logout(): void {

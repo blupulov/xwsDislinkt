@@ -34,6 +34,7 @@ import { AddEducationComponent } from './components/profileComponents/add-educat
 import { AddInterestComponent } from './components/profileComponents/add-interest/add-interest.component';
 import { PostHatersComponent } from './components/post-haters/post-haters.component';
 import { PostFansComponent } from './components/post-fans/post-fans.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { PostFansComponent } from './components/post-fans/post-fans.component';
     MatGridListModule,
     MatDividerModule,
     MatTableModule,
+    MatDatepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

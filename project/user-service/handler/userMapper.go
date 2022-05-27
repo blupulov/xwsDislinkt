@@ -2,6 +2,7 @@ package handler
 
 import (
 	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
+	"github.com/blupulov/xwsDislinkt/user-service/dto"
 	"github.com/blupulov/xwsDislinkt/user-service/model"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -22,6 +23,7 @@ func mapPbUserFromModel(user *model.User) *pb.User {
 		Skills:         []*pb.SkillItem{},
 		Interests:      []*pb.Interests{},
 		BlockedUsers:   []string{},
+		PhoneNumber:    user.PhoneNumber,
 	}
 
 	return pbUser
@@ -70,5 +72,17 @@ func mapUserForAddingInterest(newInterest *pb.AddInterestModel) *model.InterestI
 	return &model.InterestItem{
 		InterestName:        newInterest.InterestName,
 		InterestDescription: newInterest.InterestDescription,
+	}
+}
+
+func mapChangeUserDtoFromPb(userInfo *pb.ChangeUserInfo) *dto.ChangeUserDto {
+	return &dto.ChangeUserDto{
+		Username:    userInfo.Username,
+		FirstName:   userInfo.FirstName,
+		LastName:    userInfo.LastName,
+		Email:       userInfo.Email,
+		PhoneNumber: userInfo.PhoneNumber,
+		Biography:   userInfo.Biography,
+		BirthDate:   userInfo.GetBirthDate().AsTime(),
 	}
 }

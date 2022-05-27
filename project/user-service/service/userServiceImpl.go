@@ -146,6 +146,10 @@ func (us *UserServiceImpl) AddInterest(interest *model.InterestItem, userID prim
 }
 
 func (us *UserServiceImpl) ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error {
+	if us.isNewUsernameTaken(userID, dto.Username) {
+		return errors.New("username is already taken")
+	}
+
 	findFilter := bson.M{"_id": userID}
 	updateFilter := bson.M{
 		"$set": bson.M{
@@ -161,6 +165,19 @@ func (us *UserServiceImpl) ChangeUser(userID primitive.ObjectID, dto *dto.Change
 
 	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
 	return sr.Err()
+}
+
+func (us *UserServiceImpl) isNewUsernameTaken(userId primitive.ObjectID, username string) bool {
+	user, err := us.findUserByUsername(username)
+	if err != nil {
+		return false
+	}
+
+	if user.Id != userId {
+		return true
+	}
+
+	return false
 }
 
 func (us *UserServiceImpl) GetManyUsersById(usersIds []string) (*[]model.User, error) {

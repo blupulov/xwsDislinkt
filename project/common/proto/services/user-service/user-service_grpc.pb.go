@@ -32,6 +32,7 @@ type UserServiceClient interface {
 	AddInterest(ctx context.Context, in *AddInterestRequest, opts ...grpc.CallOption) (*AddInterestResponse, error)
 	//VIDETI KASNIJE DA LI MOZE NETO DA SE ISKOMBINUJE POSTO GET METODA NEMA BODY
 	GetManyUsersById(ctx context.Context, in *GetManyUsersByIdRequest, opts ...grpc.CallOption) (*GetManyUsersByIdResponse, error)
+	ChangeUser(ctx context.Context, in *ChangeUserRequest, opts ...grpc.CallOption) (*ChangeUserResponse, error)
 }
 
 type userServiceClient struct {
@@ -123,6 +124,15 @@ func (c *userServiceClient) GetManyUsersById(ctx context.Context, in *GetManyUse
 	return out, nil
 }
 
+func (c *userServiceClient) ChangeUser(ctx context.Context, in *ChangeUserRequest, opts ...grpc.CallOption) (*ChangeUserResponse, error) {
+	out := new(ChangeUserResponse)
+	err := c.cc.Invoke(ctx, "/userservice.UserService/ChangeUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -137,6 +147,7 @@ type UserServiceServer interface {
 	AddInterest(context.Context, *AddInterestRequest) (*AddInterestResponse, error)
 	//VIDETI KASNIJE DA LI MOZE NETO DA SE ISKOMBINUJE POSTO GET METODA NEMA BODY
 	GetManyUsersById(context.Context, *GetManyUsersByIdRequest) (*GetManyUsersByIdResponse, error)
+	ChangeUser(context.Context, *ChangeUserRequest) (*ChangeUserResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -170,6 +181,9 @@ func (UnimplementedUserServiceServer) AddInterest(context.Context, *AddInterestR
 }
 func (UnimplementedUserServiceServer) GetManyUsersById(context.Context, *GetManyUsersByIdRequest) (*GetManyUsersByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetManyUsersById not implemented")
+}
+func (UnimplementedUserServiceServer) ChangeUser(context.Context, *ChangeUserRequest) (*ChangeUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeUser not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -346,6 +360,24 @@ func _UserService_GetManyUsersById_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_ChangeUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ChangeUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/userservice.UserService/ChangeUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ChangeUser(ctx, req.(*ChangeUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -388,6 +420,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetManyUsersById",
 			Handler:    _UserService_GetManyUsersById_Handler,
+		},
+		{
+			MethodName: "ChangeUser",
+			Handler:    _UserService_ChangeUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
