@@ -34,6 +34,7 @@ import { AddEducationComponent } from './components/profileComponents/add-educat
 import { AddInterestComponent } from './components/profileComponents/add-interest/add-interest.component';
 import { PostHatersComponent } from './components/post-haters/post-haters.component';
 import { PostFansComponent } from './components/post-fans/post-fans.component';
+import { SelectedUserPostsComponent } from './components/selected-user-posts/selected-user-posts.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,8 @@ import { PostFansComponent } from './components/post-fans/post-fans.component';
     PostHatersComponent,
     PostFansComponent,
     AddInterestComponent,
+    SelectedUserPostsComponent,
+
   ],
   imports: [
     AppRoutingModule,
