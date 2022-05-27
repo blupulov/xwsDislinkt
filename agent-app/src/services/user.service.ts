@@ -38,7 +38,7 @@ export class UserService {
 
   getManyUsersById(usersIds: any) {
     let data = {"usersIds":usersIds}
-    return this.http.put<ManyUserResponse>(this.apiUrl + '/many', JSON.stringify(data));
+    return this.http.patch<ManyUserResponse>(this.apiUrl, JSON.stringify(data));
   }
 
   addSkill(newSkill: AddSkill) {
@@ -85,7 +85,7 @@ export class UserService {
   getUserId(): String | null {
     return localStorage.getItem('userId')
   }
-  //.toString() ??
+  
   setFansIds(fansIds: String[]) {
     localStorage.setItem("fansIds", JSON.stringify(fansIds))
   }

@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"fmt"
 
 	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
@@ -164,8 +163,6 @@ func (uh *UserHandler) AddInterest(ctx context.Context, r *pb.AddInterestRequest
 
 func (uh *UserHandler) GetManyUsersById(ctx context.Context, r *pb.GetManyUsersByIdRequest) (*pb.GetManyUsersByIdResponse, error) {
 	var response pb.GetManyUsersByIdResponse
-
-	fmt.Println(r.UsersIds)
 
 	users, err := uh.us.GetManyUsersById(r.UsersIds.UsersIds)
 

@@ -65,7 +65,7 @@ func (s *Server) Start() {
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:4200"},
 		AllowCredentials: true,
-		AllowedMethods:   []string{"POST", "PUT", "DELETE", "GET"},
+		AllowedMethods:   []string{"POST", "PUT", "DELETE", "GET", "PATCH"},
 	})
 
 	handler := c.Handler(s.mux)

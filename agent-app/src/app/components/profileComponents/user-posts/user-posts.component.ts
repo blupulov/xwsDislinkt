@@ -43,6 +43,7 @@ export class UserPostsComponent implements OnInit {
   showFans(fansIds: String[]) {
     if(fansIds.length > 0) {
       this.userService.setFansIds(fansIds)
+      //alert(this.userService.getFansIds())
       this.router.navigateByUrl('postFans')
     } else {
       alert('there is no fans')
