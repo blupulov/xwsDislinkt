@@ -16,8 +16,8 @@ export class PostService {
 
   private apiUrl = 'http://localhost:8001/post';
 
-  getAllUserPosts() {
-    return this.http.get<AllUserPostsResponse>(this.apiUrl + '/user/' + this.userService.getUserId());
+  getAllUserPosts(userId: string | null | undefined) {
+    return this.http.get<AllUserPostsResponse>(this.apiUrl + '/user/' + userId);
   }
 
   commentPost(postId: String, comment: PostComment) {

@@ -23,7 +23,7 @@ export class SelectedUserPostsComponent implements OnInit {
 
 
   getAllUserPosts() {
-    this.postService.getAllUserPosts().subscribe(
+    this.postService.getAllUserPosts(this.userService.getSelectedUserId()).subscribe(
       res => {
         this.posts = res.posts
       },

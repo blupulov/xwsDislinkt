@@ -22,7 +22,7 @@ export class UserPostsComponent implements OnInit {
   }
 
   getAllUserPosts() {
-    this.postService.getAllUserPosts().subscribe(
+    this.postService.getAllUserPosts(this.userService.getUserId()?.toString()).subscribe(
       res => {
         this.posts = res.posts
       },
@@ -43,7 +43,6 @@ export class UserPostsComponent implements OnInit {
   showFans(fansIds: String[]) {
     if(fansIds.length > 0) {
       this.userService.setFansIds(fansIds)
-      //alert(this.userService.getFansIds())
       this.router.navigateByUrl('postFans')
     } else {
       alert('there is no fans')
@@ -56,7 +55,6 @@ export class UserPostsComponent implements OnInit {
   }
 
   onSubmit() {
-    //datum treba prilagotiti
     let comment = new PostComment();
     comment.commentOwnerId = new String(this.userService.getUserId());
     comment.commentContent = this.comment;

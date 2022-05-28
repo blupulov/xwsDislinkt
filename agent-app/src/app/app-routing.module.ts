@@ -45,21 +45,18 @@ const routes: Routes = [
 
   // sto se tice registracije ona postoji na pritisak dugmeta za registraciju
 
+  //brise se ovo
   {path: 'user/addSkill', component: AddSkillComponent},
   {path: 'user/addExpirience', component: AddExpirienceComponent},
   {path: 'user/addEducation', component: AddEducationComponent},
   {path: 'user/addInterest', component: AddInterestComponent},
-
-
+  //do ovde
 
   // prikazi profil korisnika
-
-  {path: 'profile/selectedUserProfile', component: SelectedUserProfileComponent},
-  {path: 'profile/selectedUserProfile/selectedUserPosts', component: SelectedUserPostsComponent},
-  {path: 'profile/selectedUserProfile/userFollowers', component: UserFollowersComponent},
-  {path: 'profile/selectedUserProfile/userFollowing', component: FollowingUsersComponent},
-
-
+  {path: 'selectedUserProfile', component: SelectedUserProfileComponent},
+  {path: 'selectedUserProfile/selectedUserPosts', component: SelectedUserPostsComponent},
+  {path: 'selectedUserProfile/selectedUserFollowers', component: UserFollowersComponent},
+  {path: 'selectedUserProfile/selectedFollowingUsers', component: FollowingUsersComponent},
 ];
 
 @NgModule({
