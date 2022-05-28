@@ -82,14 +82,14 @@ func (s *Server) initMongoClient() *mongo.Client {
 }
 
 //Grpc server
-func (s *Server) startGrpcServer(postHandler *handler.UserHandler) {
+func (s *Server) startGrpcServer(userHandler *handler.UserHandler) {
 	listener, err := net.Listen("tcp", ":"+s.config.GrpcPort)
 	if err != nil {
 		log.Fatal(err)
 	}
 	grpcServer := grpc.NewServer()
-	usGrpc.RegisterUserServiceServer(grpcServer, postHandler)
-	log.Println("user-service (grpc) runing on port: " + s.config.GrpcPort)
+	usGrpc.RegisterUserServiceServer(grpcServer, userHandler)
+	log.Println("user-service (grpc) running on port: " + s.config.GrpcPort)
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatal(err)
 	}

@@ -3,14 +3,19 @@ package startup
 import (
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"sync"
 
+	fsGrpc "github.com/blupulov/xwsDislinkt/common/proto/services/following-service"
+
 	"github.com/blupulov/xwsDislinkt/following-service/controller"
+	"github.com/blupulov/xwsDislinkt/following-service/handler"
 	"github.com/blupulov/xwsDislinkt/following-service/service"
 	"github.com/blupulov/xwsDislinkt/following-service/startup/config"
 	"github.com/julienschmidt/httprouter"
 	"github.com/neo4j/neo4j-go-driver/v4/neo4j"
+	"google.golang.org/grpc"
 )
 
 type Server struct {
@@ -38,6 +43,7 @@ func (s *Server) Start() {
 	//Follow rest contoller
 	followController := controller.NewFollowController(followService)
 	//Follow grpc handler
+	followHandler := handler.NewFollowingHandler(followService)
 
 	//All routes (first is test rout)
 	router.GET("/", func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -58,10 +64,11 @@ func (s *Server) Start() {
 	router.GET("/follow/:userId/sent/request", followController.GetAllSentRequests)
 
 	wg := new(sync.WaitGroup)
-	wg.Add(1)
+	wg.Add(2)
 
 	//Starting servers
 	go s.startRestServer(router)
+	go s.startGrpcServer(followHandler)
 	wg.Wait()
 }
 
@@ -71,6 +78,20 @@ func (s *Server) startRestServer(router *httprouter.Router) {
 	err := http.ListenAndServe(":"+s.config.RestPort, router)
 	if err != nil {
 		panic(err)
+	}
+}
+
+//Grpc server
+func (s *Server) startGrpcServer(followingHandler *handler.FollowingHandler) {
+	listener, err := net.Listen("tcp", ":"+s.config.GrpcPort)
+	if err != nil {
+		log.Fatal(err)
+	}
+	grpcServer := grpc.NewServer()
+	fsGrpc.RegisterFollowingServiceServer(grpcServer, followingHandler)
+	log.Println("following-service (grpc) running on port: " + s.config.GrpcPort)
+	if err := grpcServer.Serve(listener); err != nil {
+		log.Fatal(err)
 	}
 }
 
