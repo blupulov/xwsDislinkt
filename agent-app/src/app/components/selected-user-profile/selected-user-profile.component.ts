@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/models/user.model';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-selected-user-profile',
@@ -7,9 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SelectedUserProfileComponent implements OnInit {
 
-  constructor() { }
+  user: User = new User();
+ // user =   this.userService.getUserById('6270fcdf067582baca1a9a46')
+
+  constructor(private userService: UserService) { }
+
+  selectedUserId: String = '6270fcdf067582baca1a9a46';
 
   ngOnInit(): void {
+    this.getUser()
+  }
+
+  getUser(): void {
+    if(this.userService.getUserId() != null) {
+      this.userService.getUserById(this.selectedUserId).subscribe(
+        res => {
+         // alert('user:' +  this.user.firstName)
+          this.user = res.user
+          console.log("ime: " + this.user.firstName)
+
+        },
+        err => {
+          alert('problem with loading user')
+        }
+      )
+    }
   }
 
 }

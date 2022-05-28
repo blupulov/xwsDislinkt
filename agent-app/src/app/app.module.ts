@@ -35,6 +35,7 @@ import { AddInterestComponent } from './components/profileComponents/add-interes
 import { PostHatersComponent } from './components/post-haters/post-haters.component';
 import { PostFansComponent } from './components/post-fans/post-fans.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { SelectedUserPostsComponent } from './components/selected-user-posts/selected-user-posts.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     PostHatersComponent,
     PostFansComponent,
     AddInterestComponent,
+    SelectedUserPostsComponent,
+
   ],
   imports: [
     AppRoutingModule,

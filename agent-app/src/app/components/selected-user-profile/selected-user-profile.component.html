@@ -1,1 +1,32 @@
-<p>selected-user-profile works!</p>
+<div class="container">
+  <!--PROFILE INFO-->
+  <mat-grid-list cols="3" rowHeight="2:1">
+    <mat-grid-tile [colspan]="1" [rowspan]="2" [style.background]="'whitesmoke'">PROFILE IMAGE</mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2" [style.background]="'whitesmoke'">
+      <table class="table">
+        <tbody>
+          <tr><td>Full name: </td><td> {{user.firstName}} {{user.lastName}} </td></tr>
+          <tr><td>Username: </td><td> {{user.username}} </td></tr>
+          <tr><td>Email: </td><td> {{user.email}} </td></tr>
+          <tr><td>Phone: </td><td> {{user.phoneNumber}} </td></tr>
+          <tr><td>Birth date: </td><td> {{user.birthDate | date: 'dd-MM-yyyy'}} </td></tr>
+          <tr><td>Biography: </td><td> {{user.biography}} </td></tr>
+      </tbody>
+      </table>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <!--BUTTONS-->
+  <div fxLayoutAlign="center center" fxFlexFill class="button-main-div">
+    <div fxFlex="40" fxLayoutAlign="stretch" fxLayout="column">
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="userFollowers" > USER FOLLOWERS </button>
+      <mat-divider></mat-divider>
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="userFollowing" > FOLLOWING </button>
+      <mat-divider></mat-divider>
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="selectedUserPosts" > USER POSTS </button>
+      <mat-divider></mat-divider>
+      <!--U CHANGE INFO TREBA DODATI FORME ZA DODAVANJE INTERESOVANJA ZANIMANJA I SLICNE STVARI-->
+    </div>
+  </div>
+
+</div>
