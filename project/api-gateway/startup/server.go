@@ -8,6 +8,7 @@ import (
 
 	"github.com/rs/cors"
 
+	"github.com/blupulov/xwsDislinkt/api-gateway/customHandlers"
 	"github.com/blupulov/xwsDislinkt/api-gateway/startup/config"
 	fsGw "github.com/blupulov/xwsDislinkt/common/proto/services/following-service"
 	psGw "github.com/blupulov/xwsDislinkt/common/proto/services/post-service"
@@ -63,7 +64,12 @@ func (s *Server) initHandlers() {
 }
 
 func (s *Server) initCustomHandlers() {
+	psEndpoint := fmt.Sprintf("%s:%s", s.config.PostServiceHost, s.config.PostServicePort)
+	usEndpoint := fmt.Sprintf("%s:%s", s.config.UserServiceHost, s.config.UserServicePort)
+	fsEndpoint := fmt.Sprintf("%s:%s", s.config.FollowingServiceHost, s.config.FollowingServicePort)
 
+	customHandler := customHandlers.NewCustomHandler(usEndpoint, psEndpoint, fsEndpoint)
+	customHandler.Init(s.mux)
 }
 
 func (s *Server) Start() {
