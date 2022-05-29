@@ -1,1 +1,12 @@
-<p>user-followers works!</p>
+<div class="container"> 
+  <table class="table table-hover">
+    <tbody>
+      <tr *ngFor="let user of users" (click)="showProfile(user.id)" >
+        <td>image</td>
+        <td> {{ user.username }} </td>
+        <td> {{ user.firstName }} {{ user.lastName }}</td>
+        <td> {{ user.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
