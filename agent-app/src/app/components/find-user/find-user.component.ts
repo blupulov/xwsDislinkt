@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-find-user',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FindUserComponent implements OnInit {
 
-  constructor() { }
+  username : String = '';
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
+
   }
 
+  onSubmit() {
+    //datum treba prilagotiti
+    this.userService.GetUserByUsername(this.username).subscribe(
+      res => {
+          this.userService.setSelectedUserId(res.user.id)
+          //alert(this.userService.getSelectedUserId())
+          //this.router.navigateByUrl('selectedUserProfile')
+      }, err => {
+        alert('user not found')
+      }
+    )
+  }
 }

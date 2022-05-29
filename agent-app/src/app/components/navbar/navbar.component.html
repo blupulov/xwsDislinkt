@@ -2,11 +2,9 @@
   <div class="container-fluid">
     <a class="navbar-brand">DISLINKT</a>
     <!--Pretraga javnih ako nije registrovan korisnik??-->
-    <div >
-      <form novalidate #form="ngForm" (submit)="onSubmit()" *ngIf="userService.getUserRole() != null" mat-raised-button color="primary">
-        <input type = "text" id="username" input style = "text-color: black" >
-        <button color="accent" type="submit" mat-raised-button color="primary" >Search</button>
-      </form>
+    <div>
+      <app-find-user *ngIf="userService.getUserRole() != null"></app-find-user>
+
     </div>
 
     <div class="d-flex">

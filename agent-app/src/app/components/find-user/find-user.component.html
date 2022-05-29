@@ -1,1 +1,4 @@
-<p>find-user works!</p>
+<form novalidate #form="ngForm" (submit)="onSubmit()">
+  <input required type = "text" name="username" [(ngModel)] = username>
+  <button color="accent" type="submit" mat-raised-button color="primary" >Search</button>
+</form>

@@ -17,15 +17,5 @@ export class NavbarComponent implements OnInit {
     this.userService.logout()
   }
 
-  onSubmit() {
-    //datum treba prilagotiti
-    this.userService.GetUserByUsername().subscribe(
-      res => {
-        alert("username is ")
 
-      }, err => {
-        alert('problem with sending comment')
-      }
-    )
-  }
 }
