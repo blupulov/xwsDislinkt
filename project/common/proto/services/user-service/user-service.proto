@@ -57,10 +57,26 @@ service UserService{
   //VIDETI KASNIJE DA LI MOZE NETO DA SE ISKOMBINUJE POSTO GET METODA NEMA BODY
   rpc GetManyUsersById(GetManyUsersByIdRequest) returns(GetManyUsersByIdResponse){
     option (google.api.http) = {
-      put: "/user/many"
+      patch: "/user/many"
       body: "usersIds"
     };
   }
+
+  rpc GetUserByUsername(GetUserByUsernameRequest) returns(GetUserByUsernameResponse){
+    option (google.api.http) = {
+      get: "/user/{username}/GetUserByUsername"
+    };
+  }
+
+}
+
+
+message GetUserByUsernameRequest {
+  string username = 1;
+}
+
+message GetUserByUsernameResponse {
+   User user = 1;
 }
 
 message GetManyUsersByIdRequest {

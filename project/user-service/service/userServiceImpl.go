@@ -229,3 +229,12 @@ func (ps *UserServiceImpl) filter(filter interface{}) (user *model.User, err err
 
 	return
 }
+
+func (us *UserServiceImpl) GetUserByUsername(username string) (user *model.User, err error) {
+	user, err = us.findUserByUsername(username)
+	if err != nil {
+		return
+	}
+
+	return
+}

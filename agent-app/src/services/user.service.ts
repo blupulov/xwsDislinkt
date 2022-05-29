@@ -21,7 +21,7 @@ export class UserService {
   public fansIds: Array<String> = [];
   public hatersIds: Array<String> = [];
 
-  
+
 
   constructor (private http: HttpClient, private router: Router) { }
 
@@ -81,7 +81,7 @@ export class UserService {
   setHatersIds(hatersIds: String[]) {
     localStorage.setItem("fansIds", JSON.stringify(hatersIds))
   }
-  
+
   getFansIds() {
     return localStorage.getItem("fansIds")
   }
@@ -92,5 +92,13 @@ export class UserService {
 
   setSelectedUserId(userId: String) {
     localStorage.setItem('selectedUserId', userId.toString())
+  }
+
+  GetUserByUsername() {
+    return this.http.get(this.apiUrl + '/' + this.getUsername + '/' + '/GetUserByUsername/')
+  }
+
+  getUsername():String|null{
+    return localStorage.getItem('username')
   }
 }

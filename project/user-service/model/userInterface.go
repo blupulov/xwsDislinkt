@@ -17,4 +17,5 @@ type UserInterface interface {
 	AddInterest(interest *InterestItem, userID primitive.ObjectID) error
 	ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error
 	GetManyUsersById(usersIds []string) (*[]User, error)
+	GetUserByUsername(username string) (*User, error)
 }

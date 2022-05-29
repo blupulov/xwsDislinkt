@@ -59,3 +59,7 @@ func (us *UserService) ChangeUser(userId primitive.ObjectID, dto *dto.ChangeUser
 func (us *UserService) GetManyUsersById(usersIds []string) (*[]model.User, error) {
 	return us.ui.GetManyUsersById(usersIds)
 }
+
+func (us *UserService) GetUserByUsername(username string) (*model.User, error) {
+	return us.ui.GetUserByUsername(username)
+}

@@ -177,3 +177,17 @@ func (uh *UserHandler) GetManyUsersById(ctx context.Context, r *pb.GetManyUsersB
 
 	return &response, nil
 }
+
+func (uh *UserHandler) GetUserByUsername(ctx context.Context, r *pb.GetUserByUsernameRequest) (*pb.GetUserByUsernameResponse, error) {
+	var response pb.GetUserByUsernameResponse
+
+	user, err := uh.us.GetUserByUsername(r.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	response.User = mapPbUserFromModel(user)
+
+	return &response, nil
+
+}

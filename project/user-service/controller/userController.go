@@ -203,3 +203,18 @@ func (uc *UserController) ChangeUser(w http.ResponseWriter, r *http.Request, p h
 
 	w.WriteHeader(http.StatusOK)
 }
+
+func (uc *UserController) GetUserByUsername(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	username := p.ByName("username")
+
+	var user *model.User
+
+	user, err := uc.us.GetUserByUsername(username)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+	fmt.Fprintf(w, "%v\n", user)
+
+}
