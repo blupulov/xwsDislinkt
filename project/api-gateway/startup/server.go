@@ -73,7 +73,7 @@ func (s *Server) initCustomHandlers() {
 }
 
 func (s *Server) Start() {
-	s.log.Println("api-gateway runing on port: " + s.config.Port)
+	s.log.Println("api-gateway running on port: " + s.config.Port)
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:4200"},

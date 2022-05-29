@@ -13,10 +13,11 @@ export class CustomService {
 
   private apiUrl = 'http://localhost:8001/custom';
 
+  //oni sto ga prate
   getUserFollowers(userId: string | null | undefined) {
     return this.http.get<User[]>(this.apiUrl + '/user/' + userId + "/followers")
   }
-
+  // oni koje prati
   getFollowingUsers(userId: string | null | undefined) {
     return this.http.get<User[]>(this.apiUrl + '/user/' + userId + "/following")
   }

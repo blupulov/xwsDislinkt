@@ -20,10 +20,10 @@ export class FollowingUsersComponent implements OnInit {
   }
 
   loadUsers() {
+    //this.userService.getSelectedUserId()
     this.customService.getFollowingUsers(this.userService.getUserId()?.toString()).subscribe(
       res => {
         this.users = res
-        console.log(this.users)
       }, err => {
         alert('problem with loading users')
       }

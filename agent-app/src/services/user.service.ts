@@ -34,7 +34,7 @@ export class UserService {
 
   getManyUsersById(usersIds: any) {
     let data = {"usersIds":usersIds}
-    return this.http.patch<ManyUserResponse>(this.apiUrl, JSON.stringify(data));
+    return this.http.patch<ManyUserResponse>(this.apiUrl + '/many', JSON.stringify(data));
   }
 
   addSkill(newSkill: AddSkill) {

@@ -17,12 +17,15 @@ export class FindUserComponent implements OnInit {
   }
 
   onSubmit() {
-    //datum treba prilagotiti
     this.userService.GetUserByUsername(this.username).subscribe(
       res => {
-          this.userService.setSelectedUserId(res.user.id)
-          //alert(this.userService.getSelectedUserId())
-          //this.router.navigateByUrl('selectedUserProfile')
+          this.username = '';
+          if(res.user.id == this.userService.getUserId())
+            this.router.navigateByUrl('profile')
+          else {
+            this.userService.setSelectedUserId(res.user.id)
+            this.router.navigateByUrl('selectedUserProfile')
+          }
       }, err => {
         alert('user not found')
       }

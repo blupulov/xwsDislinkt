@@ -35,23 +35,7 @@ const routes: Routes = [
   {path: 'profile/changeInfo/addInterest', component: AddInterestComponent},
 
   {path: 'postFans', component: PostFansComponent},
-
-  // ovde se dodaje komponenta i moguce ju je direktno pogoditi kroz url
-  // primer recimo da postoji komponenta koja jos uvek nije povezana vec je treba samo testirati:
-  //
-  // {path: 'profile/createPost', component: CreatePostComponent},
-  //
-  // putanja do nje je http://localhost:4200/createPost
-
-  // sto se tice registracije ona postoji na pritisak dugmeta za registraciju
-
-  //brise se ovo
-  {path: 'user/addSkill', component: AddSkillComponent},
-  {path: 'user/addExpirience', component: AddExpirienceComponent},
-  {path: 'user/addEducation', component: AddEducationComponent},
-  {path: 'user/addInterest', component: AddInterestComponent},
-  //do ovde
-
+  
   // prikazi profil korisnika
   {path: 'selectedUserProfile', component: SelectedUserProfileComponent},
   {path: 'selectedUserProfile/selectedUserPosts', component: SelectedUserPostsComponent},
