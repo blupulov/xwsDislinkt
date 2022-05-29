@@ -1,1 +1,69 @@
-<p>change-info works!</p>
+<div class="container">
+  <div>
+    <table class="table">
+      <tr>
+        <td> <button mat-flat-button color="primary" routerLink="addExpirience"> ADD EXPIRIENCE </button> </td> 
+        <td> <button mat-flat-button color="primary" routerLink="addSkill" > ADD SKILL </button> </td> 
+        <td> <button mat-flat-button color="primary" routerLink="addEducation" > ADD EDUCATION </button> </td>
+        <td> <button mat-flat-button color="primary" routerLink="addInterest" > ADD INTEREST </button> </td> 
+      </tr>
+    </table>
+  </div>
+
+  <div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="60">
+      <mat-toolbar color="accent">
+        CHANGE INFO
+      </mat-toolbar>
+      <form  #form="ngForm" (submit)="onSubmit()" fxLayoutAlign="stretch" fxLayout="column">
+  
+        <!--FIRSTNAME-->
+        <mat-form-field color="accent">
+          <mat-label><strong>FIRSTNAME</strong></mat-label>
+          <input name="firstName" matInput placeholder="Firstname" [(ngModel)] = newUser.firstName required>
+        </mat-form-field>
+  
+        <!--LASTNAME-->
+        <mat-form-field color="accent">
+          <mat-label><strong>LASTNAME</strong></mat-label>
+          <input name="lastname" matInput placeholder="Lastname"  [(ngModel)] = newUser.lastName required>
+        </mat-form-field>
+  
+        <!--BIRTHDATE-->
+        <mat-form-field color="accent">
+            <mat-label><strong>BIRTHDATE</strong></mat-label>
+            <input name="birthdate" type="datetime-local" matInput placeholder="Birthdate"  [(ngModel)] = newUser.birthDate required>
+        </mat-form-field>
+  
+        <!--EMAIL-->
+        <mat-form-field color="accent">
+          <mat-label><strong>EMAIL</strong></mat-label>
+          <input type="email" name="email" matInput placeholder="Email"  [(ngModel)] = newUser.email required>
+        </mat-form-field>
+  
+        <!--USERNAME-->
+        <mat-form-field color="accent">
+          <mat-label><strong>USERNAME</strong></mat-label>
+          <input name="username" matInput placeholder="Username"  [(ngModel)] = newUser.username required>
+        </mat-form-field>
+
+        <!--BIOGRAPHY-->
+        <mat-form-field color="accent">
+          <mat-label><strong>BIOGRAPHY</strong></mat-label>
+          <textarea name="biography" matInput placeholder="Biography" [(ngModel)] = newUser.biography required></textarea>
+        </mat-form-field>
+
+        <!--PHONE NUMBER-->
+        <mat-form-field color="accent">
+          <mat-label><strong>PHONE NUMBER</strong></mat-label>
+          <input type="number" name="phoneNumber" matInput placeholder="Phone number"  [(ngModel)] = newUser.phoneNumber required>
+        </mat-form-field>
+        
+  
+        <!--BUTTON-->
+        <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">CHANGE</button>
+      </form>
+  
+    </mat-card>
+  </div>
+</div>

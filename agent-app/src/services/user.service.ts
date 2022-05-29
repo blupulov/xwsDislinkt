@@ -4,10 +4,11 @@ import { Login } from "src/models/login.model";
 import { Router } from "@angular/router";
 import { Registration } from "src/models/registration.model";
 import { AddSkill } from "src/models/skill.model";
-import { User, UserResponse } from "src/models/user.model";
+import { ManyUserResponse, User, UserResponse } from "src/models/user.model";
 import { AddExpirience } from "src/models/expirience.model";
 import { AddEducation } from "src/models/education.model";
 import { AddInterest } from "src/models/interest.model";
+import { ChangeUserInfo } from "src/models/changeUserInfo.model";
 
 
 
@@ -16,12 +17,6 @@ import { AddInterest } from "src/models/interest.model";
 })
 
 export class UserService {
-
-  //TODO: u localStorage
-  public fansIds: Array<String> = [];
-  public hatersIds: Array<String> = [];
-
-
 
   constructor (private http: HttpClient, private router: Router) { }
 
@@ -35,6 +30,11 @@ export class UserService {
   registration(newUser: Registration){
     newUser.birthdate = "1999-11-11T00:00:00.000+00:00"
     return this.http.post<any>(this.apiUrl + '/register', JSON.stringify(newUser));
+  }
+
+  getManyUsersById(usersIds: any) {
+    let data = {"usersIds":usersIds}
+    return this.http.patch<ManyUserResponse>(this.apiUrl, JSON.stringify(data));
   }
 
   addSkill(newSkill: AddSkill) {
@@ -57,6 +57,14 @@ export class UserService {
     return this.http.get<UserResponse>(this.apiUrl + '/' + userId);
   }
 
+  changeUser(newUser: ChangeUserInfo) {
+    let parts = newUser.birthDate.split('T')
+    let dob = parts[0] + 'T00:00:00Z'
+    newUser.birthDate = dob
+    newUser.phoneNumber = newUser.phoneNumber.toString()
+    return this.http.put(this.apiUrl + '/' + this.getUserId(), JSON.stringify(newUser));
+  }
+
   logout(): void {
     localStorage.clear()
     this.router.navigateByUrl('/login');
@@ -73,21 +81,21 @@ export class UserService {
   getUserId(): String | null {
     return localStorage.getItem('userId')
   }
-  //.toString() ??
+
   setFansIds(fansIds: String[]) {
     localStorage.setItem("fansIds", JSON.stringify(fansIds))
   }
 
   setHatersIds(hatersIds: String[]) {
-    localStorage.setItem("fansIds", JSON.stringify(hatersIds))
+    localStorage.setItem("hatersIds", JSON.stringify(hatersIds))
   }
 
   getFansIds() {
-    return localStorage.getItem("fansIds")
+    return JSON.parse(localStorage.getItem('fansIds') || '{}');
   }
 
   getHatersIds() {
-    return localStorage.getItem("hatersIds")
+    return JSON.parse(localStorage.getItem('hatersIds') || '{}');
   }
 
   setSelectedUserId(userId: String) {
@@ -98,4 +106,8 @@ export class UserService {
     return this.http.get<UserResponse>(this.apiUrl + '/'+ username + '/GetUserByUsername')
   }
 
+  getSelectedUserId() {
+    return localStorage.getItem('selectedUserId') || '';
+  }
 }
+

@@ -68,6 +68,13 @@ service UserService{
     };
   }
 
+  rpc ChangeUser(ChangeUserRequest) returns(ChangeUserResponse){
+    option (google.api.http) = {
+      put: "/user/{userId}"
+      body: "userInfo"
+    };
+  }
+
 }
 
 
@@ -77,6 +84,25 @@ message GetUserByUsernameRequest {
 
 message GetUserByUsernameResponse {
    User user = 1;
+}
+
+message ChangeUserRequest {
+  string userId = 1;
+  ChangeUserInfo userInfo = 2;
+}
+
+message ChangeUserResponse {
+
+}
+
+message ChangeUserInfo {
+  string username = 1;
+	string firstName = 2;
+	string lastName = 3;
+	string email = 4;
+	string phoneNumber = 5;
+	string biography = 6;
+	google.protobuf.Timestamp birthDate = 7;
 }
 
 message GetManyUsersByIdRequest {
@@ -90,7 +116,6 @@ message UsersIds {
 message GetManyUsersByIdResponse {
   repeated User users = 1;
 }
-
 
 message AddInterestRequest{
   string userId = 1;
@@ -216,6 +241,7 @@ message User {
   repeated Interests interests = 11;
   repeated string blockedUsers = 12;
   string role = 13;
+  string phoneNumber = 14;
 }
 
 message EducationItem {

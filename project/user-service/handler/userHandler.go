@@ -6,7 +6,6 @@ import (
 	pb "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 	"github.com/blupulov/xwsDislinkt/user-service/service"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	//"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UserHandler struct {
@@ -170,7 +169,7 @@ func (uh *UserHandler) GetManyUsersById(ctx context.Context, r *pb.GetManyUsersB
 	if err != nil {
 		return nil, err
 	}
-	return &response, err
+
 	for _, user := range *users {
 		response.Users = append(response.Users, mapPbUserFromModel(&user))
 	}
@@ -189,5 +188,22 @@ func (uh *UserHandler) GetUserByUsername(ctx context.Context, r *pb.GetUserByUse
 	response.User = mapPbUserFromModel(user)
 
 	return &response, nil
+}
 
+func (uh *UserHandler) ChangeUser(ctx context.Context, r *pb.ChangeUserRequest) (*pb.ChangeUserResponse, error) {
+	var response pb.ChangeUserResponse
+
+	userId, err := primitive.ObjectIDFromHex(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	newUserInfo := mapChangeUserDtoFromPb(r.UserInfo)
+
+	err = uh.us.ChangeUser(userId, newUserInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
 }

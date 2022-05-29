@@ -10,11 +10,8 @@ import { UserService } from 'src/services/user.service';
 export class SelectedUserProfileComponent implements OnInit {
 
   user: User = new User();
- // user =   this.userService.getUserById('6270fcdf067582baca1a9a46')
 
   constructor(private userService: UserService) { }
-
-  selectedUserId: String = '6270fcdf067582baca1a9a46';
 
   ngOnInit(): void {
     this.getUser()
@@ -22,12 +19,9 @@ export class SelectedUserProfileComponent implements OnInit {
 
   getUser(): void {
     if(this.userService.getUserId() != null) {
-      this.userService.getUserById(this.selectedUserId).subscribe(
+      this.userService.getUserById(this.userService.getSelectedUserId()).subscribe(
         res => {
-         // alert('user:' +  this.user.firstName)
           this.user = res.user
-          console.log("ime: " + this.user.firstName)
-
         },
         err => {
           alert('problem with loading user')

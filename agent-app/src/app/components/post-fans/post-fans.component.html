@@ -1,1 +1,12 @@
-<p>post-fans works!</p>
+<div class="container"> 
+  <table class="table table-hover">
+    <tbody>
+      <tr *ngFor="let fan of fans" (click)="showProfile(fan.id)" >
+        <td>image</td>
+        <td> {{ fan.username }} </td>
+        <td> {{ fan.firstName }} {{ fan.lastName }}</td>
+        <td> {{ fan.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

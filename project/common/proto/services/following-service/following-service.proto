@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option go_package = "github.com/blupulov/xwsDislinkt/common/following-service";
+
+package followingservice;
+
+import "google/api/annotations.proto";
+
+service FollowingService{
+  rpc GetAllUserFollowers(GetAllUserFollowersRequest) returns(GetAllUserFollowersResponse) {
+    option (google.api.http) = {
+      get: "/follow/{userId}/followers"
+    };
+  }
+  rpc GetAllFollowingUsers(GetAllFollowingUsersRequest) returns(GetAllFollowingUsersResponse) {
+    option (google.api.http) = {
+      get: "/follow/{userId}/following"
+    };
+  } 
+}
+
+message GetAllFollowingUsersRequest {
+  string userId = 1;
+}
+
+message GetAllFollowingUsersResponse {
+  repeated string usersIds = 1;
+}
+
+message GetAllUserFollowersRequest {
+  string userId = 1;
+}
+
+message GetAllUserFollowersResponse {
+  repeated string usersIds = 1;
+}
