@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 export class RegistrationComponent implements OnInit {
   password: String = '';
   username: String = '';
+  biography: String = '';
   firstname: String = '';
   lastname: String = '';
   birthdate: String = '';
