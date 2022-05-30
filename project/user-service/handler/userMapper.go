@@ -38,6 +38,7 @@ func mapUserForRegistration(newUser *pb.UserRegistrationModel) *model.User {
 		Username:       newUser.Username,
 		Password:       newUser.Password,
 		Biography:      newUser.Biography,
+		PhoneNumber:    newUser.PhoneNumber,
 		Education:      make([]model.EducationItem, 0), //za potrebe testiranja
 		WorkExperience: make([]model.WorkExperienceItem, 0),
 		Skills:         make([]model.SkillItem, 0),

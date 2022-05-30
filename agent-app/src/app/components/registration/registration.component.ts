@@ -18,6 +18,8 @@ export class RegistrationComponent implements OnInit {
   lastname: String = '';
   birthdate: String = '';
   email: String = '';
+  phoneNumber:String = '';
+
 
 
   public newUser: Registration = new Registration();
