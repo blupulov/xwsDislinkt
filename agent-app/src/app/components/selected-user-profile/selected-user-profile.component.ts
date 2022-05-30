@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/models/user.model';
+import { CustomService } from 'src/services/custom.service';
+import { FollowingService } from 'src/services/following.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -11,7 +13,8 @@ export class SelectedUserProfileComponent implements OnInit {
 
   user: User = new User();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private followingService: FollowingService,
+    public customService: CustomService) { }
 
   ngOnInit(): void {
     this.getUser()
@@ -28,6 +31,28 @@ export class SelectedUserProfileComponent implements OnInit {
         }
       )
     }
+  }
+
+  follow(){
+    this.followingService.follow().subscribe(
+      res => {
+        this.customService.pushFollowing()
+      },
+      err => {
+        alert('problem with following')
+      }
+    )
+  }
+
+  unFollow() {
+    this.followingService.unFollow().subscribe(
+      res => {
+        this.customService.popFollowing()
+      },
+      err => {
+        alert('problem with following')
+      }
+    )
   }
 
 }

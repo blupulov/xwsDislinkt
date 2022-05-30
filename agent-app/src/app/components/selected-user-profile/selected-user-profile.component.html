@@ -5,6 +5,13 @@
     <mat-grid-tile [colspan]="2" [rowspan]="2" [style.background]="'whitesmoke'">
       <table class="table">
         <tbody>
+          <tr>
+            <td>
+             <button (click)="follow()" *ngIf="!customService.isSelectedUserInFollowingIds()" mat-flat-button color="primary"> Follow </button>
+             <button (click)="unFollow()" *ngIf="customService.isSelectedUserInFollowingIds()" mat-flat-button color="primary"> Unfollow </button>
+            </td>
+            <td></td>
+         </tr>
           <tr><td>Full name: </td><td> {{user.firstName}} {{user.lastName}} </td></tr>
           <tr><td>Username: </td><td> {{user.username}} </td></tr>
           <tr><td>Email: </td><td> {{user.email}} </td></tr>
@@ -25,7 +32,6 @@
       <mat-divider></mat-divider>
       <button class="profile-action-button" mat-flat-button color="primary" routerLink="selectedUserPosts" > USER POSTS </button>
       <mat-divider></mat-divider>
-      <!--U CHANGE INFO TREBA DODATI FORME ZA DODAVANJE INTERESOVANJA ZANIMANJA I SLICNE STVARI-->
     </div>
   </div>
 

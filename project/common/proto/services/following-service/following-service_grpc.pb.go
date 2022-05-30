@@ -24,6 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type FollowingServiceClient interface {
 	GetAllUserFollowers(ctx context.Context, in *GetAllUserFollowersRequest, opts ...grpc.CallOption) (*GetAllUserFollowersResponse, error)
 	GetAllFollowingUsers(ctx context.Context, in *GetAllFollowingUsersRequest, opts ...grpc.CallOption) (*GetAllFollowingUsersResponse, error)
+	Follow(ctx context.Context, in *FollowUserRequest, opts ...grpc.CallOption) (*FollowUserResponse, error)
+	UnFollow(ctx context.Context, in *UnFollowUserRequest, opts ...grpc.CallOption) (*UnFollowUserResponse, error)
 }
 
 type followingServiceClient struct {
@@ -52,12 +54,32 @@ func (c *followingServiceClient) GetAllFollowingUsers(ctx context.Context, in *G
 	return out, nil
 }
 
+func (c *followingServiceClient) Follow(ctx context.Context, in *FollowUserRequest, opts ...grpc.CallOption) (*FollowUserResponse, error) {
+	out := new(FollowUserResponse)
+	err := c.cc.Invoke(ctx, "/followingservice.FollowingService/Follow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *followingServiceClient) UnFollow(ctx context.Context, in *UnFollowUserRequest, opts ...grpc.CallOption) (*UnFollowUserResponse, error) {
+	out := new(UnFollowUserResponse)
+	err := c.cc.Invoke(ctx, "/followingservice.FollowingService/UnFollow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FollowingServiceServer is the server API for FollowingService service.
 // All implementations must embed UnimplementedFollowingServiceServer
 // for forward compatibility
 type FollowingServiceServer interface {
 	GetAllUserFollowers(context.Context, *GetAllUserFollowersRequest) (*GetAllUserFollowersResponse, error)
 	GetAllFollowingUsers(context.Context, *GetAllFollowingUsersRequest) (*GetAllFollowingUsersResponse, error)
+	Follow(context.Context, *FollowUserRequest) (*FollowUserResponse, error)
+	UnFollow(context.Context, *UnFollowUserRequest) (*UnFollowUserResponse, error)
 	mustEmbedUnimplementedFollowingServiceServer()
 }
 
@@ -70,6 +92,12 @@ func (UnimplementedFollowingServiceServer) GetAllUserFollowers(context.Context, 
 }
 func (UnimplementedFollowingServiceServer) GetAllFollowingUsers(context.Context, *GetAllFollowingUsersRequest) (*GetAllFollowingUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllFollowingUsers not implemented")
+}
+func (UnimplementedFollowingServiceServer) Follow(context.Context, *FollowUserRequest) (*FollowUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Follow not implemented")
+}
+func (UnimplementedFollowingServiceServer) UnFollow(context.Context, *UnFollowUserRequest) (*UnFollowUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnFollow not implemented")
 }
 func (UnimplementedFollowingServiceServer) mustEmbedUnimplementedFollowingServiceServer() {}
 
@@ -120,6 +148,42 @@ func _FollowingService_GetAllFollowingUsers_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FollowingService_Follow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FollowUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FollowingServiceServer).Follow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/followingservice.FollowingService/Follow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FollowingServiceServer).Follow(ctx, req.(*FollowUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FollowingService_UnFollow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnFollowUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FollowingServiceServer).UnFollow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/followingservice.FollowingService/UnFollow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FollowingServiceServer).UnFollow(ctx, req.(*UnFollowUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // FollowingService_ServiceDesc is the grpc.ServiceDesc for FollowingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +198,14 @@ var FollowingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllFollowingUsers",
 			Handler:    _FollowingService_GetAllFollowingUsers_Handler,
+		},
+		{
+			MethodName: "Follow",
+			Handler:    _FollowingService_Follow_Handler,
+		},
+		{
+			MethodName: "UnFollow",
+			Handler:    _FollowingService_UnFollow_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -9,6 +9,7 @@ import { AddExpirience } from "src/models/expirience.model";
 import { AddEducation } from "src/models/education.model";
 import { AddInterest } from "src/models/interest.model";
 import { ChangeUserInfo } from "src/models/changeUserInfo.model";
+import { FollowingService } from "./following.service";
 
 
 

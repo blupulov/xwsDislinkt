@@ -16,7 +16,35 @@ service FollowingService{
     option (google.api.http) = {
       get: "/follow/{userId}/following"
     };
-  } 
+  }
+  rpc Follow(FollowUserRequest) returns (FollowUserResponse) {
+    option (google.api.http) = {
+      post: "/follow/{userId}/follow/{targetUserId}"
+    };
+  }
+  rpc UnFollow(UnFollowUserRequest) returns (UnFollowUserResponse) {
+    option (google.api.http) = {
+      delete: "/follow/{userId}/unfollow/{targetUserId}"
+    };
+  }
+}
+
+message UnFollowUserRequest {
+  string userId = 1;
+  string targetUserId = 2;
+}
+
+message UnFollowUserResponse {
+
+}
+
+message FollowUserRequest {
+  string userId = 1;
+  string targetUserId = 2;
+}
+
+message FollowUserResponse {
+
 }
 
 message GetAllFollowingUsersRequest {

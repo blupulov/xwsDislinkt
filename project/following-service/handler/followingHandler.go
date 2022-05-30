@@ -47,3 +47,25 @@ func (fh *FollowingHandler) GetAllFollowingUsers(ctx context.Context, r *pb.GetA
 
 	return &response, nil
 }
+
+func (fh *FollowingHandler) Follow(ctx context.Context, r *pb.FollowUserRequest) (*pb.FollowUserResponse, error) {
+	var response pb.FollowUserResponse
+
+	err := fh.fs.Follow(r.UserId, r.TargetUserId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
+func (fh *FollowingHandler) UnFollow(ctx context.Context, r *pb.UnFollowUserRequest) (*pb.UnFollowUserResponse, error) {
+	var response pb.UnFollowUserResponse
+
+	err := fh.fs.UnFollow(r.UserId, r.TargetUserId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}

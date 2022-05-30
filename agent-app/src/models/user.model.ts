@@ -24,3 +24,7 @@ export class UserResponse {
 export class ManyUserResponse {
   users: User[] = [];
 }
+
+export class UserIds {
+  usersIds: String[] = [];
+}
