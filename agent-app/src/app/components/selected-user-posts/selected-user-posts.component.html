@@ -21,6 +21,9 @@
 
         <!--DUGMICI-->
         <div>
+          <button (click)="like(post.id)" [disabled]="isUserLikePost(post.id)" mat-raised-button color="accent">Like</button>
+          <button (click)="dislike(post.id)" [disabled]="isUserDislikePost(post.id)" mat-raised-button color="accent">Dislike</button>
+          <!--TREBA DODATI PRIKAZ FANOVA I PRIKAZ HEJTERA-->
           <button mat-raised-button color="primary" (click)="openFans()"> Likes: {{ post.postLikeNumber }} </button>
           <button mat-raised-button color="primary"> Dislikes: {{ post.postDislikeNumber }} </button>
           <button mat-raised-button color="primary" (click)="showPostComments(post.id)"> Comments: {{ post.comments.length }} </button>
