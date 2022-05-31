@@ -27,4 +27,8 @@ export class PostService {
   posting(newPost: NewPost) {
     return this.http.post<any>(this.apiUrl, JSON.stringify(newPost));
   }
+
+  like(postId: String) {
+    return this.http.put(this.apiUrl + '/' + postId + '/like/' + this.userService.getUserId(), {})
+  }
 }
