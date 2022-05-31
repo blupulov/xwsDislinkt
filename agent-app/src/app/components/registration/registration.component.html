@@ -8,13 +8,13 @@
       <!--FIRSTNAME-->
       <mat-form-field color="accent">
         <mat-label><strong>FIRSTNAME</strong></mat-label>
-        <input name="firstname" matInput placeholder="Firstname" [(ngModel)] = newUser.firstName >
+        <input name="firstname" matInput placeholder="Firstname" [(ngModel)] = newUser.firstName required>
       </mat-form-field>
 
       <!--LASTNAME-->
       <mat-form-field color="accent">
         <mat-label><strong>LASTNAME</strong></mat-label>
-        <input name="lastname" matInput placeholder="Lastname"  [(ngModel)] = newUser.lastName >
+        <input name="lastname" matInput placeholder="Lastname"  [(ngModel)] = newUser.lastName required>
       </mat-form-field>
 
       <mat-form-field color="accent">
@@ -31,24 +31,24 @@
       <!--EMAIL-->
       <mat-form-field color="accent">
         <mat-label><strong>EMAIL</strong></mat-label>
-        <input name="email" matInput placeholder="Email"  [(ngModel)] = newUser.email >
+        <input name="email" matInput placeholder="Email"  [(ngModel)] = newUser.email required>
       </mat-form-field>
 
       <!--USERNAME-->
       <mat-form-field color="accent">
         <mat-label><strong>USERNAME</strong></mat-label>
-        <input name="username" matInput placeholder="Username"  [(ngModel)] = newUser.username >
+        <input name="username" matInput placeholder="Username"  [(ngModel)] = newUser.username required>
       </mat-form-field>
 
       <!--PASSWORD-->
       <mat-form-field color="accent">
         <mat-label><strong>PASSWORD</strong></mat-label>
-        <input name="password" matInput placeholder="Password" type="password" [(ngModel)] = newUser.password >
+        <input name="password" matInput placeholder="Password" type="password" [(ngModel)] = newUser.password required>
       </mat-form-field>
 
       <mat-form-field color="accent">
         <mat-label><strong> CONFIRM PASSWORD</strong></mat-label>
-        <input name="confirmPassword" matInput placeholder="Confirm password" type="password" [(ngModel)] = newUser.confirmPassword >
+        <input name="confirmPassword" matInput placeholder="Confirm password" type="password" [(ngModel)] = newUser.confirmPassword required>
       </mat-form-field>
 
       <mat-form-field color="accent">
@@ -57,7 +57,7 @@
       </mat-form-field>
 
       <!--BUTTON-->
-      <button mat-raised-button color="accent" type="submit" >REGISTER</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid" >REGISTER</button>
 
     </form>
 
