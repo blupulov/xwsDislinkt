@@ -24,8 +24,7 @@ export class FindUserComponent implements OnInit {
             this.router.navigateByUrl('profile')
           else {
             this.userService.setSelectedUserId(res.user.id)
-            this.router.navigateByUrl('selectedUserProfile')
-           // window.location.reload()
+            this.router.navigateByUrl('mid')
           }
       }, err => {
         alert('user not found')

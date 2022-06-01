@@ -17,6 +17,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { SelectedUserFollowersComponent } from './components/selected-user-followers/selected-user-followers.component';
 import { SelectedUserPostsComponent } from './components/selected-user-posts/selected-user-posts.component';
 import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
+import { MidCompComponent } from './mid-comp/mid-comp.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -43,6 +44,8 @@ const routes: Routes = [
   {path: 'selectedUserProfile/selectedUserFollowers', component: UserFollowersComponent},
   {path: 'selectedUserProfile/selectedFollowingUsers', component: FollowingUsersComponent},
   {path: 'selectedUserProfile/selectedUserFollowers', component: SelectedUserFollowersComponent},
+
+  {path: 'mid', component: MidCompComponent}
 ];
 
 @NgModule({

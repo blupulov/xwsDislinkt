@@ -18,19 +18,18 @@ export class SelectedUserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser()
+    //window.location.reload()
   }
 
   getUser(): void {
-    if(this.userService.getUserId() != null) {
-      this.userService.getUserById(this.userService.getSelectedUserId()).subscribe(
-        res => {
-          this.user = res.user
-        },
-        err => {
-          alert('problem with loading user')
-        }
-      )
-    }
+    this.userService.getUserById(this.userService.getSelectedUserId()).subscribe(
+      res => {
+        this.user = res.user
+      },
+      err => {
+        alert('problem with loading user')
+      }
+    )
   }
 
   follow(){
