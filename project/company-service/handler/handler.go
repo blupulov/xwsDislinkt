@@ -112,4 +112,80 @@ func (ch *CompanyHandler) EnableCompany(ctx context.Context, r *pb.EnableCompany
 	return &response, nil
 }
 
-//komentari i poslovi
+func (ch *CompanyHandler) CreateJob(ctx context.Context, r *pb.CreateJobRequest) (*pb.CreateJobResponse, error) {
+	var response pb.CreateJobResponse
+
+	companyId, err := primitive.ObjectIDFromHex(r.CompanyId)
+	if err != nil {
+		return nil, err
+	}
+
+	job := mapJobFromPbJob(r.Job)
+
+	err = ch.cs.CreateJob(companyId, job)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
+func (ch *CompanyHandler) DeleteJob(ctx context.Context, r *pb.DeleteJobRequest) (*pb.DeleteJobResponse, error) {
+	var response pb.DeleteJobResponse
+
+	companyId, err := primitive.ObjectIDFromHex(r.CompanyId)
+	if err != nil {
+		return nil, err
+	}
+
+	jobId, err := primitive.ObjectIDFromHex(r.JobId)
+	if err != nil {
+		return nil, err
+	}
+
+	err = ch.cs.DeleteJobById(companyId, jobId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
+func (ch *CompanyHandler) CreateComment(ctx context.Context, r *pb.CreateCommentRequest) (*pb.CreateCommentResponse, error) {
+	var response pb.CreateCommentResponse
+
+	companyId, err := primitive.ObjectIDFromHex(r.CompanyId)
+	if err != nil {
+		return nil, err
+	}
+
+	comment := mapCommentFromPbComment(r.Comment)
+
+	err = ch.cs.CreateComment(companyId, comment)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
+func (ch *CompanyHandler) DeleteComment(ctx context.Context, r *pb.DeleteCommentRequest) (*pb.DeleteCommentResponse, error) {
+	var response pb.DeleteCommentResponse
+
+	companyId, err := primitive.ObjectIDFromHex(r.CompanyId)
+	if err != nil {
+		return nil, err
+	}
+
+	commentId, err := primitive.ObjectIDFromHex(r.CommentId)
+	if err != nil {
+		return nil, err
+	}
+
+	err = ch.cs.DeleteCommentById(companyId, commentId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
