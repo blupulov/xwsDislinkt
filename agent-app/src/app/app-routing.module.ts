@@ -42,7 +42,7 @@ const routes: Routes = [
   {path: 'selectedUserProfile/selectedUserPosts', component: SelectedUserPostsComponent},
   {path: 'selectedUserProfile/selectedUserFollowers', component: UserFollowersComponent},
   {path: 'selectedUserProfile/selectedFollowingUsers', component: FollowingUsersComponent},
-  {path: 'selectedUserFollowers/selectedUserFollowers', component: SelectedUserFollowersComponent},
+  {path: 'selectedUserProfile/selectedUserFollowers', component: SelectedUserFollowersComponent},
 ];
 
 @NgModule({
