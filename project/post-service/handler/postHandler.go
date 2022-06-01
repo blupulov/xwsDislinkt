@@ -102,6 +102,22 @@ func (ph *PostHandler) CommentPost(ctx context.Context, r *pb.CommentPostRequest
 	return &response, nil
 }
 
+func (ph *PostHandler) DeletePost(ctx context.Context, r *pb.DeletePostRequest) (*pb.DeletePostResponse, error) {
+	var response pb.DeletePostResponse
+
+	postId, err := primitive.ObjectIDFromHex(r.PostId)
+	if err != nil {
+		return nil, err
+	}
+
+	err = ph.ps.DeleteById(postId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
 // func (ph *PostHandler) Dislike(ctx context.Context, r *pb.DislikeRequest) (res *pb.DislikeResponse, err error) {
 // 	res = &pb.DislikeResponse{}
 // 	postId, err := primitive.ObjectIDFromHex(r.PostId)

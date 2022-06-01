@@ -28,6 +28,10 @@ export class PostService {
     return this.http.post<any>(this.apiUrl, JSON.stringify(newPost));
   }
 
+  deleteUserPost(postId: String) {
+    return this.http.delete(this.apiUrl + '/' + postId)
+  }
+
   like(postId: String) {
     return this.http.put(this.apiUrl + '/' + postId + '/like/' + this.userService.getUserId(), {})
   }

@@ -34,12 +34,25 @@ service PostService{
       get: "/post/user/{userId}"
     };
   }
+  rpc DeletePost(DeletePostRequest) returns(DeletePostResponse) {
+    option (google.api.http) = {
+      delete: "/post/{postId}"
+    };
+  }
   rpc CommentPost(CommentPostRequest) returns(CommentPostResponse) {
     option (google.api.http) = {
       put: "/post/{postId}/comment"
       body: "comment"
     };
   }
+}
+
+message  DeletePostRequest {
+  string postId = 1;
+}
+
+message  DeletePostResponse {
+
 }
 
 message CommentPostRequest {

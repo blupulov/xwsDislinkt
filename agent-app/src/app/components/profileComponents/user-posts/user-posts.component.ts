@@ -54,6 +54,17 @@ export class UserPostsComponent implements OnInit {
 
   }
 
+  deletePost(postId: String) {
+    this.postService.deleteUserPost(postId).subscribe(
+      res => {
+        alert('post deleted')
+        this.getAllUserPosts()
+      },err =>{
+        alert('problem with deleting')
+      }
+    )
+  }
+
   onSubmit() {
     let comment = new PostComment();
     comment.commentOwnerId = new String(this.userService.getUserId());

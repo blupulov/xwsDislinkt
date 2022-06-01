@@ -24,6 +24,7 @@
           <button mat-raised-button color="primary" (click)="showFans(post.fansIds)"> Likes: {{ post.postLikeNumber }} </button>
           <button mat-raised-button color="primary" (click)="showHaters(post.hatersIds)"> Dislikes: {{ post.postDislikeNumber }} </button>
           <button mat-raised-button color="primary" (click)="showPostComments(post.id)"> Comments: {{ post.comments.length }} </button>
+          <button mat-raised-button color="primary" (click)="deletePost(post.id)"> Delete</button>
         </div>
 
         <!--KOMENTARI-->
