@@ -14,6 +14,7 @@ import { ProfileComponent } from './components/profileComponents/profile/profile
 import { UserFollowersComponent } from './components/profileComponents/user-followers/user-followers.component';
 import { UserPostsComponent } from './components/profileComponents/user-posts/user-posts.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { SelectedUserFollowersComponent } from './components/selected-user-followers/selected-user-followers.component';
 import { SelectedUserPostsComponent } from './components/selected-user-posts/selected-user-posts.component';
 import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
 
@@ -35,12 +36,13 @@ const routes: Routes = [
   {path: 'profile/changeInfo/addInterest', component: AddInterestComponent},
 
   {path: 'postFans', component: PostFansComponent},
-  
+
   // prikazi profil korisnika
   {path: 'selectedUserProfile', component: SelectedUserProfileComponent},
   {path: 'selectedUserProfile/selectedUserPosts', component: SelectedUserPostsComponent},
   {path: 'selectedUserProfile/selectedUserFollowers', component: UserFollowersComponent},
   {path: 'selectedUserProfile/selectedFollowingUsers', component: FollowingUsersComponent},
+  {path: 'selectedUserFollowers/selectedUserFollowers', component: SelectedUserFollowersComponent},
 ];
 
 @NgModule({
