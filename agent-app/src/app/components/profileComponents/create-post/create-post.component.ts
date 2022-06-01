@@ -19,6 +19,19 @@ export class CreatePostComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  url = "./assets/welcome.jpg"
+
+  onSelectFile(image: any) {
+    if(image.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(image.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+        debugger;
+      }
+    }
+  }
+
   onSubmit(form: any) {
     
   }

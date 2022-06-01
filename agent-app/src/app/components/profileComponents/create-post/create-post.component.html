@@ -5,10 +5,12 @@
         </mat-toolbar>
         <form #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
             <!--IMAGE-->
-            <mat-form-field color="accent">
-                <mat-label><strong>IMAGE</strong></mat-label>
-                <input name="image" matInput placeholder="Image" [(ngModel)]= newPost.image>
-            </mat-form-field>
+            <div class="container text-center">
+
+                <img [src]="url" height="200"><br>
+                <input name="image" placeholder="Image" type="file" accept="image/*" (change)="onSelectFile($event)" [(ngModel)] = newPost.image>
+
+            </div>
             <!--COMMENT-->
             <mat-form-field color="accent">
                 <mat-label><strong>COMMENT</strong></mat-label>
