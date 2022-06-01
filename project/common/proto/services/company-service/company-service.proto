@@ -1,0 +1,203 @@
+syntax = "proto3";
+
+option go_package = "github.com/blupulov/xwsDislinkt/common/company-service";
+
+package companyservice;
+
+import "google/api/annotations.proto";
+
+service CompanyService{
+  rpc GetAll(GetAllRequest) returns(GetAllResponse) {
+    option (google.api.http) = {
+      get: "/company"
+    };
+  }
+
+  rpc GetAllUnAccepted(GetAllUnAcceptedRequest) returns(GetAllUnAcceptedResponse) {
+    option (google.api.http) = {
+      get: "/company/unAccepted"
+    };
+  }
+
+  rpc GetAllByOwnerId(GetAllByOwnerIdRequest) returns(GetAllByOwnerIdResponse) {
+    option (google.api.http) = {
+      get: "/company/{ownerId}/owner"
+    };
+  }
+  
+  rpc GetById(GetByIdRequest) returns(GetByIdResponse) {
+    option (google.api.http) = {
+      get: "/company/{companyId}"
+    };
+  }
+
+  rpc CreateCompany(CreateCompanyRequest) returns(CreateCompanyResponse) {
+    option (google.api.http) = {
+      post: "/company"
+      body: "company"
+    };
+  }
+
+  rpc DeleteCompany(DeleteCompanyRequest) returns(DeleteCompanyResponse) {
+    option (google.api.http) = {
+      delete: "/company/{companyId}"
+    };
+  }
+
+  rpc CreateComment(CreateCommentRequest) returns(CreateCommentResponse) {
+    option (google.api.http) = {
+      put: "/company/{companyId}/comment"
+      body: "comment"
+    };
+  }
+
+  rpc DeleteComment(DeleteCommentRequest) returns(DeleteCommentResponse) {
+    option (google.api.http) = {
+      delete: "/company/{companyId}/comment/{commentId}"
+    };
+  }
+
+  rpc CreateJob(CreateJobRequest) returns(CreateJobResponse) {
+    option (google.api.http) = {
+      put: "/company/{companyId}/job"
+      body: "job"
+    };
+  }
+
+  rpc DeleteJob(DeleteJobRequest) returns(DeleteJobResponse) {
+    option (google.api.http) = {
+      delete: "/company/{companyId}/job/{jobId}"
+    };
+  }
+
+  
+  rpc EnableCompany(EnableCompanyRequest) returns(EnableCompanyResponse) {
+    option (google.api.http) = {
+      put: "/company/{companyId}/enable"
+    };
+  }
+}
+
+message EnableCompanyRequest {
+  string companyId =1;
+}
+
+message EnableCompanyResponse {
+
+}
+
+message DeleteJobRequest {
+  string companyId = 1;
+  string jobId = 2;
+}
+
+message DeleteJobResponse {
+
+}
+
+message CreateJobRequest {
+  string companyId = 1;
+  Job job = 2;
+}
+
+message CreateJobResponse {
+
+}
+
+message DeleteCommentRequest {
+  string companyId = 1;
+  string commentId = 2;
+}
+
+message DeleteCommentResponse {
+
+}
+
+message CreateCommentRequest {
+  string companyId = 1;
+  Comment comment = 2;
+}
+
+message CreateCommentResponse {
+
+}
+
+message DeleteCompanyRequest {
+  string companyId = 1;
+}
+
+message DeleteCompanyResponse {
+  
+}
+
+message CreateCompanyRequest {
+  Company company = 1;
+}
+
+message CreateCompanyResponse {
+
+}
+
+message GetAllUnAcceptedRequest {
+
+}
+
+message GetAllUnAcceptedResponse {
+  repeated Company companies = 1;
+}
+
+message GetAllByOwnerIdRequest {
+  string ownerId = 1;
+}
+
+message GetAllByOwnerIdResponse {
+  repeated Company companies = 1;
+}
+
+message GetByIdRequest {
+  string  companyId = 1;
+}
+
+message GetByIdResponse {
+  Company company = 1;
+}
+
+message GetAllRequest {
+
+}
+
+message GetAllResponse {
+  repeated Company companies = 1;
+}
+
+
+message Company {
+  string id = 1;
+  string companyName = 2;
+  string ownerId = 3;
+  string description = 4;
+  Info info = 5;
+  repeated Comment comments = 6;
+  repeated Job openJobs = 7;
+}
+
+message Job {
+  string id = 1;
+	string jobName = 2;
+	string jobDescription =3;
+}
+
+message Info {
+  string street = 1;
+	string city = 2;
+	string country = 3;
+	string phoneNumber = 4;
+	string email = 5;
+}
+
+message Comment {
+  string id = 1;
+	string commentOwnerId = 2;
+	string comment = 3;
+  int32 grade = 4;
+}

@@ -8,6 +8,8 @@ type Config struct {
 	UserServicePort      string
 	FollowingServiceHost string
 	FollowingServicePort string
+	CompanyServiceHost   string
+	CompanyServicePort   string
 }
 
 //dodati u .env
@@ -20,5 +22,7 @@ func NewConfig() *Config {
 		UserServicePort:      "9051",
 		FollowingServiceHost: "localhost",
 		FollowingServicePort: "9052",
+		CompanyServiceHost:   "localhost",
+		CompanyServicePort:   "9053",
 	}
 }

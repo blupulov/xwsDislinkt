@@ -10,6 +10,7 @@ import (
 
 	"github.com/blupulov/xwsDislinkt/api-gateway/customHandlers"
 	"github.com/blupulov/xwsDislinkt/api-gateway/startup/config"
+	csGw "github.com/blupulov/xwsDislinkt/common/proto/services/company-service"
 	fsGw "github.com/blupulov/xwsDislinkt/common/proto/services/following-service"
 	psGw "github.com/blupulov/xwsDislinkt/common/proto/services/post-service"
 	usGw "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
@@ -61,6 +62,15 @@ func (s *Server) initHandlers() {
 		s.log.Println("FOLLOWING-SERVICE GATEWAY PROBLEM")
 		panic(err)
 	}
+
+	csEndpoint := fmt.Sprintf("%s:%s", s.config.CompanyServiceHost, s.config.CompanyServicePort)
+	s.log.Println("company-service grpc endpoint port: " + s.config.CompanyServicePort)
+	err = csGw.RegisterCompanyServiceHandlerFromEndpoint(context.TODO(), s.mux, csEndpoint, options)
+	if err != nil {
+		s.log.Println("COMPANY-SERVICE GATEWAY PROBLEM")
+		panic(err)
+	}
+
 }
 
 func (s *Server) initCustomHandlers() {
