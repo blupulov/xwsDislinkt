@@ -1,1 +1,12 @@
-<p>post-haters works!</p>
+<div class="container">
+    <table class="table table-hover">
+        <tbody>
+            <tr *ngFor="let hater of haters" (click)="showProfile(hater.id)">
+                <td>Image</td>
+                <td> {{ hater.username}} </td>
+                <td> {{ hater.firstName }} {{ hater.lastName }} </td>
+                <td> {{ hater.email }} </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

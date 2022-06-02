@@ -50,7 +50,12 @@ export class UserPostsComponent implements OnInit {
   }
 
   showHaters(hatersIds: String[]) {
-    alert('haters')
+    if(hatersIds.length > 0) {
+      this.userService.setHatersIds(hatersIds)
+      this.router.navigateByUrl('postHaters')
+    } else {
+      alert('there is no haters')
+    }
 
   }
 

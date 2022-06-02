@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { PostFansComponent } from './components/post-fans/post-fans.component';
+import { PostHatersComponent } from './components/post-haters/post-haters.component';
 import { AddEducationComponent } from './components/profileComponents/add-education/add-education.component';
 import { AddExpirienceComponent } from './components/profileComponents/add-expirience/add-expirience.component';
 import { AddInterestComponent } from './components/profileComponents/add-interest/add-interest.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
   {path: 'profile/changeInfo/addInterest', component: AddInterestComponent},
 
   {path: 'postFans', component: PostFansComponent},
+  {path: 'postHaters', component: PostHatersComponent},
 
   // prikazi profil korisnika
   {path: 'selectedUserProfile', component: SelectedUserProfileComponent},

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/models/user.model';
+import { UserService } from 'src/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-haters',
@@ -7,9 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostHatersComponent implements OnInit {
 
-  constructor() { }
+  haters: User[] = [];
+
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
+    this.loadHaters()
+  }
+
+  loadHaters() {
+    var hatersIds = this.userService.getHatersIds()
+
+    this.userService.getManyUsersById(hatersIds).subscribe(
+      res => {
+        this.haters = res.users
+      }, err => {
+        alert('problem with loading haters')
+      }
+    )
+  }
+
+  showProfile(userId: String) {
+    this.userService.setSelectedUserId(userId)
+    this.router.navigateByUrl('selectedUserProfile')
   }
 
 }
