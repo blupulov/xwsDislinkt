@@ -4,6 +4,7 @@ import { Post } from 'src/models/post.model';
 import { PostComment } from 'src/models/postComment.model';
 import { PostService } from 'src/services/post.service';
 import { UserService } from 'src/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-selected-user-posts',
@@ -15,7 +16,7 @@ export class SelectedUserPostsComponent implements OnInit {
   selectedPostId: String = '';
   comment: String = '';
 
-  constructor(private postService: PostService, private userService: UserService) { }
+  constructor(private postService: PostService, private userService: UserService, private router:Router) { }
 
   ngOnInit(): void {
     this.getAllUserPosts()
@@ -40,12 +41,22 @@ export class SelectedUserPostsComponent implements OnInit {
     }
   }
 
-  openFans() {
-    alert('adksahdkjash')
+  openFans(fansIds: String[]) {
+    if(fansIds.length > 0) {
+      this.userService.setFansIds(fansIds)
+      this.router.navigateByUrl('postFans')
+    } else {
+      alert('there is no fans')
+    }
   }
 
-  openHaters() {
-    alert('proba')
+  openHaters(hatersIds: String[]) {
+    if(hatersIds.length > 0) {
+      this.userService.setHatersIds(hatersIds)
+      this.router.navigateByUrl('postHaters')
+    } else {
+      alert('there is no haters')
+    }
   }
 
   onSubmit() {
