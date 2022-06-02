@@ -5,31 +5,24 @@
       <!--DATUM KREIRANJA-->
       <mat-card-header>
         {{ post.postDate | date: 'dd-MM-yyyy' }}
-      </mat-card-header>
+      </mat-card-header> 
 
-      <!--KOMENTAR AKO GA IMA-->
-      <mat-card-header>
-        {{ post.postComment }}
-      </mat-card-header>
-
-      <!--SLIKA AKO POSTOJI-->
-      <mat-card-content>
-
-      </mat-card-content>
+      <img *ngIf="post.postImage !== ''"  mat-card-image [src]="post.postImage" style="text-align:center; vertical-align:middle; max-height:450px;" />
       
-      <mat-card-footer class="post-footer" fxLayoutAlign="center center" fxLayoutAlign="stretch" fxLayout="column">
-        
-        <!--DUGMICI-->
-        <div>
+      <mat-card-content>
+        {{ post.postComment }}
+      </mat-card-content>
+
+      <mat-card-actions>
           <button mat-raised-button color="primary" (click)="showFans(post.fansIds)"> Likes: {{ post.postLikeNumber }} </button>
           <button mat-raised-button color="primary" (click)="showHaters(post.hatersIds)"> Dislikes: {{ post.postDislikeNumber }} </button>
           <button mat-raised-button color="primary" (click)="showPostComments(post.id)"> Comments: {{ post.comments.length }} </button>
           <button mat-raised-button color="primary" (click)="deletePost(post.id)"> Delete</button>
-        </div>
-
+      </mat-card-actions>
+      
+      <mat-card-footer class="post-footer" fxLayoutAlign="center center" fxLayoutAlign="stretch" fxLayout="column">
         <!--KOMENTARI-->
         <div *ngIf="post.id === selectedPostId" class="post-comments">
-         
           <!--ADD COMMENT FORM-->
           <form novalidate #form="ngForm" (submit)="onSubmit()">
             <mat-form-field color="accent">

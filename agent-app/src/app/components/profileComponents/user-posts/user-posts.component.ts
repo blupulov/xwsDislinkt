@@ -21,6 +21,10 @@ export class UserPostsComponent implements OnInit {
     this.getAllUserPosts()
   }
 
+  alertPost(post: Post) {
+    alert(JSON.stringify(post.postImage))
+  }
+
   getAllUserPosts() {
     this.postService.getAllUserPosts(this.userService.getUserId()?.toString()).subscribe(
       res => {
