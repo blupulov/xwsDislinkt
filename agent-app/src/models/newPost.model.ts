@@ -1,4 +1,5 @@
 export class NewPost {
-    image: String = '';
-    comment: String = '';
+    postImage: String = '';
+    postComment: String = '';
+    postOwnerId: String = '';
 }

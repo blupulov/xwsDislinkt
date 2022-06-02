@@ -6,22 +6,19 @@
         <form #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
             <!--IMAGE-->
             <div class="container text-center">
-
                 <img [src]="url" height="200"><br>
-                <input name="image" placeholder="Image" type="file" accept="image/*" (change)="onSelectFile($event)" [(ngModel)] = newPost.image>
-
+                <input name="image" placeholder="Image" type="file" accept="image/*" (change)="onSelectFile($event)">
             </div>
+
             <!--COMMENT-->
             <mat-form-field color="accent">
                 <mat-label><strong>COMMENT</strong></mat-label>
-                <input name="comment" matInput placeholder="Comment" [(ngModel)] = newPost.comment>
+                <input name="comment" matInput placeholder="Comment" [(ngModel)] = newPost.postComment>
             </mat-form-field>
+
             <!--BUTTON-->
             <button mat-raised-button color="accent" type="submit">POST</button>
-
         </form>
-
-
     </mat-card>
 
 </div>
