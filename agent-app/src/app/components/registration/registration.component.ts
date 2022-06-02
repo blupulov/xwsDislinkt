@@ -19,6 +19,7 @@ export class RegistrationComponent implements OnInit {
   birthdate: String = '';
   email: String = '';
   phoneNumber:String = '';
+  image: String = '';
 
 
 
@@ -27,6 +28,19 @@ export class RegistrationComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  url = "./assets/no-image.png"
+
+  onSelectFile(image: any) {
+    if(image.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(image.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+        debugger;
+      }
+    }
   }
 
   onSubmit(form: any){

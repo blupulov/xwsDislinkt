@@ -5,6 +5,13 @@
     </mat-toolbar>
     <form  #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
 
+      <!--IMAGE-->
+      <div class="container text-center">
+        <img [src]="url" height="200"><br>
+        <input name="image" placeholder="Image" type="file" accept="image/*" (change)="onSelectFile($event)" [(ngModel)] = newUser.image required>
+
+      </div>
+
       <!--FIRSTNAME-->
       <mat-form-field color="accent">
         <mat-label><strong>FIRSTNAME</strong></mat-label>
