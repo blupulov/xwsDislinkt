@@ -35,4 +35,8 @@ export class PostService {
   like(postId: String) {
     return this.http.put(this.apiUrl + '/' + postId + '/like/' + this.userService.getUserId(), {})
   }
+
+  dislike(postId: String) {
+    return this.http.put(this.apiUrl + '/' + postId + '/dislike/' + this.userService.getUserId(), {})
+  }
 }

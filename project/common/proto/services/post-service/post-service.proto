@@ -29,6 +29,11 @@ service PostService{
       put: "/post/{postId}/like/{userId}"
     };
   }
+  rpc Dislike(DislikeRequest) returns(DislikeResponse) {
+    option (google.api.http) = {
+      put: "/post/{postId}/dislike/{userId}"
+    };
+  }
   rpc GetAllUserPosts(GetAllUserPostsRequest) returns(GetAllUserPostsResponse) {
     option (google.api.http) = {
       get: "/post/user/{userId}"
@@ -101,6 +106,15 @@ message LikeRequest {
 }
 
 message LikeResponse {
+  string status = 1;
+}
+
+message DislikeRequest {
+  string postId = 1;
+  string userId = 2;
+}
+
+message DislikeResponse {
   string status = 1;
 }
 

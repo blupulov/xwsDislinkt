@@ -44,6 +44,10 @@ export class SelectedUserPostsComponent implements OnInit {
     alert('adksahdkjash')
   }
 
+  openHaters() {
+    alert('proba')
+  }
+
   onSubmit() {
     let comment = new PostComment();
     comment.commentOwnerId = new String(this.userService.getUserId());
@@ -112,7 +116,28 @@ export class SelectedUserPostsComponent implements OnInit {
   }
 
   dislike(postId: String) {
+    this.postService.dislike(postId).subscribe(
+      res => {
+        this.addUserIdToPostHaters(postId)
+      }, err => {
+        alert('problem with disliking post')
+      }
+    )
+  }
 
+  addUserIdToPostHaters(postId: String) {
+    for(let post in this.posts) {
+      if(this.posts[post].id == postId) {
+        this.posts[post].hatersIds.push(this.userService.getUserId() || "")
+        this.posts[post].postDislikeNumber++
+        for(let fanId in this.posts[post].fansIds) {
+          if(this.posts[post].fansIds[fanId] == this.userService.getUserId()) {
+            this.posts[post].fansIds.splice(parseInt(fanId), 1)
+            this.posts[post].postLikeNumber--
+          }
+        }
+      }
+    }
   }
   
 }

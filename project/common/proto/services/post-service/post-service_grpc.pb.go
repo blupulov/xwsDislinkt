@@ -26,6 +26,7 @@ type PostServiceClient interface {
 	GetById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*GetByIdResponse, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*InsertResponse, error)
 	Like(ctx context.Context, in *LikeRequest, opts ...grpc.CallOption) (*LikeResponse, error)
+	Dislike(ctx context.Context, in *DislikeRequest, opts ...grpc.CallOption) (*DislikeResponse, error)
 	GetAllUserPosts(ctx context.Context, in *GetAllUserPostsRequest, opts ...grpc.CallOption) (*GetAllUserPostsResponse, error)
 	DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error)
 	CommentPost(ctx context.Context, in *CommentPostRequest, opts ...grpc.CallOption) (*CommentPostResponse, error)
@@ -75,6 +76,15 @@ func (c *postServiceClient) Like(ctx context.Context, in *LikeRequest, opts ...g
 	return out, nil
 }
 
+func (c *postServiceClient) Dislike(ctx context.Context, in *DislikeRequest, opts ...grpc.CallOption) (*DislikeResponse, error) {
+	out := new(DislikeResponse)
+	err := c.cc.Invoke(ctx, "/postservice.PostService/Dislike", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *postServiceClient) GetAllUserPosts(ctx context.Context, in *GetAllUserPostsRequest, opts ...grpc.CallOption) (*GetAllUserPostsResponse, error) {
 	out := new(GetAllUserPostsResponse)
 	err := c.cc.Invoke(ctx, "/postservice.PostService/GetAllUserPosts", in, out, opts...)
@@ -110,6 +120,7 @@ type PostServiceServer interface {
 	GetById(context.Context, *GetByIdRequest) (*GetByIdResponse, error)
 	Insert(context.Context, *InsertRequest) (*InsertResponse, error)
 	Like(context.Context, *LikeRequest) (*LikeResponse, error)
+	Dislike(context.Context, *DislikeRequest) (*DislikeResponse, error)
 	GetAllUserPosts(context.Context, *GetAllUserPostsRequest) (*GetAllUserPostsResponse, error)
 	DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error)
 	CommentPost(context.Context, *CommentPostRequest) (*CommentPostResponse, error)
@@ -131,6 +142,9 @@ func (UnimplementedPostServiceServer) Insert(context.Context, *InsertRequest) (*
 }
 func (UnimplementedPostServiceServer) Like(context.Context, *LikeRequest) (*LikeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Like not implemented")
+}
+func (UnimplementedPostServiceServer) Dislike(context.Context, *DislikeRequest) (*DislikeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Dislike not implemented")
 }
 func (UnimplementedPostServiceServer) GetAllUserPosts(context.Context, *GetAllUserPostsRequest) (*GetAllUserPostsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllUserPosts not implemented")
@@ -226,6 +240,24 @@ func _PostService_Like_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PostService_Dislike_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DislikeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostServiceServer).Dislike(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/postservice.PostService/Dislike",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostServiceServer).Dislike(ctx, req.(*DislikeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PostService_GetAllUserPosts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllUserPostsRequest)
 	if err := dec(in); err != nil {
@@ -302,6 +334,10 @@ var PostService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Like",
 			Handler:    _PostService_Like_Handler,
+		},
+		{
+			MethodName: "Dislike",
+			Handler:    _PostService_Dislike_Handler,
 		},
 		{
 			MethodName: "GetAllUserPosts",
