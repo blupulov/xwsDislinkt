@@ -25,7 +25,7 @@ export class PostService {
   }
 
   posting(newPost: NewPost) {
-    return this.http.post<any>(this.apiUrl, JSON.stringify(newPost));
+    return this.http.post(this.apiUrl, JSON.stringify(newPost));
   }
 
   deleteUserPost(postId: String) {
