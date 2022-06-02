@@ -15,6 +15,7 @@ import { UserFollowersComponent } from './components/profileComponents/user-foll
 import { UserPostsComponent } from './components/profileComponents/user-posts/user-posts.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SelectedUserFollowersComponent } from './components/selected-user-followers/selected-user-followers.component';
+import { SelectedUserFollowingComponent } from './components/selected-user-following/selected-user-following.component';
 import { SelectedUserPostsComponent } from './components/selected-user-posts/selected-user-posts.component';
 import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
 import { MidCompComponent } from './mid-comp/mid-comp.component';
@@ -44,6 +45,7 @@ const routes: Routes = [
   {path: 'selectedUserProfile/selectedUserFollowers', component: UserFollowersComponent},
   {path: 'selectedUserProfile/selectedFollowingUsers', component: FollowingUsersComponent},
   {path: 'selectedUserProfile/selectedUserFollowers', component: SelectedUserFollowersComponent},
+  {path: 'selectedUserProfile/selectedUserFollowing', component: SelectedUserFollowingComponent},
 
   {path: 'mid', component: MidCompComponent}
 ];

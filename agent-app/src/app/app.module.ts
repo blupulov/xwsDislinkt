@@ -38,6 +38,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { SelectedUserPostsComponent } from './components/selected-user-posts/selected-user-posts.component';
 import { SelectedUserFollowersComponent } from './components/selected-user-followers/selected-user-followers.component';
 import { MidCompComponent } from './mid-comp/mid-comp.component';
+import { SelectedUserFollowingComponent } from './components/selected-user-following/selected-user-following.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { MidCompComponent } from './mid-comp/mid-comp.component';
     SelectedUserPostsComponent,
     SelectedUserFollowersComponent,
     MidCompComponent,
+    SelectedUserFollowingComponent,
 
   ],
   imports: [
