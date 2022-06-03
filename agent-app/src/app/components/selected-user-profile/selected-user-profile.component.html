@@ -1,7 +1,10 @@
 <div class="container">
   <!--PROFILE INFO-->
   <mat-grid-list cols="3" rowHeight="2:1">
-    <mat-grid-tile [colspan]="1" [rowspan]="2" [style.background]="'whitesmoke'">PROFILE IMAGE</mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2" [style.background]="'whitesmoke'">
+      <img *ngIf="user.image !== ''" [src]="user.image" style="text-align:center; vertical-align:middle; max-height:300px; max-width:300px" />
+      <p *ngIf="user.image == ''" >NO IMAGE</p>
+    </mat-grid-tile>
     <mat-grid-tile [colspan]="2" [rowspan]="2" [style.background]="'whitesmoke'">
       <table class="table">
         <tbody>
