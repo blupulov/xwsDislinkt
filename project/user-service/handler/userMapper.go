@@ -7,6 +7,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
+//TODO: OVO ZA EDU I OSTALO
 func mapPbUserFromModel(user *model.User) *pb.User {
 	pbUser := &pb.User{
 		Id:        user.Id.Hex(),
@@ -18,12 +19,13 @@ func mapPbUserFromModel(user *model.User) *pb.User {
 		Biography: user.Biography,
 		Role:      user.Role.String(),
 		// DODATI DOBAVLJENJE NIZOVA IZPOD
-		Education:      []*pb.EducationItem{}, //za potrebe testiranja,sve dole
+		Education:      []*pb.EducationItem{},
 		WorkExpirience: []*pb.WorkExpirienceItem{},
 		Skills:         []*pb.SkillItem{},
 		Interests:      []*pb.Interests{},
 		BlockedUsers:   []string{},
 		PhoneNumber:    user.PhoneNumber,
+		Image:          user.ProfileImage,
 	}
 
 	return pbUser
@@ -31,14 +33,15 @@ func mapPbUserFromModel(user *model.User) *pb.User {
 
 func mapUserForRegistration(newUser *pb.UserRegistrationModel) *model.User {
 	return &model.User{
-		FirstName: newUser.FirstName,
-		LastName:  newUser.LastName,
-		//BirthDate:      newUser.GetBirthdate().AsTime(),
+		FirstName:      newUser.FirstName,
+		LastName:       newUser.LastName,
+		BirthDate:      newUser.GetBirthdate().AsTime(),
 		Email:          newUser.Email,
 		Username:       newUser.Username,
 		Password:       newUser.Password,
 		Biography:      newUser.Biography,
 		PhoneNumber:    newUser.PhoneNumber,
+		ProfileImage:   newUser.Image,
 		Education:      make([]model.EducationItem, 0), //za potrebe testiranja
 		WorkExperience: make([]model.WorkExperienceItem, 0),
 		Skills:         make([]model.SkillItem, 0),

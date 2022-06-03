@@ -242,6 +242,7 @@ message User {
   repeated string blockedUsers = 12;
   string role = 13;
   string phoneNumber = 14;
+  string image = 15;
 }
 
 message EducationItem {
