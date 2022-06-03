@@ -31,8 +31,11 @@
       <mat-divider></mat-divider>
       <button class="profile-action-button" mat-flat-button color="primary" routerLink="createPost" > ADD POST </button>
       <mat-divider></mat-divider>
-      <!--U CHANGE INFO TREBA DODATI FORME ZA DODAVANJE INTERESOVANJA ZANIMANJA I SLICNE STVARI-->
       <button class="profile-action-button" mat-flat-button color="primary" routerLink="changeInfo" > CHANGE INFO </button>
+      <mat-divider></mat-divider>
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="createCompany" > CREATE COMPANY </button>
+      <mat-divider></mat-divider>
+      <button *ngIf="user.role == 'OWNER_ROLE'" class="profile-action-button" mat-flat-button color="primary" routerLink="myCompanies" > COMPANIES </button>
     </div>
   </div>
 

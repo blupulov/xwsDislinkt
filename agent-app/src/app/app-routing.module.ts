@@ -1,5 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CompanyProfileComponent } from './components/companies/company-profile/company-profile.component';
+import { CreateCommentComponent } from './components/companies/create-comment/create-comment.component';
+import { CreateCompanyComponent } from './components/companies/create-company/create-company.component';
+import { CreateJobComponent } from './components/companies/create-job/create-job.component';
+import { EnableCompanyComponent } from './components/companies/enable-company/enable-company.component';
+import { ShowMyCompaniesComponent } from './components/companies/show-my-companies/show-my-companies.component';
+import { ShowUserCompaniesComponent } from './components/companies/show-user-companies/show-user-companies.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { PostFansComponent } from './components/post-fans/post-fans.component';
@@ -37,11 +44,18 @@ const routes: Routes = [
   {path: 'profile/changeInfo/addExpirience', component: AddExpirienceComponent},
   {path: 'profile/changeInfo/addEducation', component: AddEducationComponent},
   {path: 'profile/changeInfo/addInterest', component: AddInterestComponent},
-
+  {path: 'profile/createCompany', component: CreateCompanyComponent},
+  {path: 'profile/myCompanies', component: ShowMyCompaniesComponent},
+  
   {path: 'postFans', component: PostFansComponent},
   {path: 'postHaters', component: PostHatersComponent},
+  {path: 'userCompanies', component: ShowUserCompaniesComponent},
+  {path: 'companyProfile', component: CompanyProfileComponent},
+  {path: 'enableCompany', component: EnableCompanyComponent},
+  {path: 'createJob', component: CreateJobComponent},
+  {path: 'createComment', component: CreateCommentComponent},
 
-  // prikazi profil korisnika
+  //KOMPONENTE KOJIMA SE PRISTUPA SA SELEKTOVANOG PROFILA
   {path: 'selectedUserProfile', component: SelectedUserProfileComponent},
   {path: 'selectedUserProfile/selectedUserPosts', component: SelectedUserPostsComponent},
   {path: 'selectedUserProfile/selectedUserFollowers', component: UserFollowersComponent},

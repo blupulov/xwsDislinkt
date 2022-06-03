@@ -39,6 +39,13 @@ import { SelectedUserPostsComponent } from './components/selected-user-posts/sel
 import { SelectedUserFollowersComponent } from './components/selected-user-followers/selected-user-followers.component';
 import { MidCompComponent } from './mid-comp/mid-comp.component';
 import { SelectedUserFollowingComponent } from './components/selected-user-following/selected-user-following.component';
+import { CreateCompanyComponent } from './components/companies/create-company/create-company.component';
+import { ShowUserCompaniesComponent } from './components/companies/show-user-companies/show-user-companies.component';
+import { CompanyProfileComponent } from './components/companies/company-profile/company-profile.component';
+import { EnableCompanyComponent } from './components/companies/enable-company/enable-company.component';
+import { ShowMyCompaniesComponent } from './components/companies/show-my-companies/show-my-companies.component';
+import { CreateJobComponent } from './components/companies/create-job/create-job.component';
+import { CreateCommentComponent } from './components/companies/create-comment/create-comment.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +72,13 @@ import { SelectedUserFollowingComponent } from './components/selected-user-follo
     SelectedUserFollowersComponent,
     MidCompComponent,
     SelectedUserFollowingComponent,
+    CreateCompanyComponent,
+    ShowUserCompaniesComponent,
+    CompanyProfileComponent,
+    EnableCompanyComponent,
+    ShowMyCompaniesComponent,
+    CreateJobComponent,
+    CreateCommentComponent,
 
   ],
   imports: [
