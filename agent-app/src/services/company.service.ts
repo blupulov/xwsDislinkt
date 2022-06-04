@@ -41,6 +41,14 @@ export class CompanyService {
     return this.http.delete(this.apiUrl + '/' + this.getSelectedCompanyId() + '/comment/' + commentId)
   }
 
+  deleteCompany(companyId: string) {
+    return this.http.delete(this.apiUrl + '/' + companyId)
+  }
+
+  enableCompany(companyId: string) {
+    return this.http.put(this.apiUrl + '/' + companyId + '/enable', {})
+  }
+
   setSelectedCompanyId(companyId: string) {
     localStorage.setItem("selectedCompanyId", companyId)
   }

@@ -18,4 +18,5 @@ type UserInterface interface {
 	ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error
 	GetManyUsersById(usersIds []string) (*[]User, error)
 	GetUserByUsername(username string) (*User, error)
+	PromoteUserToCompanyOwner(userId primitive.ObjectID) error
 }

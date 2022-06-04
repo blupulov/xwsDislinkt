@@ -13,13 +13,15 @@ type CustomHandler struct {
 	userClientAddress      string
 	postClientAddress      string
 	followingClientAddress string
+	companyClientAddress   string
 }
 
-func NewCustomHandler(userClientAddr, postClientAddr, followingClientAddr string) *CustomHandler {
+func NewCustomHandler(userClientAddr, postClientAddr, followingClientAddr, companyClientAddr string) *CustomHandler {
 	return &CustomHandler{
 		userClientAddress:      userClientAddr,
 		postClientAddress:      postClientAddr,
 		followingClientAddress: followingClientAddr,
+		companyClientAddress:   companyClientAddr,
 	}
 }
 
@@ -32,6 +34,30 @@ func (ch *CustomHandler) Init(mux *runtime.ServeMux) {
 	if err != nil {
 		panic(err)
 	}
+	err = mux.HandlePath("PUT", "/custom/user/{userId}/company/{companyId}", ch.EnableCompanyAndPromoteUser)
+}
+
+func (ch *CustomHandler) EnableCompanyAndPromoteUser(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
+	userId := pathParams["userId"]
+	companyId := pathParams["companyId"]
+	if userId == "" || companyId == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err := ch.enableCompany(companyId)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	err = ch.promoteUserToCompanyOwner(userId)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func (ch *CustomHandler) GetFollowingUsers(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {

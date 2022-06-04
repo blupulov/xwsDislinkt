@@ -8,6 +8,14 @@ import (
 	us "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
 )
 
+func (ch *CustomHandler) promoteUserToCompanyOwner(userId string) error {
+	userClient := grpcClients.NewUserClient(ch.userClientAddress)
+
+	_, err := userClient.PromoteUserToCompanyOwner(context.TODO(), &us.PromoteUserRequest{UserId: userId})
+
+	return err
+}
+
 func (ch *CustomHandler) getUserById(userId string) (*model.User, error) {
 	userClient := grpcClients.NewUserClient(ch.userClientAddress)
 

@@ -3,6 +3,7 @@ package grpcClients
 import (
 	"log"
 
+	company "github.com/blupulov/xwsDislinkt/common/proto/services/company-service"
 	following "github.com/blupulov/xwsDislinkt/common/proto/services/following-service"
 	posts "github.com/blupulov/xwsDislinkt/common/proto/services/post-service"
 	users "github.com/blupulov/xwsDislinkt/common/proto/services/user-service"
@@ -35,6 +36,15 @@ func NewFollowingClient(addr string) following.FollowingServiceClient {
 	}
 
 	return following.NewFollowingServiceClient(conn)
+}
+
+func NewCompanyClient(addr string) company.CompanyServiceClient {
+	conn, err := getConnection(addr)
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection to Company service: %v", err)
+	}
+
+	return company.NewCompanyServiceClient(conn)
 }
 
 func getConnection(address string) (*grpc.ClientConn, error) {

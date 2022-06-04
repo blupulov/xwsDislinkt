@@ -31,6 +31,15 @@ func NewUserServiceImpl(client *mongo.Client) model.UserInterface {
 	}
 }
 
+func (us *UserServiceImpl) PromoteUserToCompanyOwner(userId primitive.ObjectID) error {
+	findFilter := bson.M{"_id": userId}
+	updateFilter := bson.M{"$set": bson.M{"role": model.ROLE_ADMIN}}
+
+	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
+
+	return sr.Err()
+}
+
 func (ps *UserServiceImpl) GetById(id primitive.ObjectID) (*model.User, error) {
 	filter := bson.M{"_id": id}
 	return ps.filter(filter)

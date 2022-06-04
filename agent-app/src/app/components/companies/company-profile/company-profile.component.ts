@@ -39,12 +39,22 @@ export class CompanyProfileComponent implements OnInit {
   }
 
 
-  deleteJob(id:string) {
+  deleteJob(id: string) {
     this.companyService.deleteJob(id).subscribe(
       res => {
         this.loadCompany()
       }, err => {
         alert('problem with deleting job')
+      }
+    )
+  }
+
+  deleteComment(id: string) {
+    this.companyService.deleteComment(id).subscribe(
+      res => {
+        this.loadCompany()
+      }, err => {
+        alert('problem with deleting comment')
       }
     )
   }
