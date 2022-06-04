@@ -207,3 +207,19 @@ func (uh *UserHandler) ChangeUser(ctx context.Context, r *pb.ChangeUserRequest) 
 
 	return &response, nil
 }
+
+func (uh *UserHandler) PromoteUserToCompanyOwner(ctx context.Context, r *pb.PromoteUserRequest) (*pb.PromoteUserResponse, error) {
+	var response pb.PromoteUserResponse
+
+	userId, err := primitive.ObjectIDFromHex(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	err = uh.us.PromoteUserToCompanyOwner(userId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}

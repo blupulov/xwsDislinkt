@@ -15,7 +15,7 @@ service CompanyService{
 
   rpc GetAllUnAccepted(GetAllUnAcceptedRequest) returns(GetAllUnAcceptedResponse) {
     option (google.api.http) = {
-      get: "/company/unAccepted"
+      get: "/company/{id}/unAccepted"
     };
   }
 
@@ -139,7 +139,7 @@ message CreateCompanyResponse {
 }
 
 message GetAllUnAcceptedRequest {
-
+  string id = 1;
 }
 
 message GetAllUnAcceptedResponse {

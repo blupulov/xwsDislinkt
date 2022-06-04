@@ -66,7 +66,7 @@ func (s *Server) initMongoClient() *mongo.Client {
 }
 
 func (s *Server) startRestServer(router *httprouter.Router) {
-	log.Println("user-service (rest) running on port: " + s.config.RestPort)
+	log.Println("company-service (rest) running on port: " + s.config.RestPort)
 	err := http.ListenAndServe(":"+s.config.RestPort, router)
 	if err != nil {
 		panic(err)

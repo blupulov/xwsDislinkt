@@ -1,0 +1,24 @@
+<div class="container"> 
+  <table class="table">
+    <thead>
+      <th>Company name</th>
+      <th>Description</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Full address</th>
+      <th></th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let company of companies">
+        <td class="col-md-2"> {{ company.companyName }} </td>
+        <td class="col-md-4"> {{ company.description }} </td>
+        <td class="col-md-1"> {{ company.info.email }} </td>
+        <td class="col-md-1"> {{ company.info.phoneNumber }} </td>
+        <td class="col-md-2"> {{ company.info.country }}, {{ company.info.city }}, {{ company.info.street }} </td>
+        <td class="col-md-1"> <button class="btn btn-success" (click)="enableCompany(company.ownerId, company.id)">ENABLE</button> </td>
+        <td class="col-md-1"> <button class="btn btn-danger" (click)="deleteCompany(company.id)">DELETE</button> </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

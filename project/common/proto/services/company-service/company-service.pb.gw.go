@@ -53,6 +53,23 @@ func request_CompanyService_GetAllUnAccepted_0(ctx context.Context, marshaler ru
 	var protoReq GetAllUnAcceptedRequest
 	var metadata runtime.ServerMetadata
 
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
 	msg, err := client.GetAllUnAccepted(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -61,6 +78,23 @@ func request_CompanyService_GetAllUnAccepted_0(ctx context.Context, marshaler ru
 func local_request_CompanyService_GetAllUnAccepted_0(ctx context.Context, marshaler runtime.Marshaler, server CompanyServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetAllUnAcceptedRequest
 	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
 
 	msg, err := server.GetAllUnAccepted(ctx, &protoReq)
 	return msg, metadata, err
@@ -626,7 +660,7 @@ func RegisterCompanyServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/companyservice.CompanyService/GetAllUnAccepted", runtime.WithHTTPPathPattern("/company/unAccepted"))
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/companyservice.CompanyService/GetAllUnAccepted", runtime.WithHTTPPathPattern("/company/{id}/unAccepted"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -926,7 +960,7 @@ func RegisterCompanyServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/companyservice.CompanyService/GetAllUnAccepted", runtime.WithHTTPPathPattern("/company/unAccepted"))
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/companyservice.CompanyService/GetAllUnAccepted", runtime.WithHTTPPathPattern("/company/{id}/unAccepted"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1137,7 +1171,7 @@ func RegisterCompanyServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 var (
 	pattern_CompanyService_GetAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"company"}, ""))
 
-	pattern_CompanyService_GetAllUnAccepted_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"company", "unAccepted"}, ""))
+	pattern_CompanyService_GetAllUnAccepted_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2}, []string{"company", "id", "unAccepted"}, ""))
 
 	pattern_CompanyService_GetAllByOwnerId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2}, []string{"company", "ownerId", "owner"}, ""))
 

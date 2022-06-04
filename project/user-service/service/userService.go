@@ -63,3 +63,7 @@ func (us *UserService) GetManyUsersById(usersIds []string) (*[]model.User, error
 func (us *UserService) GetUserByUsername(username string) (*model.User, error) {
 	return us.ui.GetUserByUsername(username)
 }
+
+func (us *UserService) PromoteUserToCompanyOwner(userId primitive.ObjectID) error {
+	return us.ui.PromoteUserToCompanyOwner(userId)
+}

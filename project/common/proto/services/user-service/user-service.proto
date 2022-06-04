@@ -74,6 +74,18 @@ service UserService{
       body: "userInfo"
     };
   }
+  rpc PromoteUserToCompanyOwner(PromoteUserRequest) returns(PromoteUserResponse) {
+    option (google.api.http) = {
+      put: "/user/{userId}/promote"
+    };
+  }
+}
+
+message PromoteUserRequest {
+  string userId = 1;
+}
+
+message PromoteUserResponse {
 
 }
 

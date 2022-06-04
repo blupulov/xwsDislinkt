@@ -1,0 +1,24 @@
+
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="30">
+    <mat-toolbar color="accent">
+      CREATE JOB
+    </mat-toolbar>
+    <form novalidate #form="ngForm" (submit)="onSubmit()" fxLayoutAlign="stretch" fxLayout="column">
+      
+      <mat-form-field color="accent">
+        <mat-label><strong>GRADE (1-10)</strong></mat-label>
+        <input name="grade" matInput [(ngModel)] = newComment.grade required>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong>COMMENT</strong></mat-label>
+        <textarea name="comment" matInput placeholder="Comment" [(ngModel)] = newComment.comment required></textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">CREATE</button>
+      
+    </form>
+
+  </mat-card>
+</div>

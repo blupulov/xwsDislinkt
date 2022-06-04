@@ -34,6 +34,7 @@ type UserServiceClient interface {
 	GetManyUsersById(ctx context.Context, in *GetManyUsersByIdRequest, opts ...grpc.CallOption) (*GetManyUsersByIdResponse, error)
 	GetUserByUsername(ctx context.Context, in *GetUserByUsernameRequest, opts ...grpc.CallOption) (*GetUserByUsernameResponse, error)
 	ChangeUser(ctx context.Context, in *ChangeUserRequest, opts ...grpc.CallOption) (*ChangeUserResponse, error)
+	PromoteUserToCompanyOwner(ctx context.Context, in *PromoteUserRequest, opts ...grpc.CallOption) (*PromoteUserResponse, error)
 }
 
 type userServiceClient struct {
@@ -143,6 +144,15 @@ func (c *userServiceClient) ChangeUser(ctx context.Context, in *ChangeUserReques
 	return out, nil
 }
 
+func (c *userServiceClient) PromoteUserToCompanyOwner(ctx context.Context, in *PromoteUserRequest, opts ...grpc.CallOption) (*PromoteUserResponse, error) {
+	out := new(PromoteUserResponse)
+	err := c.cc.Invoke(ctx, "/userservice.UserService/PromoteUserToCompanyOwner", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -159,6 +169,7 @@ type UserServiceServer interface {
 	GetManyUsersById(context.Context, *GetManyUsersByIdRequest) (*GetManyUsersByIdResponse, error)
 	GetUserByUsername(context.Context, *GetUserByUsernameRequest) (*GetUserByUsernameResponse, error)
 	ChangeUser(context.Context, *ChangeUserRequest) (*ChangeUserResponse, error)
+	PromoteUserToCompanyOwner(context.Context, *PromoteUserRequest) (*PromoteUserResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -198,6 +209,9 @@ func (UnimplementedUserServiceServer) GetUserByUsername(context.Context, *GetUse
 }
 func (UnimplementedUserServiceServer) ChangeUser(context.Context, *ChangeUserRequest) (*ChangeUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeUser not implemented")
+}
+func (UnimplementedUserServiceServer) PromoteUserToCompanyOwner(context.Context, *PromoteUserRequest) (*PromoteUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PromoteUserToCompanyOwner not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -410,6 +424,24 @@ func _UserService_ChangeUser_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_PromoteUserToCompanyOwner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PromoteUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).PromoteUserToCompanyOwner(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/userservice.UserService/PromoteUserToCompanyOwner",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).PromoteUserToCompanyOwner(ctx, req.(*PromoteUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -460,6 +492,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeUser",
 			Handler:    _UserService_ChangeUser_Handler,
+		},
+		{
+			MethodName: "PromoteUserToCompanyOwner",
+			Handler:    _UserService_PromoteUserToCompanyOwner_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

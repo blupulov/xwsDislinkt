@@ -1,0 +1,73 @@
+<div class="container">
+  <h1>Company: {{company.companyName}}</h1>
+  <table class="table">
+    <tbody>
+    <tr>
+      <td> {{ company.description }}  </td> 
+    </tr>
+    </tbody>
+  </table>
+
+  <!--JOBS-->
+  <div class="job">
+  <h2>OPEN JOBS</h2>
+  <button mat-raised-button *ngIf="company.ownerId == userService.getUserId()" (click)="createJob()" color="primary"> CREATE JOB </button>
+  <table class="table" *ngIf="company.openJobs.length > 0">
+    <thead>
+      <th>Job name</th>
+      <th>Job description</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let job of company.openJobs">
+        <td class="col-md-2"> {{ job.jobName }} </td>
+        <td class="col-md-8"> {{ job.jobDescription }} </td>
+        <td *ngIf="company.ownerId == userService.getUserId()"> <button class="btn btn-danger" (click)="deleteJob(job.id)"> DELETE </button> </td>
+        <td *ngIf="company.ownerId != userService.getUserId()"></td>
+      </tr>
+  </tbody>
+  </table>
+  <p *ngIf="company.openJobs.length === 0">COMPANY DON'T HAVE OPEN JOBS</p>
+  </div>
+  
+
+  <div class="comment">
+    <h2>COMMENTS</h2>
+    <button mat-raised-button *ngIf="company.ownerId !== userService.getUserId()" (click)="createComment()" color="primary"> CREATE COMMENT </button>
+    <table class="table" *ngIf="company.comments.length > 0">
+      <thead>
+        <th>Comment</th>
+        <th>Grade</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comment of company.comments">
+          <td class="col-md-8"> {{ comment.comment }} </td>
+          <td class="col-md-2"> {{ comment.grade }} </td>
+          <td *ngIf="comment.commentOwnerId == userService.getUserId()"> <button class="btn btn-danger" (click)="deleteComment(comment.id)"> DELETE </button> </td>
+          <td *ngIf="comment.commentOwnerId !== userService.getUserId()"></td>
+        </tr>
+    </tbody>
+    </table>
+    <p *ngIf="company.comments.length === 0">WAITING FOR COMMENT</p>
+  </div>
+  
+  <footer>
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Full address: </td>
+          <td> {{ company.info.country }} {{ company.info.city }} {{ company.info.street }}  </td> 
+        </tr>
+      <tr>
+        <td>Email: </td>
+        <td> {{ company.info.email }}  </td> 
+      </tr>
+      <tr>
+        <td>Phone: </td>
+        <td> {{ company.info.phoneNumber }}  </td> 
+      </tr>
+      </tbody>
+    </table>
+  </footer>
+</div>

@@ -77,8 +77,9 @@ func (s *Server) initCustomHandlers() {
 	psEndpoint := fmt.Sprintf("%s:%s", s.config.PostServiceHost, s.config.PostServicePort)
 	usEndpoint := fmt.Sprintf("%s:%s", s.config.UserServiceHost, s.config.UserServicePort)
 	fsEndpoint := fmt.Sprintf("%s:%s", s.config.FollowingServiceHost, s.config.FollowingServicePort)
+	csEndpoint := fmt.Sprintf("%s:%s", s.config.CompanyServiceHost, s.config.CompanyServicePort)
 
-	customHandler := customHandlers.NewCustomHandler(usEndpoint, psEndpoint, fsEndpoint)
+	customHandler := customHandlers.NewCustomHandler(usEndpoint, psEndpoint, fsEndpoint, csEndpoint)
 	customHandler.Init(s.mux)
 }
 
