@@ -49,7 +49,6 @@ const routes: Routes = [
   
   {path: 'postFans', component: PostFansComponent},
   {path: 'postHaters', component: PostHatersComponent},
-  {path: 'userCompanies', component: ShowUserCompaniesComponent},
   {path: 'companyProfile', component: CompanyProfileComponent},
   {path: 'enableCompany', component: EnableCompanyComponent},
   {path: 'createJob', component: CreateJobComponent},
@@ -62,6 +61,7 @@ const routes: Routes = [
   {path: 'selectedUserProfile/selectedFollowingUsers', component: FollowingUsersComponent},
   {path: 'selectedUserProfile/selectedUserFollowers', component: SelectedUserFollowersComponent},
   {path: 'selectedUserProfile/selectedUserFollowing', component: SelectedUserFollowingComponent},
+  {path: 'selectedUserProfile/userCompanies', component: ShowUserCompaniesComponent},
 
   {path: 'mid', component: MidCompComponent}
 ];
