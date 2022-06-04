@@ -3,6 +3,7 @@ import { User } from 'src/models/user.model';
 import { FollowingService } from 'src/services/following.service';
 import { UserService } from 'src/services/user.service';
 import { CustomService } from'src/services/custom.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -14,11 +15,17 @@ export class ProfileComponent implements OnInit {
   user: User = new User();
 
   constructor(private userService: UserService, private followingService: FollowingService,
-    private customService: CustomService) { }
+    private customService: CustomService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUser()
-    this.loadFollowingUsersIds()
+
+    if (this.userService.getUserRole() != "ADMIN"){
+      this.loadFollowingUsersIds()
+    } else {
+      this.router.navigateByUrl('enableCompany')
+    }
+    
   }
 
   getUser(): void {

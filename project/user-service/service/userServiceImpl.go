@@ -33,7 +33,7 @@ func NewUserServiceImpl(client *mongo.Client) model.UserInterface {
 
 func (us *UserServiceImpl) PromoteUserToCompanyOwner(userId primitive.ObjectID) error {
 	findFilter := bson.M{"_id": userId}
-	updateFilter := bson.M{"$set": bson.M{"role": model.ROLE_ADMIN}}
+	updateFilter := bson.M{"$set": bson.M{"role": model.ROLE_COMPANY_OWNER}}
 
 	sr := us.usersCollection.FindOneAndUpdate(context.TODO(), findFilter, updateFilter)
 

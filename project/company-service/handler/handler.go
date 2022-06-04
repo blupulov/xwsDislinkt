@@ -19,6 +19,21 @@ func NewCompanyHandler(companyService *service.CompanyService) *CompanyHandler {
 	}
 }
 
+func (ch *CompanyHandler) GetAllUnAccepted(ctx context.Context, r *pb.GetAllUnAcceptedRequest) (*pb.GetAllUnAcceptedResponse, error) {
+	var response pb.GetAllUnAcceptedResponse
+
+	companies, err := ch.cs.GetAllUnAcceptedCompanies()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, company := range companies {
+		response.Companies = append(response.Companies, mapPbCompanyFromCompany(company))
+	}
+
+	return &response, nil
+}
+
 func (ch *CompanyHandler) GetAll(ctx context.Context, r *pb.GetAllRequest) (*pb.GetAllResponse, error) {
 	var response pb.GetAllResponse
 

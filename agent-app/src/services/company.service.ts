@@ -17,6 +17,10 @@ export class CompanyService {
     return this.http.post(this.apiUrl, JSON.stringify(company))
   }
 
+  getUnAcceptedCompanies() {
+    return this.http.get<CompaniesResponse>(this.apiUrl + '/0' + '/unAccepted')
+  }
+
   getOwnerCompanies(ownerId: String | null) {
     return this.http.get<CompaniesResponse>(this.apiUrl + '/' + ownerId + '/owner')
   }

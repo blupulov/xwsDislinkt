@@ -23,6 +23,10 @@ export class CustomService {
     return this.http.get<User[]>(this.apiUrl + '/user/' + userId + "/following")
   }
 
+  enableCompany(userId: string, companyId: string) {
+    return this.http.put(this.apiUrl + '/user/' + userId + '/company/' + companyId, {})
+  }
+
   // samo id-jevi osoba koje ulogovani korisnik prati
   setFollowing(usersIds: String[]) {
     localStorage.setItem("following", JSON.stringify(usersIds))
