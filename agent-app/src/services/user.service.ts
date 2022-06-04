@@ -29,7 +29,10 @@ export class UserService {
   }
 
   registration(newUser: Registration){
-    newUser.birthdate = "1999-11-11T00:00:00.000+00:00"
+    let parts = newUser.birthDate.split('T')
+    let dob = parts[0] + 'T00:00:00Z'
+    newUser.birthDate = dob
+    newUser.phoneNumber = newUser.phoneNumber.toString()
     return this.http.post<any>(this.apiUrl + '/register', JSON.stringify(newUser));
   }
 

@@ -2,7 +2,7 @@ export class Registration {
     firstName: String = '';
     lastName: String = '';
     email: String = '';
-    birthdate: String = '';
+    birthDate: String = '';
     biography: String = '';
     username: String = '';
     password: String = '';

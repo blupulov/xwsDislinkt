@@ -5,16 +5,12 @@
       <!--DATUM KREIRANJA-->
       <mat-card-header>
         {{ post.postDate | date: 'dd-MM-yyyy' }}
-      </mat-card-header>
+      </mat-card-header> 
 
-      <!--KOMENTAR AKO GA IMA-->
-      <mat-card-header>
-        {{ post.postComment }}
-      </mat-card-header>
-
-      <!--SLIKA AKO POSTOJI-->
+      <img *ngIf="post.postImage !== ''"  mat-card-image [src]="post.postImage" style="text-align:center; vertical-align:middle; max-height:450px;" />
+      
       <mat-card-content>
-
+        {{ post.postComment }}
       </mat-card-content>
 
       <mat-card-footer class="post-footer" fxLayoutAlign="center center" fxLayoutAlign="stretch" fxLayout="column">

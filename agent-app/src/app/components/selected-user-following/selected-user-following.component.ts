@@ -11,17 +11,13 @@ import { UserService } from 'src/services/user.service';
 })
 export class SelectedUserFollowingComponent implements OnInit {
 
-
   users: User[] = [];
 
   constructor(private customService: CustomService, private userService: UserService, private router: Router) { }
 
-
-
   ngOnInit(): void {
     this.loadUsers()
   }
-
 
   loadUsers() {
     this.customService.getFollowingUsers(this.userService.getSelectedUserId()?.toString()).subscribe(
@@ -35,8 +31,12 @@ export class SelectedUserFollowingComponent implements OnInit {
   }
 
   showProfile(userId: String) {
-    this.userService.setSelectedUserId(userId)
-    this.router.navigateByUrl('selectedUserProfile')
+    if(userId == this.userService.getUserId()){
+      this.router.navigateByUrl('profile')
+    } else {
+      this.userService.setSelectedUserId(userId)
+      this.router.navigateByUrl('selectedUserProfile')
+    }
   }
 
 }

@@ -29,10 +29,11 @@ func (ch *CustomHandler) getUserById(userId string) (*model.User, error) {
 
 func mapUser(res *us.GetByIdResponse) *model.User {
 	return &model.User{
-		Id:        res.User.Id,
-		Username:  res.User.Username,
-		FirstName: res.User.FirstName,
-		LastName:  res.User.LastName,
-		Email:     res.User.Email,
+		Id:           res.User.Id,
+		Username:     res.User.Username,
+		FirstName:    res.User.FirstName,
+		LastName:     res.User.LastName,
+		Email:        res.User.Email,
+		ProfileImage: res.User.Image,
 	}
 }

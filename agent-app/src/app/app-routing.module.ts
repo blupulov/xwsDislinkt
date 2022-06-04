@@ -57,8 +57,6 @@ const routes: Routes = [
   //KOMPONENTE KOJIMA SE PRISTUPA SA SELEKTOVANOG PROFILA
   {path: 'selectedUserProfile', component: SelectedUserProfileComponent},
   {path: 'selectedUserProfile/selectedUserPosts', component: SelectedUserPostsComponent},
-  {path: 'selectedUserProfile/selectedUserFollowers', component: UserFollowersComponent},
-  {path: 'selectedUserProfile/selectedFollowingUsers', component: FollowingUsersComponent},
   {path: 'selectedUserProfile/selectedUserFollowers', component: SelectedUserFollowersComponent},
   {path: 'selectedUserProfile/selectedUserFollowing', component: SelectedUserFollowingComponent},
   {path: 'selectedUserProfile/userCompanies', component: ShowUserCompaniesComponent},

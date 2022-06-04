@@ -15,18 +15,14 @@ export class SelectedUserFollowersComponent implements OnInit {
 
   constructor(private customService: CustomService, private userService: UserService, private router: Router) { }
 
-
   ngOnInit(): void {
     this.loadUsers()
   }
-
-
 
   loadUsers() {
     this.customService.getUserFollowers(this.userService.getSelectedUserId()?.toString()).subscribe(
       res => {
         this.users = res
-        console.log(this.users)
       }, err => {
         alert('problem with loading users')
       }
@@ -34,8 +30,12 @@ export class SelectedUserFollowersComponent implements OnInit {
   }
 
   showProfile(userId: String) {
-    this.userService.setSelectedUserId(userId)
-    this.router.navigateByUrl('selectedUserProfile')
+    if(userId == this.userService.getUserId()){
+      this.router.navigateByUrl('profile')
+    } else {
+      this.userService.setSelectedUserId(userId)
+      this.router.navigateByUrl('selectedUserProfile')
+    }
   }
 
 }

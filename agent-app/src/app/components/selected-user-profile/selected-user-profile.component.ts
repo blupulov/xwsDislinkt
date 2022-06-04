@@ -1,4 +1,6 @@
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/models/user.model';
 import { CustomService } from 'src/services/custom.service';
 import { FollowingService } from 'src/services/following.service';
@@ -14,16 +16,18 @@ export class SelectedUserProfileComponent implements OnInit {
   user: User = new User();
 
   constructor(private userService: UserService, private followingService: FollowingService,
-    public customService: CustomService) { }
+    public customService: CustomService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUser()
-    //window.location.reload()
   }
 
   getUser(): void {
     this.userService.getUserById(this.userService.getSelectedUserId()).subscribe(
       res => {
+        if(res.user.role == "ADMIN"){
+          this.router.navigateByUrl('profile')
+        }
         this.user = res.user
       },
       err => {

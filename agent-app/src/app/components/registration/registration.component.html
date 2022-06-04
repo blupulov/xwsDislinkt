@@ -4,14 +4,6 @@
       REGISTRATION FORM
     </mat-toolbar>
     <form  #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
-
-      <!--IMAGE-->
-      <div class="container text-center">
-        <img [src]="url" height="200"><br>
-        <input name="image" placeholder="Image" type="file" accept="image/*" (change)="onSelectFile($event)" [(ngModel)] = newUser.image required>
-
-      </div>
-
       <!--FIRSTNAME-->
       <mat-form-field color="accent">
         <mat-label><strong>FIRSTNAME</strong></mat-label>
@@ -31,9 +23,9 @@
 
       <!--BIRTHDATE-->
       <mat-form-field color="accent">
-          <mat-label><strong>BIRTHDATE</strong></mat-label>
-          <input name="birthdate" matInput placeholder="Birthdate"  [(ngModel)] = newUser.birthdate >
-      </mat-form-field>
+        <mat-label><strong>BIRTHDATE</strong></mat-label>
+        <input name="birthdate" type="datetime-local" matInput placeholder="Birthdate"  [(ngModel)] = newUser.birthDate required>
+    </mat-form-field>
 
       <!--EMAIL-->
       <mat-form-field color="accent">
@@ -60,9 +52,14 @@
 
       <mat-form-field color="accent">
         <mat-label><strong>PHONE NUMBER</strong></mat-label>
-        <input type="text" name="phoneNumber" matInput placeholder="Phone number"  [(ngModel)] = newUser.phoneNumber >
+        <input type="number" name="phoneNumber" matInput placeholder="Phone number"  [(ngModel)] = newUser.phoneNumber >
       </mat-form-field>
 
+      <div class="image">
+        <img [src]="url" height="75" width="75">
+      <input name="image" placeholder="Image" type="file" accept="image/*" (change)="onSelectFile($event)" required>
+      </div>
+      
       <!--BUTTON-->
       <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid" >REGISTER</button>
 

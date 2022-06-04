@@ -31,8 +31,12 @@ export class PostHatersComponent implements OnInit {
   }
 
   showProfile(userId: String) {
-    this.userService.setSelectedUserId(userId)
-    this.router.navigateByUrl('selectedUserProfile')
+    if(userId == this.userService.getUserId()){
+      this.router.navigateByUrl('profile')
+    } else {
+      this.userService.setSelectedUserId(userId)
+      this.router.navigateByUrl('selectedUserProfile')
+    }
   }
 
 }
