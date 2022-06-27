@@ -57,9 +57,20 @@ func registerRoutes(router *httprouter.Router, controller *controllers.Controlle
 
 	//Companies
 	router.GET("/agentApp/company", controller.GetAllCompanies)
+	router.GET("/agentApp/company/{companyId}", controller.GetCompanyById)
+	router.GET("/agentApp/company/{ownerId}/ownerId", controller.GetAllByOwnerId)
+	router.GET("/agentApp/company/unAccepted", controller.GetAllUnAcceptedCompanies)
+
+	router.POST("/agentApp/company", controller.CreateCompany)
+
 	//Users
+	router.GET("/agentApp/user/{userId}", controller.GetUserById)
+
+	router.POST("/agentApp/user/register", controller.Register)
+	router.POST("/agentApp/user/login", controller.Login)
 
 	//Combined
+	router.PUT("/agentApp/{companyId}/enable/{ownerId}/promote", controller.EnableCompany)
 }
 
 func (s *Server) initMongoClient() *mongo.Client {

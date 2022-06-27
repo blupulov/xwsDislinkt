@@ -15,9 +15,8 @@ type User struct {
 	Username     string             `bson:"username" json:"username"`
 	Password     string             `bson:"password" json:"password"`
 	PhoneNumber  string             `bson:"phoneNumber" json:"phoneNumber"`
-	Biography    string             `bson:"biography" json:"biography"`
 	Role         UserRole           `bson:"role" json:"role"`
-	ProfileImage string             `bson:"profileImage" json:"profileImage"` //base64
+	ProfileImage string             `bson:"profileImage" json:"profileImage"`
 }
 
 type UserRole int8
