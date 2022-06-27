@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public userService: UserService) { }
 
   ngOnInit(): void {
+
   }
 
+
+  logout() {
+    this.userService.logout()
+  }
 }

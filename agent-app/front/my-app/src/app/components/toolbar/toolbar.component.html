@@ -1,3 +1,12 @@
-<mat-toolbar>
-  <span>DIS-JOB</span>
-</mat-toolbar>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">DIS-JOB</a>
+
+    <div class="d-flex">
+        <button *ngIf="userService.getUserRole() == null" mat-raised-button color="accent" routerLink="login">Login</button>
+        <button *ngIf="userService.getUserRole() == null" mat-raised-button color="accent" routerLink="register">Register</button>
+        <button *ngIf="userService.getUserRole() != null && userService.getUserRole() != 'ADMIN'" mat-raised-button color="accent" routerLink="profile">Profile</button>
+        <button *ngIf="userService.getUserRole() != null" mat-raised-button color="primary" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</nav>
