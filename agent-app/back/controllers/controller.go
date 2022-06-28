@@ -163,16 +163,20 @@ func (c *Controller) GetUserById(w http.ResponseWriter, r *http.Request, p httpr
 		return
 	}
 
-	var user *model.User
-
-	user, err = c.us.GetById(userId)
+	user, err := c.us.GetById(userId)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
+	jsonUser, err := json.Marshal(user)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, "%s\n", user)
+	fmt.Fprintf(w, "%s\n", jsonUser)
 }
 
 func (c *Controller) Login(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {

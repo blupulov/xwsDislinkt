@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { LoginResponse } from "src/models/loginResponse.model";
 import { Registration } from "src/models/registration.model";
+import { User, UserResponse } from "src/models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class UserService {
     let dob = parts[0] + 'T00:00:00Z'
     newUser.birthDate = dob
     return this.http.post<any>(this.apiUrl + '/register', JSON.stringify(newUser));
+  }
+
+  getUserById(userId: String | null) {
+    return this.http.get<User>(this.apiUrl + '/' + userId)
   }
 
   login(username: String, password: String) {

@@ -17,6 +17,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDividerModule } from '@angular/material/divider';
+import { CreateCompanyComponent } from './components/create-company/create-company.component';
+import { ChangeUserComponent } from './components/change-user/change-user.component';
+import { EnableCompanyComponent } from './components/enable-company/enable-company.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,10 @@ import { ReactiveFormsModule } from "@angular/forms";
     ToolbarComponent,
     LoginComponent,
     RegistrationComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CreateCompanyComponent,
+    ChangeUserComponent,
+    EnableCompanyComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +47,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     MatCardModule,
     FormsModule,
     ReactiveFormsModule,
+    MatGridListModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

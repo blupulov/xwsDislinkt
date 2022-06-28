@@ -1,1 +1,36 @@
-<p>user-profile works!</p>
+<div class="container">
+  <mat-grid-list cols="3" rowHeight="2:1">
+    <!--PROFILE IMAGE-->
+    <mat-grid-tile [colspan]="1" [rowspan]="2" [style.background]="'whitesmoke'">
+      <img *ngIf="user.profileImage !== ''" [src]="user.profileImage" style="text-align:center; vertical-align:middle; max-height:300px; max-width:300px" />
+      <p *ngIf="user.profileImage == ''" >NO IMAGE</p>
+    </mat-grid-tile>
+    <!--PROFILE INFO-->
+    <mat-grid-tile [colspan]="2" [rowspan]="2" [style.background]="'whitesmoke'">
+      <table class="table">
+        <tbody>
+          <tr><td>Full name: </td><td> {{user.firstName}} {{user.lastName}} </td></tr>
+          <tr><td>Username: </td><td> {{user.username}} </td></tr>
+          <tr><td>Email: </td><td> {{user.email}} </td></tr>
+          <tr><td>Phone: </td><td> {{user.phoneNumber}} </td></tr>
+          <tr><td>Birth date: </td><td> {{user.birthDate | date: 'dd-MM-yyyy'}} </td></tr>
+      </tbody>
+      </table>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <!--BUTTONS-->
+  <div fxLayoutAlign="center center" fxFlexFill class="button-main-div">
+    <div fxFlex="40" fxLayoutAlign="stretch" fxLayout="column">
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="changeInfo" > CHANGE INFO </button>
+      <mat-divider></mat-divider>
+      <button class="profile-action-button" mat-flat-button color="primary" routerLink="createCompany" > CREATE COMPANY </button>
+      <mat-divider></mat-divider>
+      <button *ngIf="user.role == 'COMPANY OWNER'" class="profile-action-button" mat-flat-button color="primary" routerLink="myCompanies" > COMPANIES </button>
+    </div>
+  </div>
+
+</div>
+
+
+
