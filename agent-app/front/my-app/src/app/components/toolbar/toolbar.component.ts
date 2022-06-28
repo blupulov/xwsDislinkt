@@ -10,9 +10,7 @@ export class ToolbarComponent implements OnInit {
 
   constructor(public userService: UserService) { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
 
   logout() {

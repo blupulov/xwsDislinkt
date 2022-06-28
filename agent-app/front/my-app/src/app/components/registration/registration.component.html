@@ -1,1 +1,69 @@
-<p>registration works!</p>
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="30">
+    <mat-toolbar color="accent">
+      REGISTRATION FORM
+    </mat-toolbar>
+    <form  #form="ngForm" (submit)="onSubmit(form)" fxLayoutAlign="stretch" fxLayout="column">
+      <!--FIRSTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>FIRSTNAME</strong></mat-label>
+        <input name="firstname" matInput placeholder="Firstname" [(ngModel)] = newUser.firstName required>
+      </mat-form-field>
+
+      <!--LASTNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>LASTNAME</strong></mat-label>
+        <input name="lastname" matInput placeholder="Lastname"  [(ngModel)] = newUser.lastName required>
+      </mat-form-field>
+
+      <!--BIRTHDATE-->
+      <mat-form-field color="accent">
+        <mat-label><strong>BIRTHDATE</strong></mat-label>
+        <input name="birthdate" type="datetime-local" matInput placeholder="Birthdate"  [(ngModel)] = newUser.birthDate required>
+    </mat-form-field>
+
+      <!--EMAIL-->
+      <mat-form-field color="accent">
+        <mat-label><strong>EMAIL</strong></mat-label>
+        <input name="email" matInput placeholder="Email"  [(ngModel)] = newUser.email required>
+      </mat-form-field>
+
+      <!--USERNAME-->
+      <mat-form-field color="accent">
+        <mat-label><strong>USERNAME</strong></mat-label>
+        <input name="username" matInput placeholder="Username"  [(ngModel)] = newUser.username required>
+      </mat-form-field>
+
+      <!--PASSWORD-->
+      <mat-form-field color="accent">
+        <mat-label><strong>PASSWORD</strong></mat-label>
+        <input name="password" matInput placeholder="Password" type="password" [(ngModel)] = newUser.password required>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong> CONFIRM PASSWORD</strong></mat-label>
+        <input name="confirmPassword" matInput placeholder="Confirm password" type="password" [(ngModel)] = newUser.confirmPassword required>
+      </mat-form-field>
+
+      <!--PHONE NUMBER-->
+      <mat-form-field color="accent">
+        <mat-label><strong>PHONE NUMBER</strong></mat-label>
+        <input matInput placeholder="Phone number" type="text" class="form-control" name="phoneNumber"
+          #phoneNumber="ngModel" [(ngModel)] = newUser.phoneNumber required
+          [class.invalid]="phoneNumber.touched && phoneNumber.invalid" pattern="[0-9]+" minlength="3"/>
+        <!--<input type="number" name="phoneNumber" matInput placeholder="Phone number"  [(ngModel)] = newUser.phoneNumber > -->
+      </mat-form-field>
+
+      <!--IMAGE-->
+      <div class="image">
+        <img [src]="url" height="75" width="75">
+      <input name="image" placeholder="Image" type="file" accept="image/*" (change)="onSelectFile($event)" required>
+      </div>
+      
+      <!--BUTTON-->
+      <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid" >REGISTER</button>
+
+    </form>
+
+  </mat-card>
+</div>

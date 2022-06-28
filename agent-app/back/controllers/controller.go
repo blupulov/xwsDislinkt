@@ -143,11 +143,11 @@ func (c *Controller) EnableCompany(w http.ResponseWriter, r *http.Request, p htt
 //USERS
 //****************************************************************************************************
 
-func (uc *Controller) Register(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (c *Controller) Register(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	user := model.User{}
 
 	json.NewDecoder(r.Body).Decode(&user)
-	err := uc.us.Register(&user)
+	err := c.us.Register(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -156,7 +156,7 @@ func (uc *Controller) Register(w http.ResponseWriter, r *http.Request, _ httprou
 	w.WriteHeader(http.StatusOK)
 }
 
-func (uc *Controller) GetUserById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func (c *Controller) GetUserById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	userId, err := primitive.ObjectIDFromHex(p.ByName("userId"))
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -165,17 +165,17 @@ func (uc *Controller) GetUserById(w http.ResponseWriter, r *http.Request, p http
 
 	var user *model.User
 
-	user, err = uc.us.GetById(userId)
+	user, err = c.us.GetById(userId)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, "%v\n", user)
+	fmt.Fprintf(w, "%s\n", user)
 }
 
-func (uc *Controller) Login(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (c *Controller) Login(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var loginDto dto.LoginDto
 	err := json.NewDecoder(r.Body).Decode(&loginDto)
 	if err != nil {
@@ -183,7 +183,7 @@ func (uc *Controller) Login(w http.ResponseWriter, r *http.Request, _ httprouter
 		return
 	}
 
-	token, err := uc.us.Login(loginDto.Password, loginDto.Username)
+	token, err := c.us.Login(loginDto.Password, loginDto.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
@@ -195,6 +195,6 @@ func (uc *Controller) Login(w http.ResponseWriter, r *http.Request, _ httprouter
 		return
 	}
 
-	fmt.Fprintf(w, "%v\n", jsonToken)
-	w.WriteHeader(http.StatusAccepted)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "%s\n", jsonToken)
 }

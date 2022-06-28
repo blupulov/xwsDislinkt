@@ -11,6 +11,7 @@ import (
 	"github.com/blupulov/xwsDislinkt/agent-app/back/service"
 	"github.com/blupulov/xwsDislinkt/agent-app/back/startup/config"
 	"github.com/julienschmidt/httprouter"
+	"github.com/rs/cors"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -57,20 +58,21 @@ func registerRoutes(router *httprouter.Router, controller *controllers.Controlle
 
 	//Companies
 	router.GET("/agentApp/company", controller.GetAllCompanies)
-	router.GET("/agentApp/company/{companyId}", controller.GetCompanyById)
-	router.GET("/agentApp/company/{ownerId}/ownerId", controller.GetAllByOwnerId)
+	router.GET("/agentApp/company/ownerId/:ownerId", controller.GetAllByOwnerId)
+	router.GET("/agentApp/company/companyId/:companyId", controller.GetCompanyById)
+
 	router.GET("/agentApp/company/unAccepted", controller.GetAllUnAcceptedCompanies)
 
 	router.POST("/agentApp/company", controller.CreateCompany)
 
 	//Users
-	router.GET("/agentApp/user/{userId}", controller.GetUserById)
+	router.GET("/agentApp/user/:userId", controller.GetUserById)
 
 	router.POST("/agentApp/user/register", controller.Register)
 	router.POST("/agentApp/user/login", controller.Login)
 
 	//Combined
-	router.PUT("/agentApp/{companyId}/enable/{ownerId}/promote", controller.EnableCompany)
+	router.PUT("/agentApp/enable/:companyId/promote/:ownerId", controller.EnableCompany)
 }
 
 func (s *Server) initMongoClient() *mongo.Client {
@@ -86,7 +88,14 @@ func (s *Server) initMongoClient() *mongo.Client {
 
 func (s *Server) startRestServer(router *httprouter.Router) {
 	log.Println("company-service (rest) running on port: " + s.config.RestPort)
-	err := http.ListenAndServe(":"+s.config.RestPort, router)
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+		AllowedMethods:   []string{"POST", "PUT", "DELETE", "GET", "PATCH"},
+	})
+
+	err := http.ListenAndServe(":"+s.config.RestPort, c.Handler(router))
 	if err != nil {
 		panic(err)
 	}

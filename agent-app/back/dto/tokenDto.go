@@ -1,7 +1,7 @@
 package dto
 
 type TokenDto struct {
-	Token string
-	Role  string
-	Id    string
+	Token string `json:"token"`
+	Role  string `json:"role"`
+	Id    string `json:"userId"`
 }

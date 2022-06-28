@@ -14,9 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserService) { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   onSubmit() {
     this.userService.login(this.username, this.password).subscribe(
@@ -24,7 +22,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userId', res.userId)
         localStorage.setItem('role', res.role)
         localStorage.setItem('token', res.token)
-        this.router.navigateByUrl('/profile');
+        this.router.navigateByUrl('/userProfile');
       },
       err => {
         alert("LOGIN PROBLEM");
