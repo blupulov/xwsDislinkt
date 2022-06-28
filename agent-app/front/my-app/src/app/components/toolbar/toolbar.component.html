@@ -1,7 +1,6 @@
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand">DIS-JOB</a>
-
     <div class="d-flex">
         <button *ngIf="userService.getUserRole() == null" mat-raised-button color="accent" routerLink="login">Login</button>
         <button *ngIf="userService.getUserRole() == null" mat-raised-button color="accent" routerLink="register">Register</button>

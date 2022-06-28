@@ -30,6 +30,10 @@ export class CompanyService {
     return this.http.get<Company[]>(this.apiUrl + '/ownerId/' + ownerId)
   }
 
+  deleteCompany(companyId: string) {
+    return this.http.delete(this.apiUrl + '/' + companyId)
+  }
+
   setSelectedCompanyId(companyId: string) {
     localStorage.setItem("selectedCompanyId", companyId)
   }

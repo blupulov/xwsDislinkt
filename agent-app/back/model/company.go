@@ -27,9 +27,9 @@ type Comment struct {
 }
 
 type Info struct {
-	Street      string `bson:"street"`
-	City        string `bson:"city"`
-	Country     string `bson:"country"`
-	PhoneNumber string `bson:"phoneNumber"`
-	Email       string `bson:"email"`
+	Street      string `bson:"street" json:"street"`
+	City        string `bson:"city" json:"city"`
+	Country     string `bson:"country" json:"country"`
+	PhoneNumber string `bson:"phoneNumber" json:"phoneNumber"`
+	Email       string `bson:"email" json:"email"`
 }

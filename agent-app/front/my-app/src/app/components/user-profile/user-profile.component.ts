@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
 
@@ -10,10 +11,13 @@ import { UserService } from 'src/services/user.service';
 export class UserProfileComponent implements OnInit {
   user: User = new User();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.getUser()
+
+    if (this.userService.getUserRole() == "ADMIN")
+      this.router.navigateByUrl('enableCompany')
   }
 
   getUser(): void {

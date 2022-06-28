@@ -1,1 +1,50 @@
-<p>create-company works!</p>
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="40">
+    <mat-toolbar color="accent">
+      COMPANY REQUEST
+    </mat-toolbar>
+    <form  #form="ngForm" (submit)="onSubmit()" fxLayoutAlign="stretch" fxLayout="column">
+
+      <mat-form-field color="accent">
+        <mat-label><strong>COMPANY NAME</strong></mat-label>
+        <input name="cname" matInput placeholder="Company name" [(ngModel)] = newCompany.companyName required>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong>COUNTRY</strong></mat-label>
+        <input name="country" matInput placeholder="Country"  [(ngModel)] = newCompany.info.country required>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong>CITY</strong></mat-label>
+        <input name="city" matInput placeholder="City"  [(ngModel)] = newCompany.info.city required>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong>STREET</strong></mat-label>
+        <input name="street" matInput placeholder="Street"  [(ngModel)] = newCompany.info.street required>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong>EMAIL</strong></mat-label>
+        <input name="email" matInput type="email" placeholder="Email"  [(ngModel)] = newCompany.info.email required>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong>PHONE NUMBER</strong></mat-label>
+        <input matInput placeholder="Phone number" type="text" class="form-control" name="phoneNumber"
+          #phoneNumber="ngModel" [(ngModel)] = newCompany.info.phoneNumber required
+          [class.invalid]="phoneNumber.touched && phoneNumber.invalid" pattern="[0-9]+" minlength="3"/>  
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label><strong>DESCRIPTION</strong></mat-label>
+        <textarea name="description" matInput placeholder="Description" [(ngModel)] = newCompany.description required></textarea>
+      </mat-form-field>
+
+      <!--BUTTON-->
+      <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">CREATE</button>
+    </form>
+  </mat-card>
+</div>
+
