@@ -22,6 +22,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CreateCompanyComponent } from './components/create-company/create-company.component';
 import { ChangeUserComponent } from './components/change-user/change-user.component';
 import { EnableCompanyComponent } from './components/enable-company/enable-company.component';
+import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
+import { SelectedUserCompaniesComponent } from './components/selected-user-companies/selected-user-companies.component';
+import { MyCompaniesComponent } from './components/my-companies/my-companies.component';
+import { CreateJobComponent } from './components/create-job/create-job.component';
+import { CreateCommentComponent } from './components/create-comment/create-comment.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -32,7 +38,12 @@ import { EnableCompanyComponent } from './components/enable-company/enable-compa
     UserProfileComponent,
     CreateCompanyComponent,
     ChangeUserComponent,
-    EnableCompanyComponent
+    EnableCompanyComponent,
+    CompanyProfileComponent,
+    SelectedUserCompaniesComponent,
+    MyCompaniesComponent,
+    CreateJobComponent,
+    CreateCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +60,7 @@ import { EnableCompanyComponent } from './components/enable-company/enable-compa
     ReactiveFormsModule,
     MatGridListModule,
     MatDividerModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

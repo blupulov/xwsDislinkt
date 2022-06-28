@@ -26,7 +26,7 @@
       <mat-divider></mat-divider>
       <button class="profile-action-button" mat-flat-button color="primary" routerLink="createCompany" > CREATE COMPANY </button>
       <mat-divider></mat-divider>
-      <button *ngIf="user.role == 'COMPANY OWNER'" class="profile-action-button" mat-flat-button color="primary" routerLink="myCompanies" > COMPANIES </button>
+      <button *ngIf="userService.getUserRole() == 'COMPANY OWNER'" class="profile-action-button" mat-flat-button color="primary" routerLink="myCompanies" > COMPANIES </button>
     </div>
   </div>
 

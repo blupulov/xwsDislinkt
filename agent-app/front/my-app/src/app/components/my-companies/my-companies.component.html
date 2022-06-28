@@ -1,0 +1,10 @@
+<div class="container"> 
+  <table class="table table-hover">
+    <tbody>
+      <tr *ngFor="let company of companies" (click)="showCompany(company.id)" >
+        <td> {{ company.companyName }} </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

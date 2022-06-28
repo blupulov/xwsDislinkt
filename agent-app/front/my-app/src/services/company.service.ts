@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Company } from "src/models/company.model";
+import { Company, Job, Comment } from "src/models/company.model";
 
 
 @Injectable({
@@ -22,8 +22,8 @@ export class CompanyService {
     return this.http.get<Company[]>(this.apiUrl + '/unAccepted')
   }
 
-  getCompanyById(companyId: String | null) {
-    return this.http.get<Company>(this.apiUrl + '/companyId/' + companyId)
+  getCompanyById() {
+    return this.http.get<Company>(this.apiUrl + '/companyId/' + this.getSelectedCompanyId())
   }
 
   getAllCompaniesByOwnerId(ownerId: String | null) {
@@ -42,4 +42,19 @@ export class CompanyService {
     return localStorage.getItem("selectedCompanyId")
   }
 
+  createJob(job: Job) {
+    return this.http.put(this.apiUrl + '/' + this.getSelectedCompanyId() + '/job', JSON.stringify(job))
+  }
+
+  deleteJob(jobId: string) {
+    return this.http.delete(this.apiUrl + '/' + this.getSelectedCompanyId() + '/job/' + jobId)
+  }
+
+  createComment(comment: Comment) {
+    return this.http.put(this.apiUrl + '/' + this.getSelectedCompanyId() + '/comment', JSON.stringify(comment))
+  }
+
+  deleteComment(commentId: string) {
+    return this.http.delete(this.apiUrl + '/' + this.getSelectedCompanyId() + '/comment/' + commentId)
+  }
 }
