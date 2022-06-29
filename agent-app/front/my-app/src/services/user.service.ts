@@ -56,4 +56,8 @@ export class UserService {
     localStorage.setItem('selectedUserId', userId.toString())
   }
 
+  getUserByUsername(username: String) {
+    return this.http.get<User>(this.apiUrl + '/0/' + '/' + username)
+  }
+
 }

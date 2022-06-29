@@ -7,8 +7,11 @@ import { CreateCompanyComponent } from './components/create-company/create-compa
 import { CreateJobComponent } from './components/create-job/create-job.component';
 import { EnableCompanyComponent } from './components/enable-company/enable-company.component';
 import { LoginComponent } from './components/login/login.component';
+import { MidSearchComponent } from './components/mid-search/mid-search.component';
 import { MyCompaniesComponent } from './components/my-companies/my-companies.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { SelectedUserCompaniesComponent } from './components/selected-user-companies/selected-user-companies.component';
+import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 const routes: Routes = [
@@ -25,6 +28,10 @@ const routes: Routes = [
   {path: 'createJob', component: CreateJobComponent},
   {path: 'createComment', component: CreateCommentComponent},
 
+  {path: 'selectedUserProfile', component: SelectedUserProfileComponent},
+  {path: 'selectedUserProfile/userCompanies', component: SelectedUserCompaniesComponent},
+
+  {path: 'mid', component: MidSearchComponent}
 ];
 
 @NgModule({

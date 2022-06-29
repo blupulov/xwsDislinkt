@@ -28,6 +28,9 @@ import { MyCompaniesComponent } from './components/my-companies/my-companies.com
 import { CreateJobComponent } from './components/create-job/create-job.component';
 import { CreateCommentComponent } from './components/create-comment/create-comment.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
+import { MidSearchComponent } from './components/mid-search/mid-search.component';
+import { FindUserComponent } from './components/find-user/find-user.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { MatTabsModule } from '@angular/material/tabs';
     SelectedUserCompaniesComponent,
     MyCompaniesComponent,
     CreateJobComponent,
-    CreateCommentComponent
+    CreateCommentComponent,
+    SelectedUserProfileComponent,
+    MidSearchComponent,
+    FindUserComponent
   ],
   imports: [
     BrowserModule,
