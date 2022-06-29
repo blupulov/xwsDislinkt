@@ -65,8 +65,16 @@ func registerRoutes(router *httprouter.Router, controller *controllers.Controlle
 
 	router.POST("/agentApp/company", controller.CreateCompany)
 
+	router.PUT("/agentApp/company/job/:companyId", controller.CreateJob)
+	router.PUT("/agentApp/company/comment/:companyId", controller.CreateComment)
+
+	router.DELETE("/agentApp/company/:companyId", controller.DeleteCompanyById)
+	router.DELETE("/agentApp/company/:companyId/comment/:commentId", controller.DeleteCommentById)
+	router.DELETE("/agentApp/company/:companyId/job/:jobId", controller.DeleteJobById)
+
 	//Users
 	router.GET("/agentApp/user/:userId", controller.GetUserById)
+	router.GET("/agentApp/user/:userId/:username", controller.GetUserByUsername)
 
 	router.POST("/agentApp/user/register", controller.Register)
 	router.POST("/agentApp/user/login", controller.Login)

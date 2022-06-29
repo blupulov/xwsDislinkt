@@ -139,6 +139,104 @@ func (c *Controller) EnableCompany(w http.ResponseWriter, r *http.Request, p htt
 	w.WriteHeader(http.StatusOK)
 }
 
+func (c *Controller) DeleteJobById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	companyId, err := primitive.ObjectIDFromHex(p.ByName("companyId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	jobId, err := primitive.ObjectIDFromHex(p.ByName("jobId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = c.cs.DeleteJobById(companyId, jobId)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func (c *Controller) DeleteCommentById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	companyId, err := primitive.ObjectIDFromHex(p.ByName("companyId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	commentId, err := primitive.ObjectIDFromHex(p.ByName("commentId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = c.cs.DeleteCommentById(companyId, commentId)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func (c *Controller) CreateComment(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	companyId, err := primitive.ObjectIDFromHex(p.ByName("companyId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	comment := model.Comment{}
+	json.NewDecoder(r.Body).Decode(&comment)
+
+	err = c.cs.CreateComment(companyId, &comment)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+}
+
+func (c *Controller) CreateJob(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	companyId, err := primitive.ObjectIDFromHex(p.ByName("companyId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	job := model.Job{}
+	json.NewDecoder(r.Body).Decode(&job)
+
+	err = c.cs.CreateJob(companyId, &job)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+}
+
+func (c *Controller) DeleteCompanyById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	companyId, err := primitive.ObjectIDFromHex(p.ByName("companyId"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = c.cs.DeleteById(companyId)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
 //****************************************************************************************************
 //USERS
 //****************************************************************************************************
@@ -201,4 +299,21 @@ func (c *Controller) Login(w http.ResponseWriter, r *http.Request, _ httprouter.
 
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "%s\n", jsonToken)
+}
+
+func (c *Controller) GetUserByUsername(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	user, err := c.us.GetUserByUsername(p.ByName("username"))
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	jsonUser, err := json.Marshal(user)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, "%s\n", jsonUser)
+	w.WriteHeader(http.StatusOK)
 }

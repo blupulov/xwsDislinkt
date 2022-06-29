@@ -43,7 +43,7 @@ export class CompanyService {
   }
 
   createJob(job: Job) {
-    return this.http.put(this.apiUrl + '/' + this.getSelectedCompanyId() + '/job', JSON.stringify(job))
+    return this.http.put(this.apiUrl + '/job/' + this.getSelectedCompanyId(), JSON.stringify(job))
   }
 
   deleteJob(jobId: string) {
@@ -51,7 +51,7 @@ export class CompanyService {
   }
 
   createComment(comment: Comment) {
-    return this.http.put(this.apiUrl + '/' + this.getSelectedCompanyId() + '/comment', JSON.stringify(comment))
+    return this.http.put(this.apiUrl + '/comment/' + this.getSelectedCompanyId(), JSON.stringify(comment))
   }
 
   deleteComment(commentId: string) {
