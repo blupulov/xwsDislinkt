@@ -314,6 +314,6 @@ func (c *Controller) GetUserByUsername(w http.ResponseWriter, r *http.Request, p
 		return
 	}
 
-	fmt.Fprintf(w, "%s\n", jsonUser)
 	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "%s\n", jsonUser)
 }

@@ -17,7 +17,7 @@ export class CreateCommentComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    if (parseInt(this.newComment.grade) < 1 || parseInt(this.newComment.grade) > 10)
+    if (this.newComment.grade < 1 || this.newComment.grade > 10)
       return;
     
       this.newComment.commentOwnerId = this.userService.getUserId()?.toString() || ""  

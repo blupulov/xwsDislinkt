@@ -26,7 +26,7 @@ export class Comment {
   id: string = '';
 	commentOwnerId: string = '';
 	comment: string = '';
-  grade: string = '';
+  grade: number = 1;
 }
 
 export class CompaniesResponse {
