@@ -2,6 +2,7 @@ package handler
 
 import (
 	pb "github.com/blupulov/xwsDislinkt/common/proto/services/post-service"
+	"github.com/blupulov/xwsDislinkt/post-service/dto"
 	"github.com/blupulov/xwsDislinkt/post-service/model"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -49,5 +50,14 @@ func mapPostCommentFromPb(pbComment *pb.Comment) *model.Comment {
 		CommentOwnerId: pbComment.CommentOwnerId,
 		CommentContent: pbComment.CommentContent,
 		CreationDate:   pbComment.GetCreationDate().AsTime(),
+	}
+}
+
+func mapShareJobDtoFromPb(pbJob *pb.Job) *dto.ShareJobDto {
+	return &dto.ShareJobDto{
+		Token:          pbJob.ApiToken,
+		JobName:        pbJob.JobName,
+		CompanyName:    pbJob.CompanyName,
+		DisJobUsername: pbJob.DisJobUsername,
 	}
 }

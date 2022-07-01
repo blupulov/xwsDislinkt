@@ -6,6 +6,7 @@ import { CreateCommentComponent } from './components/create-comment/create-comme
 import { CreateCompanyComponent } from './components/create-company/create-company.component';
 import { CreateJobComponent } from './components/create-job/create-job.component';
 import { EnableCompanyComponent } from './components/enable-company/enable-company.component';
+import { GetApiTokenComponent } from './components/get-api-token/get-api-token.component';
 import { LoginComponent } from './components/login/login.component';
 import { MidSearchComponent } from './components/mid-search/mid-search.component';
 import { MyCompaniesComponent } from './components/my-companies/my-companies.component';
@@ -30,6 +31,8 @@ const routes: Routes = [
 
   {path: 'selectedUserProfile', component: SelectedUserProfileComponent},
   {path: 'selectedUserProfile/userCompanies', component: SelectedUserCompaniesComponent},
+
+  {path: 'getApiToken', component: GetApiTokenComponent},
 
   {path: 'mid', component: MidSearchComponent}
 ];

@@ -136,20 +136,15 @@ func (ph *PostHandler) DeletePost(ctx context.Context, r *pb.DeletePostRequest) 
 	return &response, nil
 }
 
-// func (ph *PostHandler) Dislike(ctx context.Context, r *pb.DislikeRequest) (res *pb.DislikeResponse, err error) {
-// 	res = &pb.DislikeResponse{}
-// 	postId, err := primitive.ObjectIDFromHex(r.PostId)
-// 	if err != nil {
-// 		res.Status = "Bad post ID"
-// 		return
-// 	}
+func (ph *PostHandler) ShareJob(ctx context.Context, r *pb.ShareJobRequest) (*pb.ShareJobResponse, error) {
+	var response pb.ShareJobResponse
 
-// 	err = ph.ps.Dislike(r.userId, r.postId)
-// 	if err != nil {
-// 		res.Status = "Didnt dislike post"
-// 	} else {
-// 		res.Status = "Post disliked"
-// 	}
+	dto := mapShareJobDtoFromPb(r.Job)
 
-// 	return
-// }
+	err := ph.ps.CreatePostFromJob(dto)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}

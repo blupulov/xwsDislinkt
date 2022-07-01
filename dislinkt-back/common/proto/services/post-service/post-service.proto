@@ -50,6 +50,27 @@ service PostService{
       body: "comment"
     };
   }
+  rpc ShareJob(ShareJobRequest) returns(ShareJobResponse) {
+    option (google.api.http) = {
+      post: "/post/job"
+      body: "job"
+    };
+  }
+}
+
+message Job {
+  string apiToken = 1;
+  string jobName = 2;
+  string companyName = 3;
+  string disJobUsername = 4;
+}
+
+message ShareJobResponse {
+
+}
+
+message ShareJobRequest {
+  Job job = 1;
 }
 
 message  DeletePostRequest {

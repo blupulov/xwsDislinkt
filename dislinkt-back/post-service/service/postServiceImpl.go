@@ -2,21 +2,22 @@ package service
 
 import (
 	"context"
+	"errors"
 	"time"
 
+	"github.com/blupulov/xwsDislinkt/post-service/dto"
 	"github.com/blupulov/xwsDislinkt/post-service/model"
+	"github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-//TODO: ADD DTO-OBJECTS FOR CREATING AND UPDATING
 const (
 	DATABASE   = "post-service"
 	COLLECTION = "posts"
 )
 
-//Implementation of methods in PostInterface
 type PostServiceImpl struct {
 	postsCollection *mongo.Collection
 }
@@ -210,4 +211,50 @@ func (ps *PostServiceImpl) updateDislikeIfNotFan(userId string, postId primitive
 
 	_, err := ps.postsCollection.UpdateOne(context.TODO(), findFilter, updateFilter)
 	return err
+}
+
+func (ps *PostServiceImpl) CreatePostFromJob(dto *dto.ShareJobDto) error {
+	postOwnerId, err := validateApiToken(dto.Token)
+	if err != nil {
+		return err
+	}
+
+	var post model.Post
+	post.PostOwnerId = postOwnerId
+	post.PostComment = "Job name: " + dto.JobName + "\n" +
+		"Company name: " + dto.CompanyName + "\n" +
+		"DisJobUsername: " + dto.DisJobUsername
+	post.Comments = make([]model.Comment, 0)
+	post.HatersIds = make([]string, 0)
+	post.FansIds = make([]string, 0)
+
+	err = ps.Insert(&post)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func validateApiToken(token string) (string, error) {
+	claims := jwt.MapClaims{}
+
+	_, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (interface{}, error) {
+		return []byte("secret"), nil
+	})
+	if err != nil {
+		return "", err
+	}
+
+	iss := claims["iss"].(string)
+	exp := claims["exp"].(float64)
+
+	now := time.Now().UTC()
+	expires := time.Unix(int64(exp), 0).UTC()
+
+	if now.After(expires) {
+		return "", errors.New("Api token expires")
+	}
+
+	return iss, nil
 }

@@ -35,6 +35,7 @@ type UserServiceClient interface {
 	GetUserByUsername(ctx context.Context, in *GetUserByUsernameRequest, opts ...grpc.CallOption) (*GetUserByUsernameResponse, error)
 	ChangeUser(ctx context.Context, in *ChangeUserRequest, opts ...grpc.CallOption) (*ChangeUserResponse, error)
 	PromoteUserToCompanyOwner(ctx context.Context, in *PromoteUserRequest, opts ...grpc.CallOption) (*PromoteUserResponse, error)
+	CreateApiToken(ctx context.Context, in *CreateApiTokenRequest, opts ...grpc.CallOption) (*CreateApiTokenResponse, error)
 }
 
 type userServiceClient struct {
@@ -153,6 +154,15 @@ func (c *userServiceClient) PromoteUserToCompanyOwner(ctx context.Context, in *P
 	return out, nil
 }
 
+func (c *userServiceClient) CreateApiToken(ctx context.Context, in *CreateApiTokenRequest, opts ...grpc.CallOption) (*CreateApiTokenResponse, error) {
+	out := new(CreateApiTokenResponse)
+	err := c.cc.Invoke(ctx, "/userservice.UserService/CreateApiToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -170,6 +180,7 @@ type UserServiceServer interface {
 	GetUserByUsername(context.Context, *GetUserByUsernameRequest) (*GetUserByUsernameResponse, error)
 	ChangeUser(context.Context, *ChangeUserRequest) (*ChangeUserResponse, error)
 	PromoteUserToCompanyOwner(context.Context, *PromoteUserRequest) (*PromoteUserResponse, error)
+	CreateApiToken(context.Context, *CreateApiTokenRequest) (*CreateApiTokenResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -212,6 +223,9 @@ func (UnimplementedUserServiceServer) ChangeUser(context.Context, *ChangeUserReq
 }
 func (UnimplementedUserServiceServer) PromoteUserToCompanyOwner(context.Context, *PromoteUserRequest) (*PromoteUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PromoteUserToCompanyOwner not implemented")
+}
+func (UnimplementedUserServiceServer) CreateApiToken(context.Context, *CreateApiTokenRequest) (*CreateApiTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateApiToken not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -442,6 +456,24 @@ func _UserService_PromoteUserToCompanyOwner_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_CreateApiToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateApiTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).CreateApiToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/userservice.UserService/CreateApiToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).CreateApiToken(ctx, req.(*CreateApiTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -496,6 +528,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PromoteUserToCompanyOwner",
 			Handler:    _UserService_PromoteUserToCompanyOwner_Handler,
+		},
+		{
+			MethodName: "CreateApiToken",
+			Handler:    _UserService_CreateApiToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -87,7 +87,7 @@ func (s *Server) Start() {
 	s.log.Println("api-gateway running on port: " + s.config.Port)
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:4200"},
+		AllowedOrigins:   []string{"*"},
 		AllowCredentials: true,
 		AllowedMethods:   []string{"POST", "PUT", "DELETE", "GET", "PATCH"},
 	})

@@ -223,3 +223,16 @@ func (uh *UserHandler) PromoteUserToCompanyOwner(ctx context.Context, r *pb.Prom
 
 	return &response, nil
 }
+
+func (uh *UserHandler) CreateApiToken(ctx context.Context, r *pb.CreateApiTokenRequest) (*pb.CreateApiTokenResponse, error) {
+	var response pb.CreateApiTokenResponse
+
+	token, err := uh.us.GenerateApiToken(r.Credentials.Password, r.Credentials.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	response.Token = token
+
+	return &response, nil
+}

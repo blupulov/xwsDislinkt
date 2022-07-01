@@ -61,13 +61,11 @@ service UserService{
       body: "usersIds"
     };
   }
-
   rpc GetUserByUsername(GetUserByUsernameRequest) returns(GetUserByUsernameResponse){
     option (google.api.http) = {
       get: "/user/{username}/GetUserByUsername"
     };
   }
-
   rpc ChangeUser(ChangeUserRequest) returns(ChangeUserResponse){
     option (google.api.http) = {
       put: "/user/{userId}"
@@ -79,6 +77,20 @@ service UserService{
       put: "/user/{userId}/promote"
     };
   }
+  rpc CreateApiToken(CreateApiTokenRequest) returns(CreateApiTokenResponse) {
+    option (google.api.http) = {
+      post: "/user/apiToken"
+      body: "credentials"
+    };
+  }
+}
+
+message CreateApiTokenRequest {
+  Credentials credentials = 1;
+}
+
+message CreateApiTokenResponse {
+  string token = 1;
 }
 
 message PromoteUserRequest {
@@ -88,7 +100,6 @@ message PromoteUserRequest {
 message PromoteUserResponse {
 
 }
-
 
 message GetUserByUsernameRequest {
   string username = 1;

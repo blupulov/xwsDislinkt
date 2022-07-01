@@ -108,18 +108,3 @@ func (s *Server) startRestServer(router *httprouter.Router) {
 		panic(err)
 	}
 }
-
-/*
-func (s *Server) startGrpcServer(companyHandler *handler.CompanyHandler) {
-	listener, err := net.Listen("tcp", ":"+s.config.GrpcPort)
-	if err != nil {
-		log.Fatal(err)
-	}
-	grpcServer := grpc.NewServer()
-	csGrpc.RegisterCompanyServiceServer(grpcServer, companyHandler)
-	log.Println("company-service (grpc) running on port: " + s.config.GrpcPort)
-	if err := grpcServer.Serve(listener); err != nil {
-		log.Fatal(err)
-	}
-}
-*/

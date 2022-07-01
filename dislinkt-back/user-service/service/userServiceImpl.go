@@ -76,6 +76,30 @@ func (ps *UserServiceImpl) Register(user *model.User) error {
 	return nil
 }
 
+func (us *UserServiceImpl) GenerateApiToken(password, username string) (string, error) {
+	user, err := us.findUserByUsername(username)
+	if err != nil {
+		return "", err
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		return "", err
+	}
+
+	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+		Issuer:    user.Id.Hex(),
+		ExpiresAt: time.Now().Add(time.Hour * 24 * 365).Unix(),
+	})
+
+	token, err := claims.SignedString([]byte(SecretKey))
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
+}
+
 func (us *UserServiceImpl) Login(password, username string) (*dto.TokenDto, error) {
 	user, err := us.findUserByUsername(username)
 	if err != nil {
@@ -88,7 +112,7 @@ func (us *UserServiceImpl) Login(password, username string) (*dto.TokenDto, erro
 	}
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Issuer:    user.Id.String(),
+		Issuer:    user.Id.Hex(),
 		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
 	})
 

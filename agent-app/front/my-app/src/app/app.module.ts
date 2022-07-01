@@ -31,6 +31,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SelectedUserProfileComponent } from './components/selected-user-profile/selected-user-profile.component';
 import { MidSearchComponent } from './components/mid-search/mid-search.component';
 import { FindUserComponent } from './components/find-user/find-user.component';
+import { GetApiTokenComponent } from './components/get-api-token/get-api-token.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { FindUserComponent } from './components/find-user/find-user.component';
     CreateCommentComponent,
     SelectedUserProfileComponent,
     MidSearchComponent,
-    FindUserComponent
+    FindUserComponent,
+    GetApiTokenComponent
   ],
   imports: [
     BrowserModule,

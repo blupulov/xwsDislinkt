@@ -60,4 +60,13 @@ export class UserService {
     return this.http.get<User>(this.apiUrl + '/0/' + '/' + username)
   }
 
+  getApiToken() {
+    return localStorage.getItem('apiToken') || ''
+  }
+
+  createApiToken(username: String, password: String) {
+    let params = {username: username, password: password}
+    return this.http.post<any>('http://localhost:8001/user/apiToken', JSON.stringify(params))
+  }
+
 }

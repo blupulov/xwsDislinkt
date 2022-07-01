@@ -1,6 +1,7 @@
 package model
 
 import (
+	"github.com/blupulov/xwsDislinkt/post-service/dto"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -14,5 +15,5 @@ type PostInterface interface {
 	Dislike(userId string, postId primitive.ObjectID) error
 	AddComment(comment *Comment, postId primitive.ObjectID) error
 	DeleteCommentById(commentId, postId string) error
-	//delete comment by Id, or (ownerId and creation time)??
+	CreatePostFromJob(dto *dto.ShareJobDto) error
 }

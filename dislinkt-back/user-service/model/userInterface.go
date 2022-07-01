@@ -19,4 +19,5 @@ type UserInterface interface {
 	GetManyUsersById(usersIds []string) (*[]User, error)
 	GetUserByUsername(username string) (*User, error)
 	PromoteUserToCompanyOwner(userId primitive.ObjectID) error
+	GenerateApiToken(password, username string) (string, error)
 }

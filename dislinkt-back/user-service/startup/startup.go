@@ -61,6 +61,9 @@ func (s *Server) Start() {
 	router.DELETE("/user/:userId", userController.DeleteById)
 
 	router.PUT("/user/:userId", userController.ChangeUser)
+
+	router.PATCH("/user/:token", userController.ReadToken)
+
 	wg := new(sync.WaitGroup)
 	wg.Add(2)
 

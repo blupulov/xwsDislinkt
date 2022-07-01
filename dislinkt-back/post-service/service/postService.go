@@ -1,6 +1,7 @@
 package service
 
 import (
+	"github.com/blupulov/xwsDislinkt/post-service/dto"
 	"github.com/blupulov/xwsDislinkt/post-service/model"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -50,4 +51,8 @@ func (ps *PostService) AddComment(comment *model.Comment, postId primitive.Objec
 
 func (ps *PostService) DeleteCommentById(commentId, postId string) error {
 	return ps.pi.DeleteCommentById(commentId, postId)
+}
+
+func (ps *PostService) CreatePostFromJob(dto *dto.ShareJobDto) error {
+	return ps.pi.CreatePostFromJob(dto)
 }

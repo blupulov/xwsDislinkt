@@ -36,14 +36,15 @@
           <thead>
             <th>Job name</th>
             <th>Job description</th>
-            <th></th>
+            <th *ngIf="company.ownerId == userService.getUserId()"></th>
+            <th *ngIf="company.ownerId == userService.getUserId()"></th>
           </thead>
           <tbody>
             <tr *ngFor="let job of company.openJobs">
               <td class="col-md-2"> {{ job.jobName }} </td>
-              <td class="col-md-8"> {{ job.jobDescription }} </td>
+              <td class="col-md-6"> {{ job.jobDescription }} </td>
               <td *ngIf="company.ownerId == userService.getUserId()"> <button class="btn btn-danger" (click)="deleteJob(job.id)"> DELETE </button> </td>
-              <td *ngIf="company.ownerId != userService.getUserId()"></td>
+              <td *ngIf="company.ownerId == userService.getUserId()"> <button class="btn btn-success" (click)="shareJobOnDislinkt(job)"> SHARE ON DISLINKT </button></td>
             </tr>
           </tbody>
         </table>

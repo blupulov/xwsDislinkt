@@ -67,3 +67,7 @@ func (us *UserService) GetUserByUsername(username string) (*model.User, error) {
 func (us *UserService) PromoteUserToCompanyOwner(userId primitive.ObjectID) error {
 	return us.ui.PromoteUserToCompanyOwner(userId)
 }
+
+func (us *UserService) GenerateApiToken(password, username string) (string, error) {
+	return us.ui.GenerateApiToken(password, username)
+}
