@@ -1,5 +1,7 @@
 package config
 
+import "os"
+
 type Config struct {
 	RestPort   string
 	UserDBHost string
@@ -10,8 +12,8 @@ type Config struct {
 func NewConfig() *Config {
 	return &Config{
 		RestPort:   "8051",
-		GrpcPort:   "9051",
-		UserDBHost: "localhost",
-		UserDBPort: "27017",
+		GrpcPort:   os.Getenv("USER_SERVICE_PORT"),
+		UserDBHost: os.Getenv("MONGO_DB_HOST"),
+		UserDBPort: os.Getenv("MONGO_DB_PORT"),
 	}
 }

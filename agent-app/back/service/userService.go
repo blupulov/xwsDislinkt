@@ -43,3 +43,7 @@ func (us *UserService) PromoteUserToCompanyOwner(userId primitive.ObjectID) erro
 func (us *UserService) GetUserByUsername(username string) (*model.User, error) {
 	return us.ui.GetUserByUsername(username)
 }
+
+func (us *UserService) RegisterAdmin() {
+	us.ui.RegisterAdmin()
+}

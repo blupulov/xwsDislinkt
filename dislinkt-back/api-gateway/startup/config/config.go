@@ -1,5 +1,7 @@
 package config
 
+import "os"
+
 type Config struct {
 	Port                 string
 	PostServiceHost      string
@@ -15,13 +17,13 @@ type Config struct {
 //dodati u .env
 func NewConfig() *Config {
 	return &Config{
-		Port:                 "8001",
-		PostServiceHost:      "localhost",
-		PostServicePort:      "9050",
-		UserServiceHost:      "localhost",
-		UserServicePort:      "9051",
-		FollowingServiceHost: "localhost",
-		FollowingServicePort: "9052",
+		Port:                 os.Getenv("GATEWAY_PORT"),
+		PostServiceHost:      os.Getenv("POST_SERVICE_HOST"),
+		PostServicePort:      os.Getenv("POST_SERVICE_PORT"),
+		UserServiceHost:      os.Getenv("USER_SERVICE_HOST"),
+		UserServicePort:      os.Getenv("USER_SERVICE_PORT"),
+		FollowingServiceHost: os.Getenv("FOLLOWING_SERVICE_HOST"),
+		FollowingServicePort: os.Getenv("FOLLOWING_SERVICE_PORT"),
 		CompanyServiceHost:   "localhost",
 		CompanyServicePort:   "9053",
 	}

@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  agent_back:
+    image: agent_back
+    container_name: agent_back
+    build:
+      context: .
+      dockerfile: ./back/Dockerfile
+    restart: on-failure
+    ports:
+      - ${AGENT_APP_PORT}:${AGENT_APP_PORT}
+    environment:
+      AGENT_APP_PORT: ${AGENT_APP_PORT}
+      MONGO_DB_HOST: ${MONGO_DB_HOST}
+      MONGO_DB_PORT: ${MONGO_DB_PORT}
+    depends_on:
+      - mongo_db_agent
+    networks:
+      - agent_network
+
+  mongo_db_agent:
+    image: mongo
+    container_name: mongo_db_agent
+    restart: on-failure
+    networks:
+      - agent_network
+
+networks:
+  agent_network:
+    driver: bridge

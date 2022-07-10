@@ -1,5 +1,7 @@
 package config
 
+import "os"
+
 type Config struct {
 	RestPort         string
 	GrpcPort         string
@@ -12,9 +14,9 @@ type Config struct {
 func NewConfig() *Config {
 	return &Config{
 		RestPort:         "8052",
-		GrpcPort:         "9052",
-		FollowDBHost:     "localhost",
-		FollowDBPort:     "7687",
+		GrpcPort:         os.Getenv("FOLLOWING_SERVICE_PORT"),
+		FollowDBHost:     os.Getenv("NEO4J_DB_HOST"),
+		FollowDBPort:     os.Getenv("NEO4J_DB_PORT"),
 		FollowDBUsername: "neo4j",
 		FollowDBPassword: "password",
 	}

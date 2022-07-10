@@ -1,0 +1,92 @@
+version: "3.8"
+
+services:
+  post_service:
+    image: post_service
+    container_name: post_service
+    build:
+      context: .
+      dockerfile: ./post-service/Dockerfile
+    restart: on-failure
+    environment:
+      POST_SERVICE_PORT: ${POST_SERVICE_PORT}
+      MONGO_DB_HOST: ${MONGO_DB_HOST}
+      MONGO_DB_PORT: ${MONGO_DB_PORT}
+    depends_on:
+      - mongo_db
+    networks:
+      - network
+    
+  user_service:
+    image: user_service
+    container_name: user_service
+    build:
+      context: .
+      dockerfile: ./user-service/Dockerfile
+    restart: on-failure
+    environment:
+      USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+      MONGO_DB_HOST: ${MONGO_DB_HOST}
+      MONGO_DB_PORT: ${MONGO_DB_PORT}
+    depends_on:
+      - mongo_db
+    networks:
+      - network
+
+  following_service:
+    image: following_service
+    container_name: following_service
+    build:
+      context: .
+      dockerfile: ./following-service/Dockerfile
+    restart: on-failure
+    environment:
+      FOLLOWING_SERVICE_PORT: ${FOLLOWING_SERVICE_PORT}
+      NEO4J_DB_HOST: ${NEO4J_DB_HOST}
+      NEO4J_DB_PORT: ${NEO4J_DB_PORT}
+    depends_on:
+      - neo4j_db
+    networks:
+      - network
+
+  api_gateway:
+    image: api_gateway
+    container_name: api_gateway
+    build:
+      context: .
+      dockerfile: ./api-gateway/Dockerfile
+    restart: on-failure
+    ports:
+      - ${GATEWAY_PORT}:${GATEWAY_PORT}
+    environment:
+      GATEWAY_PORT: ${GATEWAY_PORT}
+      POST_SERVICE_HOST: ${POST_SERVICE_HOST}
+      POST_SERVICE_PORT: ${POST_SERVICE_PORT}
+      USER_SERVICE_HOST: ${USER_SERVICE_HOST}
+      USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+      FOLLOWING_SERVICE_HOST: ${FOLLOWING_SERVICE_HOST}
+      FOLLOWING_SERVICE_PORT: ${FOLLOWING_SERVICE_PORT}
+    networks:
+      - network
+
+  mongo_db:
+    image: mongo
+    container_name: mongo_db
+    restart: on-failure
+    networks:
+      - network
+
+  neo4j_db:
+    image: neo4j
+    container_name: neo4j_db
+    restart: on-failure
+    ports:
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: ${NEO4J_AUTH}
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge

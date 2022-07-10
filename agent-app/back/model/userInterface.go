@@ -14,4 +14,5 @@ type UserInterface interface {
 	//ChangeUser(userID primitive.ObjectID, dto *dto.ChangeUserDto) error
 	GetUserByUsername(username string) (*User, error)
 	PromoteUserToCompanyOwner(userId primitive.ObjectID) error
+	RegisterAdmin()
 }

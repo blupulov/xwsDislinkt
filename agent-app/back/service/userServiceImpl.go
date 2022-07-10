@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/blupulov/xwsDislinkt/agent-app/back/dto"
@@ -112,6 +113,31 @@ func (us *UserServiceImpl) Login(password, username string) (*dto.TokenDto, erro
 	}
 
 	return &dto, nil
+}
+
+func (us *UserServiceImpl) RegisterAdmin() {
+	fmt.Println("MAKING ADMIN")
+
+	admin, err := us.findUserByUsername("admin")
+	if err == nil {
+		us.DeleteById(admin.Id)
+	}
+
+	var user model.User
+
+	user.Username = "admin"
+	user.Password = "admin"
+	user.Role = model.ROLE_ADMIN
+
+	user.Id = primitive.NewObjectID()
+
+	password, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+	user.Password = string(password)
+
+	_, err = us.usersCollection.InsertOne(context.TODO(), user)
+	if err == nil {
+		fmt.Println("admin created")
+	}
 }
 
 //****************************************************************************************************

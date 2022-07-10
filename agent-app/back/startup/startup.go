@@ -40,6 +40,9 @@ func (s *Server) Start() {
 	//Controller
 	controller := controllers.NewController(companyService, userService)
 
+	//INSERT ADMIN
+	userService.RegisterAdmin()
+
 	//All routes (first is test rout)
 	registerRoutes(router, controller)
 
